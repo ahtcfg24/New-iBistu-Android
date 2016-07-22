@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 边缘框-->
+    <stroke
+        android:width="5dp"
+        android:color="#fffffe"
+        />
+    <!--弧形边角 -->
+    <corners android:radius="15dp"/>
+    <!-- 渐变背景色色-->
+    <gradient
+        android:angle="270"
+        android:endColor="#ffffff"
+        android:startColor="#ffffee"/>
+</shape>

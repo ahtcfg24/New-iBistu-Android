@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+
+
+    <!-- 获得焦点时 -->
+    <item
+        android:drawable="@drawable/menu"
+        android:state_focused="true"
+        android:state_pressed="false"
+        />
+    <!-- 获得焦点并按下 -->
+    <item
+        android:drawable="@drawable/menu_vertical"
+        android:state_focused="true"
+        android:state_pressed="true"
+        />
+    <!-- 失去焦点时 -->
+    <item
+        android:drawable="@drawable/menu_vertical"
+        android:state_focused="false"
+        android:state_pressed="true"
+        />
+    <!-- 默认时 -->
+    <item android:drawable="@drawable/menu"/>
+</selector>
