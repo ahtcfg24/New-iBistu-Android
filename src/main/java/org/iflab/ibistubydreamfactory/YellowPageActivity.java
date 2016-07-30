@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import org.iflab.ibistubydreamfactory.adapters.YellowPageAdapter;
 import org.iflab.ibistubydreamfactory.apis.APISource;
-import org.iflab.ibistubydreamfactory.apis.YellowPageService;
+import org.iflab.ibistubydreamfactory.apis.YellowPageAPI;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.Resource;
-import org.iflab.ibistubydreamfactory.models.YellowPageDepart;
+import org.iflab.ibistubydreamfactory.models.YellowPageDepartment;
 import org.iflab.ibistubydreamfactory.utils.ACache;
 
 import java.util.List;
@@ -29,8 +29,8 @@ import retrofit2.Response;
 public class YellowPageActivity extends AppCompatActivity {
     private ListView listViewYellowPageDepart;
     private ProgressBar progressBar;
-    private List<YellowPageDepart> yellowPageDepartList;
-    private Resource<YellowPageDepart> yellowPageDepartResource;
+    private List<YellowPageDepartment> yellowPageDepartmentList;
+    private Resource<YellowPageDepartment> yellowPageDepartResource;
     private ACache aCache;
     private Intent intent;
 
@@ -50,8 +50,8 @@ public class YellowPageActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent();
-                intent.putExtra("depart", yellowPageDepartList.get(position).getDepart());
-                intent.putExtra("name", yellowPageDepartList.get(position).getName());
+                intent.putExtra("department", yellowPageDepartmentList.get(position).getDepartment());
+                intent.putExtra("name", yellowPageDepartmentList.get(position).getName());
                 intent.setClass(YellowPageActivity.this, YellowPageDetailsActivity.class);
                 startActivity(intent);
             }
@@ -62,7 +62,7 @@ public class YellowPageActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar_yellowPageDepart);
         listViewYellowPageDepart = (ListView) findViewById(R.id.listView_yellowPage);
         aCache = ACache.get(MyApplication.getAppContext());
-        yellowPageDepartResource = (Resource<YellowPageDepart>) aCache.getAsObject("yellowPageDepartResource");
+        yellowPageDepartResource = (Resource<YellowPageDepartment>) aCache.getAsObject("yellowPageDepartResource");
 
     }
 
@@ -71,9 +71,9 @@ public class YellowPageActivity extends AppCompatActivity {
      * 填充部门列表数据到ListView
      */
     private void loadData() {
-        yellowPageDepartList = yellowPageDepartResource.getResource();
+        yellowPageDepartmentList = yellowPageDepartResource.getResource();
         progressBar.setVisibility(View.GONE);
-        listViewYellowPageDepart.setAdapter(new YellowPageAdapter(yellowPageDepartList, YellowPageActivity.this));
+        listViewYellowPageDepart.setAdapter(new YellowPageAdapter(yellowPageDepartmentList, YellowPageActivity.this));
     }
 
 
@@ -96,12 +96,12 @@ public class YellowPageActivity extends AppCompatActivity {
      * 获得学校部门信息
      */
     private void getYellowPageDepartResource() {
-        YellowPageService departmentService = APISource.getInstance()
-                                                       .getService(YellowPageService.class);
-        Call<Resource<YellowPageDepart>> call = departmentService.getYellowPageDepart();
-        call.enqueue(new Callback<Resource<YellowPageDepart>>() {
+        YellowPageAPI departmentService = APISource.getInstance()
+                                                   .getAPIObject(YellowPageAPI.class);
+        Call<Resource<YellowPageDepartment>> call = departmentService.getYellowPageDepart();
+        call.enqueue(new Callback<Resource<YellowPageDepartment>>() {
             @Override
-            public void onResponse(Call<Resource<YellowPageDepart>> call, Response<Resource<YellowPageDepart>> response) {
+            public void onResponse(Call<Resource<YellowPageDepartment>> call, Response<Resource<YellowPageDepartment>> response) {
                 if (response.isSuccessful()) {
                     yellowPageDepartResource = response.body();
                     aCache.put("yellowPageDepartResource", yellowPageDepartResource);
@@ -113,11 +113,10 @@ public class YellowPageActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Resource<YellowPageDepart>> call, Throwable t) {
+            public void onFailure(Call<Resource<YellowPageDepartment>> call, Throwable t) {
                 System.out.println("error：" + t.toString());
                 Toast.makeText(YellowPageActivity.this, "错误：" + t.getMessage(), Toast.LENGTH_LONG)
                      .show();
-
             }
         });
 

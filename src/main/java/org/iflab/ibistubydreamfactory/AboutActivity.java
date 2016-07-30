@@ -12,9 +12,9 @@ import android.widget.ProgressBar;
 
 import org.iflab.ibistubydreamfactory.adapters.AboutListViewAdapter;
 import org.iflab.ibistubydreamfactory.apis.APISource;
-import org.iflab.ibistubydreamfactory.apis.AboutService;
+import org.iflab.ibistubydreamfactory.apis.AboutAPI;
+import org.iflab.ibistubydreamfactory.models.About;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
-import org.iflab.ibistubydreamfactory.models.Introduction;
 import org.iflab.ibistubydreamfactory.models.Resource;
 import org.iflab.ibistubydreamfactory.utils.ACache;
 
@@ -25,9 +25,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AboutActivity extends AppCompatActivity {
-    private Resource<Introduction> introductionResource;
+    private Resource<About> introductionResource;
     private ProgressBar progressBar;
-    private List<Introduction> aboutItemList;//存储关于列表各选项的名字
+    private List<About> aboutItemList;//存储关于列表各选项的名字
     private ListView aboutListView;
     private Intent intent;
     private ACache aCache;
@@ -36,7 +36,6 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
         if (introductionResource == null) {
             /*如果缓存没有就从网络获取*/
@@ -47,9 +46,9 @@ public class AboutActivity extends AppCompatActivity {
         aboutListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intent.putExtra("introCont", aboutItemList.get(position).getIntroCont());//把模块的内容传过去
-                intent.putExtra("introName", aboutItemList.get(position)
-                                                          .getIntroName());//把所点击的模块的名字传过去
+                intent.putExtra("aboutContent", aboutItemList.get(position).getAboutDetails());//把模块的内容传过去
+                intent.putExtra("aboutName", aboutItemList.get(position)
+                                                          .getAboutName());//把所点击的模块的名字传过去
                 intent.setClass(AboutActivity.this, AboutDetailsActivity.class);
                 startActivity(intent);
             }
@@ -65,6 +64,7 @@ public class AboutActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar_about);
         aboutListView = (ListView) findViewById(R.id.about_listView);
         aCache = ACache.get(MyApplication.getAppContext());
+        introductionResource = (Resource<About>) aCache.getAsObject("introductionResource");
     }
 
 
@@ -72,11 +72,11 @@ public class AboutActivity extends AppCompatActivity {
      * 获取数据
      */
     private void getIntroductionResource() {
-        AboutService aboutService = APISource.getInstance().getService(AboutService.class);
-        Call<Resource<Introduction>> call = aboutService.getAboutIntroDuctions();
-        call.enqueue(new Callback<Resource<Introduction>>() {
+        AboutAPI aboutAPI = APISource.getInstance().getAPIObject(AboutAPI.class);
+        Call<Resource<About>> call = aboutAPI.getAboutIntroductions();
+        call.enqueue(new Callback<Resource<About>>() {
             @Override
-            public void onResponse(Call<Resource<Introduction>> call, Response<Resource<Introduction>> response) {
+            public void onResponse(Call<Resource<About>> call, Response<Resource<About>> response) {
                 if (response.isSuccessful()) {
                     introductionResource = response.body();
                     aCache.put("introductionResource", introductionResource);
@@ -88,7 +88,7 @@ public class AboutActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Resource<Introduction>> call, Throwable t) {
+            public void onFailure(Call<Resource<About>> call, Throwable t) {
                 System.out.println("error：" + t.toString());
 
             }

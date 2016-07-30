@@ -7,13 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
-import org.iflab.ibistubydreamfactory.utils.ACache;
-
 public class AboutDetailsActivity extends AppCompatActivity {
     private WebView webView;
     private Intent intent;
-    private String introCont;//mod的内容
-    private ACache aCache;
+    private String aboutContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +19,10 @@ public class AboutDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about_details);
         webView = (WebView) findViewById(R.id.webView);
         intent = getIntent();
-        introCont = intent.getStringExtra("introCont");//获取传过来的模块内容
-        getSupportActionBar().setTitle(intent.getStringExtra("introName"));//获取传过来的标题并设为activity的标题
-        aCache = ACache.get(MyApplication.getAppContext());
+        aboutContent = intent.getStringExtra("aboutContent");//获取传过来的模块内容
+        getSupportActionBar().setTitle(intent.getStringExtra("aboutName"));//获取传过来的标题并设为activity的标题
             /*使用loadData会乱码，原因未知*/
-        webView.loadDataWithBaseURL(null, introCont, "text/html", "utf-8", null);
+        webView.loadDataWithBaseURL(null, aboutContent, "text/html", "utf-8", null);
     }
 
 

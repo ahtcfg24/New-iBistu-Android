@@ -81,7 +81,7 @@ public class APISource {
     }
 
     /**
-     * 处理错误信息
+     * 处理接口访问错误时返回的信息
      * @param response
      * @return
      */
@@ -109,9 +109,9 @@ public class APISource {
     }
 
     /**
-     * 根据传入的Service类，动态返回所需的Service
+     * 根据传入的API类，动态返回所需的API对象
      */
-    public <T> T getService(Class<T> serviceClass) {
-        return retrofit.create(serviceClass);
+    public <T> T getAPIObject(Class<T> apiClass) {
+        return retrofit.create(apiClass);
     }
 }

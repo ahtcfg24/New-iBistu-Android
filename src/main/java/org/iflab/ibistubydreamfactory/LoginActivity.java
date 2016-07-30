@@ -11,7 +11,7 @@ import android.widget.Toast;
 import junit.framework.Assert;
 
 import org.iflab.ibistubydreamfactory.apis.APISource;
-import org.iflab.ibistubydreamfactory.apis.AuthService;
+import org.iflab.ibistubydreamfactory.apis.AuthAPI;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.LoginRequest;
 import org.iflab.ibistubydreamfactory.models.User;
@@ -59,14 +59,14 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
         } else {
             apiSource = APISource.getInstance();
-            AuthService authService = apiSource.getService(AuthService.class);
+            AuthAPI authAPI = apiSource.getAPIObject(AuthAPI.class);
 
             final LoginRequest request = new LoginRequest();
             request.setEmail(email);
             request.setPassword(password);
             request.setRemember_me(true);//默认获得永不过期的token
 
-            Call<User> call = authService.login(request);
+            Call<User> call = authAPI.login(request);
             call.enqueue(new Callback<User>() {
 
                 @Override

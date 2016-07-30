@@ -13,11 +13,11 @@ import android.widget.Toast;
 
 import org.iflab.ibistubydreamfactory.adapters.yellowPageDetailsAdapter;
 import org.iflab.ibistubydreamfactory.apis.APISource;
-import org.iflab.ibistubydreamfactory.apis.YellowPageService;
+import org.iflab.ibistubydreamfactory.apis.YellowPageAPI;
 import org.iflab.ibistubydreamfactory.customviews.YellowPageDialog;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.Resource;
-import org.iflab.ibistubydreamfactory.models.YellowPageDepart;
+import org.iflab.ibistubydreamfactory.models.YellowPageDepartment;
 import org.iflab.ibistubydreamfactory.utils.ACache;
 
 import java.util.List;
@@ -29,14 +29,14 @@ import retrofit2.Response;
 public class YellowPageDetailsActivity extends AppCompatActivity {
     private ListView listViewYellowPageDepartDetails;
     private ProgressBar progressBar;
-    private List<YellowPageDepart> yellowPageDepartDetailsList;
-    private Resource<YellowPageDepart> yellowPageDepartDetailsResource;
+    private List<YellowPageDepartment> yellowPageDepartmentDetailsList;
+    private Resource<YellowPageDepartment> yellowPageDepartDetailsResource;
     private ACache aCache;
     private Intent intent;
     private String branchName;//部门下分支的名字
     private String telephoneNumber;//部门下分支的号码
-    private String depart;
-    private String filterDepart = "depart=";//后端接口查询depart的过滤字段
+    private String department;
+    private String filter = "department=";//后端接口查询department的过滤字段，相当于sql中的where子句
 
 
     @Override
@@ -53,9 +53,9 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
         listViewYellowPageDepartDetails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                branchName = yellowPageDepartDetailsList.get(position).getName();
-                telephoneNumber = yellowPageDepartDetailsList.get(position).getTelnum().toString();
-                new YellowPageDialog(YellowPageDetailsActivity.this, branchName, telephoneNumber, yellowPageDepartDetailsList, position);
+                branchName = yellowPageDepartmentDetailsList.get(position).getName();
+                telephoneNumber = yellowPageDepartmentDetailsList.get(position).getTelephone();
+                new YellowPageDialog(YellowPageDetailsActivity.this, branchName, telephoneNumber, yellowPageDepartmentDetailsList, position);
 
             }
         });
@@ -65,11 +65,11 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
     private void init() {
         progressBar = (ProgressBar) findViewById(R.id.progressBar_yellowPageDepartDetails);
         intent = getIntent();
-        depart = intent.getStringExtra("depart");
+        department = intent.getStringExtra("department");
         getSupportActionBar().setTitle(intent.getStringExtra("name"));
         listViewYellowPageDepartDetails = (ListView) findViewById(R.id.listView_yellowPageDepartDetails);
         aCache = ACache.get(MyApplication.getAppContext());
-        yellowPageDepartDetailsResource = (Resource<YellowPageDepart>) aCache.getAsObject(depart);
+        yellowPageDepartDetailsResource = (Resource<YellowPageDepartment>) aCache.getAsObject(department);
 
     }
 
@@ -78,15 +78,16 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
      * 获得学校部门信息
      */
     private void getYellowPageDepartResource() {
-        YellowPageService departmentService = APISource.getInstance()
-                                                       .getService(YellowPageService.class);
-        Call<Resource<YellowPageDepart>> call = departmentService.getYellowPageDepartDetails(filterDepart + depart);
-        call.enqueue(new Callback<Resource<YellowPageDepart>>() {
+        YellowPageAPI departmentService = APISource.getInstance()
+                                                   .getAPIObject(YellowPageAPI.class);
+        Call<Resource<YellowPageDepartment>> call = departmentService.getYellowPageDetails(filter + department);
+        System.out.println("filter+department" + filter + department);
+        call.enqueue(new Callback<Resource<YellowPageDepartment>>() {
             @Override
-            public void onResponse(Call<Resource<YellowPageDepart>> call, Response<Resource<YellowPageDepart>> response) {
+            public void onResponse(Call<Resource<YellowPageDepartment>> call, Response<Resource<YellowPageDepartment>> response) {
                 if (response.isSuccessful()) {
                     yellowPageDepartDetailsResource = response.body();
-                    aCache.put(depart, yellowPageDepartDetailsResource);
+                    aCache.put(department, yellowPageDepartDetailsResource);
                     loadData();
                 } else {
                     ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
@@ -95,7 +96,7 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Resource<YellowPageDepart>> call, Throwable t) {
+            public void onFailure(Call<Resource<YellowPageDepartment>> call, Throwable t) {
                 System.out.println("error：" + t.toString());
                 Toast.makeText(YellowPageDetailsActivity.this, "错误：" + t.getMessage(), Toast.LENGTH_LONG)
                      .show();
@@ -109,9 +110,9 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
      * 加载部门下的详情数据到listview中
      */
     private void loadData() {
-        yellowPageDepartDetailsList = yellowPageDepartDetailsResource.getResource();
+        yellowPageDepartmentDetailsList = yellowPageDepartDetailsResource.getResource();
         progressBar.setVisibility(View.GONE);
-        listViewYellowPageDepartDetails.setAdapter(new yellowPageDetailsAdapter(YellowPageDetailsActivity.this, yellowPageDepartDetailsList));
+        listViewYellowPageDepartDetails.setAdapter(new yellowPageDetailsAdapter(YellowPageDetailsActivity.this, yellowPageDepartmentDetailsList));
 
     }
 

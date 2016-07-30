@@ -8,9 +8,9 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
- *
+ * 认证接口
  */
-public interface AuthService {
+public interface AuthAPI {
     @POST("system/admin/session")
     Call<User> login(@Body LoginRequest loginRequest);
 }

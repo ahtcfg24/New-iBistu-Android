@@ -8,17 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.iflab.ibistubydreamfactory.R;
-import org.iflab.ibistubydreamfactory.models.Introduction;
+import org.iflab.ibistubydreamfactory.models.About;
 
 import java.util.List;
 
 public class AboutListViewAdapter extends BaseAdapter {
-    private List<Introduction> aboutItemList;
+    private List<About> aboutItemList;
     private Context context;
     private TextView aboutItemTextView;
 
 
-    public AboutListViewAdapter(List<Introduction> aboutItemList, Context context) {
+    public AboutListViewAdapter(List<About> aboutItemList, Context context) {
         this.aboutItemList = aboutItemList;
         this.context = context;
     }
@@ -55,7 +55,7 @@ public class AboutListViewAdapter extends BaseAdapter {
             aboutItemTextView = (TextView) convertView.findViewById(R.id.about_item_textView);
         }
             /*填充列表文字*/
-        aboutItemTextView.setText(aboutItemList.get(position).getIntroName());
+        aboutItemTextView.setText(aboutItemList.get(position).getAboutName());
         return convertView;
     }
 }

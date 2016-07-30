@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.iflab.ibistubydreamfactory.R;
-import org.iflab.ibistubydreamfactory.models.YellowPageDepart;
+import org.iflab.ibistubydreamfactory.models.YellowPageDepartment;
 
 import java.util.List;
 
@@ -17,18 +17,18 @@ import java.util.List;
  */
 public class YellowPageAdapter extends BaseAdapter {
 
-    private List<YellowPageDepart> yellowPageDepartList;
+    private List<YellowPageDepartment> yellowPageDepartmentList;
     private Context context;
     private ViewHolder viewHolder;
 
-    public YellowPageAdapter(List<YellowPageDepart> yellowPageDepartList, Context context) {
-        this.yellowPageDepartList = yellowPageDepartList;
+    public YellowPageAdapter(List<YellowPageDepartment> yellowPageDepartmentList, Context context) {
+        this.yellowPageDepartmentList = yellowPageDepartmentList;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return yellowPageDepartList.size();
+        return yellowPageDepartmentList.size();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class YellowPageAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.yellowPageItemTextView.setText(yellowPageDepartList.get(position).getName());
+        viewHolder.yellowPageItemTextView.setText(yellowPageDepartmentList.get(position).getName());
         return convertView;
     }
 

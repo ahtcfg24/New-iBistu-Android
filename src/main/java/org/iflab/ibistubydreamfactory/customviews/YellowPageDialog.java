@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.iflab.ibistubydreamfactory.R;
-import org.iflab.ibistubydreamfactory.models.YellowPageDepart;
+import org.iflab.ibistubydreamfactory.models.YellowPageDepartment;
 
 import java.util.List;
 
@@ -22,18 +22,18 @@ import java.util.List;
  */
 public class YellowPageDialog extends Dialog {
     private Button dialButton, insertButton, cancelButton;
-    private TextView titleTextVeiw, numTextView;
+    private TextView titleTextView, numTextView;
     private int position;
     private Context context;
-    private List<YellowPageDepart> yellowPageDepartBranchList;
+    private List<YellowPageDepartment> yellowPageDepartmentBranchList;
 
     public YellowPageDialog(Context context, String title, String num
-            , List<YellowPageDepart> yellowPageDepartBranchList
+            , List<YellowPageDepartment> yellowPageDepartmentBranchList
             , int position) {
         super(context, R.style.YellowPageDialog);
         this.context = context;
         this.position = position;
-        this.yellowPageDepartBranchList = yellowPageDepartBranchList;
+        this.yellowPageDepartmentBranchList = yellowPageDepartmentBranchList;
         init(title, num);//初始化布局
         setListener();//设置监听器
         show();//显示Dialog
@@ -45,9 +45,9 @@ public class YellowPageDialog extends Dialog {
         dialButton = (Button) findViewById(R.id.dial_button);
         insertButton = (Button) findViewById(R.id.insert_button);
         cancelButton = (Button) findViewById(R.id.cancel_button);
-        titleTextVeiw = (TextView) findViewById(R.id.dialog_title_textView);
+        titleTextView = (TextView) findViewById(R.id.dialog_title_textView);
         numTextView = (TextView) findViewById(R.id.dialog_num_textView);
-        titleTextVeiw.setText(title);
+        titleTextView.setText(title);
         numTextView.setText(num);
     }
 
@@ -65,7 +65,7 @@ public class YellowPageDialog extends Dialog {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.dial_button://拨号
-                    Uri uri = Uri.parse("tel:" + yellowPageDepartBranchList.get(position).getTelnum());
+                    Uri uri = Uri.parse("tel:" + yellowPageDepartmentBranchList.get(position).getTelephone());
                     Intent intent = new Intent(Intent.ACTION_DIAL, uri);
                     context.startActivity(intent);
                     hide();
@@ -75,9 +75,12 @@ public class YellowPageDialog extends Dialog {
                     intent1.setType("vnd.android.cursor.dir/person");
                     intent1.setType("vnd.android.cursor.dir/contact");
                     intent1.setType("vnd.android.cursor.dir/raw_contact");
-                    intent1.putExtra(ContactsContract.Intents.Insert.NAME, yellowPageDepartBranchList.get(position).getName());
+                    intent1.putExtra(ContactsContract.Intents.Insert.NAME, yellowPageDepartmentBranchList
+                            .get(position).getName());
                     intent1.putExtra(ContactsContract.Intents.Insert.SECONDARY_PHONE_TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_WORK);
-                    intent1.putExtra(ContactsContract.Intents.Insert.SECONDARY_PHONE, yellowPageDepartBranchList.get(position).getTelnum().toString());
+                    intent1.putExtra(ContactsContract.Intents.Insert.SECONDARY_PHONE, yellowPageDepartmentBranchList
+                            .get(position)
+                            .getTelephone());
                     context.startActivity(intent1);
                     dismiss();
                     break;

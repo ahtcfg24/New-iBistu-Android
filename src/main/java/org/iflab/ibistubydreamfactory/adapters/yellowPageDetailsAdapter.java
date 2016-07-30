@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.iflab.ibistubydreamfactory.R;
-import org.iflab.ibistubydreamfactory.models.YellowPageDepart;
+import org.iflab.ibistubydreamfactory.models.YellowPageDepartment;
 
 import java.util.List;
 
@@ -17,17 +17,17 @@ import java.util.List;
  */
 public class yellowPageDetailsAdapter extends BaseAdapter {
     private Context context;
-    private List<YellowPageDepart> yellowPageDepartBranchList;
+    private List<YellowPageDepartment> yellowPageDepartmentBranchList;
     private ViewHolder viewHolder;
 
-    public yellowPageDetailsAdapter(Context context, List<YellowPageDepart> yellowPageDepartBranchList) {
+    public yellowPageDetailsAdapter(Context context, List<YellowPageDepartment> yellowPageDepartmentBranchList) {
         this.context = context;
-        this.yellowPageDepartBranchList = yellowPageDepartBranchList;
+        this.yellowPageDepartmentBranchList = yellowPageDepartmentBranchList;
     }
 
     @Override
     public int getCount() {
-        return yellowPageDepartBranchList.size();
+        return yellowPageDepartmentBranchList.size();
     }
 
     @Override
@@ -59,8 +59,9 @@ public class yellowPageDetailsAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.telephoneNumberTextView.setText(yellowPageDepartBranchList.get(position).getTelnum().toString());
-        viewHolder.branchNameTextView.setText(yellowPageDepartBranchList.get(position).getName());
+        viewHolder.telephoneNumberTextView.setText(yellowPageDepartmentBranchList.get(position)
+                                                                                 .getTelephone());
+        viewHolder.branchNameTextView.setText(yellowPageDepartmentBranchList.get(position).getName());
         return convertView;
     }
 
