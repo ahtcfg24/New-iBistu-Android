@@ -96,9 +96,9 @@ public class YellowPageActivity extends AppCompatActivity {
      * 获得学校部门信息
      */
     private void getYellowPageDepartResource() {
-        YellowPageAPI departmentService = APISource.getInstance()
+        YellowPageAPI yellowPageAPI = APISource.getInstance()
                                                    .getAPIObject(YellowPageAPI.class);
-        Call<Resource<YellowPageDepartment>> call = departmentService.getYellowPageDepart();
+        Call<Resource<YellowPageDepartment>> call = yellowPageAPI.getYellowPageDepart();
         call.enqueue(new Callback<Resource<YellowPageDepartment>>() {
             @Override
             public void onResponse(Call<Resource<YellowPageDepartment>> call, Response<Resource<YellowPageDepartment>> response) {

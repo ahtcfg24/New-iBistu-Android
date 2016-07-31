@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:paddingBottom="4dp">
+
+    <ImageView
+        android:id="@+id/busLogoImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:paddingBottom="4dp"
+        android:paddingTop="5dp"
+        android:src="@drawable/bus" />
+
+    <TextView
+        android:id="@+id/busNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/busLogoImageView"
+        android:paddingTop="5dp"
+        android:text="TextView"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/busIntroTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/busLogoImageView"
+        android:layout_alignLeft="@+id/busNameTextView"
+        android:paddingBottom="4dp"
+        android:text="TextView"
+        android:textColor="#CCCCCC" />
+
+    <TextView
+        android:id="@+id/goTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingTop="7dp"
+        android:text="TextView"
+        android:textColor="#FF0033" />
+
+    <ImageView
+        android:id="@+id/goTimeImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/goTimeTextView"
+        android:paddingTop="9dp"
+        android:src="@drawable/depart" />
+
+    <ImageView
+        android:id="@+id/returnTimeImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/busIntroTextView"
+        android:layout_toLeftOf="@+id/backTimeTextView"
+        android:paddingBottom="6dp"
+        android:src="@drawable/turn" />
+
+    <TextView
+        android:id="@+id/backTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/returnTimeImageView"
+        android:layout_toRightOf="@+id/goTimeImageView"
+        android:paddingBottom="4dp"
+        android:text="TextView"
+        android:textColor="#FF6600" />
+
+</RelativeLayout>

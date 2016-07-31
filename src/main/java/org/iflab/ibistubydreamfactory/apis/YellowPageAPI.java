@@ -12,7 +12,7 @@ import retrofit2.http.Query;
  */
 public interface YellowPageAPI {
     /**
-     * 获取黄页部门列表信息
+     * 获取黄页部门列表
      */
     @GET("ibistu/_table/module_department_list")
     Call<Resource<YellowPageDepartment>> getYellowPageDepart();

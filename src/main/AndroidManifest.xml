@@ -6,13 +6,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
-        android:name="org.iflab.ibistubydreamfactory.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/CustomActionBarTheme">
-
         <meta-data
             android:name="sessionToken"
             android:value="session_token"/>
@@ -23,43 +22,44 @@
             android:name="apiKey"
             android:value="3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2"/>
 
-        <activity android:name="org.iflab.ibistubydreamfactory.LoginActivity">
-
+        <activity android:name=".LoginActivity">
         </activity>
-
         <activity
-            android:name="org.iflab.ibistubydreamfactory.YellowPageActivity"
+            android:name=".YellowPageActivity"
             android:label="黄页">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.iflab.ibistubydreamfactory.HomeActivity"/>
         </activity>
-        <activity android:name="org.iflab.ibistubydreamfactory.YellowPageDetailsActivity">
+        <activity android:name=".YellowPageDetailsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.iflab.ibistubydreamfactory.YellowPageActivity"/>
         </activity>
         <activity
-            android:name="org.iflab.ibistubydreamfactory.HomeActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            >
+            android:name=".HomeActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name="org.iflab.ibistubydreamfactory.AboutActivity"
-            android:label="关于"
-            >
+            android:name=".AboutActivity"
+            android:label="关于">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.iflab.ibistubydreamfactory.HomeActivity"/>
         </activity>
-        <activity android:name="org.iflab.ibistubydreamfactory.AboutDetailsActivity">
+        <activity android:name=".AboutDetailsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.iflab.ibistubydreamfactory.AboutActivity"/>
+        </activity>
+        <activity android:name=".BusActivity">
+        </activity>
+        <activity android:name=".BusLineActivity">
         </activity>
     </application>
 
