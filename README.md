@@ -200,11 +200,11 @@ tags: iBistu
 ## 黄页
 
  1. 获取黄页部门列表数据
- - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_department_list`
- - 请求方法：get
- - 参数：无
- - 返回值：
-  ```json
+   - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_department_list`
+   - 请求方法：get
+   - 参数：无
+   - 返回值：
+```json
   {
   "resource": [
     {
@@ -538,8 +538,7 @@ tags: iBistu
     }
   ]
 }
-  ```
-  
+```
  2. 获取黄页某一部门下的电话号码数据
    - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_yellowpage`
    - 请求方法：get
