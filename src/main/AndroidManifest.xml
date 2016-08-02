@@ -66,6 +66,9 @@
                 android:value="org.iflab.ibistubydreamfactory.HomeActivity"/>
         </activity>
         <activity android:name=".BusLineActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.iflab.ibistubydreamfactory.BusActivity"/>
         </activity>
     </application>
 

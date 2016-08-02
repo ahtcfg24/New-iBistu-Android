@@ -34,6 +34,8 @@ public class BusActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private List<Bus> busSourceList;
     private List<BusType> busData;
+    private BusType scheduledBus;
+    private BusType teachBus;
     private Resource<Bus> busResource;
     private ACache aCache;
     private Intent intent;
@@ -45,8 +47,8 @@ public class BusActivity extends AppCompatActivity {
 
         init();//初始化
         if (busResource == null) {
-//            /*如果缓存没有就从网络获取*/
-        getBusResource();
+          /*如果缓存没有就从网络获取*/
+            getBusResource();
         } else {
             loadData();
         }
@@ -54,8 +56,13 @@ public class BusActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent();
+                if (position > scheduledBus.getItemCount()) {
+                    position = position - 1;
+                }
+                position = position - 1;
                 intent.putExtra("line", busSourceList.get(position).getBusLine());
                 intent.putExtra("name", busSourceList.get(position).getBusName());
+                intent.putExtra("type", busSourceList.get(position).getBusType());
                 intent.setClass(BusActivity.this, BusLineActivity.class);
                 startActivity(intent);
             }
@@ -105,8 +112,8 @@ public class BusActivity extends AppCompatActivity {
      */
     private void loadData() {
         busSourceList = busResource.getResource();
-        BusType scheduledBus = new BusType("通勤班车");
-        BusType teachBus = new BusType("教学班车");
+        scheduledBus = new BusType("通勤班车");
+        teachBus = new BusType("教学班车");
         for (Bus bus : busSourceList) {
             String busType = bus.getBusType();
             if (busType.equals("通勤班车")) {

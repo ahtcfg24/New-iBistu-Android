@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView_header_arrivalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="27dp"
+        android:text="TextView" />
+
+    <ImageView
+        android:id="@+id/imageView_busLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_bus_line_header" />
+
+    <TextView
+        android:id="@+id/textView_header_station"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView_header_arrivalTime"
+        android:layout_alignBottom="@+id/textView_header_arrivalTime"
+        android:layout_toRightOf="@+id/imageView_busLine"
+        android:text="TextView" />
+
+</RelativeLayout>
