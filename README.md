@@ -31,11 +31,11 @@ tags: iBistu
 ## 关于
 
  1. 获取iBistu相关的介绍数据
- - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_about`
- - 请求方法：get
- - 参数：无
- - 返回值：json
-  ``` JSON
+   - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_about`
+   - 请求方法：get
+   - 参数：无
+   - 返回值：
+  ```json
     {
   "resource": [
     {
@@ -67,14 +67,14 @@ tags: iBistu
 }
   ```
 
-##  班车
-
+## 班车
+ 
  1. 获取班车数据
- - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_bus`
- - 请求方法：get
- - 参数：无
- - 返回值：json
- ```JSON
+   - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_bus`
+   - 请求方法：get
+   - 参数：无
+   - 返回值：
+ ```json
  {
   "resource": [
     {
@@ -203,8 +203,8 @@ tags: iBistu
  - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_department_list`
  - 请求方法：get
  - 参数：无
- - 返回值：json
-  ```JSON
+ - 返回值：
+  ```json
   {
   "resource": [
     {
@@ -541,14 +541,14 @@ tags: iBistu
   ```
   
  2. 获取黄页某一部门下的电话号码数据
- - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_yellowpage`
- - 请求方法：get
- - 参数：
- 	* `offset`：固定参数，值为`1`
-    * `filter`：固定前缀`department=`，值为黄页接口1返回的数据中的`department`字段值
- - 示例：获取研究生工作办公室的电话号码：（此处参数值为：`department=10`）：`http://45.32.11.169/api/v2/ibistu/_table/module_yellowpage?offset=1&filter=department=10`
- - 返回值：json
- ```JSON
+   - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_yellowpage`
+   - 请求方法：get
+   - 参数：
+      * `offset`：固定参数，值为`1`
+      * `filter`：固定前缀`department=`，值为黄页接口1返回的数据中的`department`字段值
+   - 示例：获取研究生工作办公室的电话号码：（此处参数值为：`department=10`）：`http://45.32.11.169/api/v2/ibistu/_table/module_yellowpage?offset=1&filter=department=10`
+   - 返回值：
+ ```json
 {
   "resource": [
     {
@@ -604,14 +604,14 @@ tags: iBistu
 }
  ```
  
- ## 地图
+## 地图
 
  1. 获取校区位置数据
- - 接口：http://45.32.11.169/api/v2/ibistu/_table/module_map
- - 请求方法：get
- - 参数：无
- - 返回值：json
-  ```JSON
+   - 接口：http://45.32.11.169/api/v2/ibistu/_table/module_map
+   - 请求方法：get
+   - 参数：无
+   - 返回值：
+  ```json
   {
   "resource": [
     {
@@ -663,7 +663,7 @@ tags: iBistu
 }
   ```
   
-  ## 模块列表
+## 模块列表
   
   用于控制已有模块是否显示，需结合用户模块，暂无
   
