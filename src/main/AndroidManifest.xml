@@ -57,7 +57,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.iflab.ibistubydreamfactory.AboutActivity"/>
         </activity>
-        <activity android:name=".BusActivity">
+        <activity
+            android:name=".BusActivity"
+            android:label="校车"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.iflab.ibistubydreamfactory.HomeActivity"/>
         </activity>
         <activity android:name=".BusLineActivity">
         </activity>
