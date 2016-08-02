@@ -11,8 +11,8 @@ tags: iBistu
 ---
 ## 前言
  1. 本接口使用DreamFactory生成，返回的json结构固定为：
- ```json
-{
+ ```
+ {
 "resource": [
   {对象1}，
   {对象2}，
