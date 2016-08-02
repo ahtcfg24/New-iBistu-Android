@@ -21,10 +21,9 @@ tags: iBistu
   ]
 }
 ```
-
-
 2. 访问本接口需要添加请求头，请求头内容包括：apikey，token，目前由于用户模块未完善，可仅提供apikey进行开发。目前可用的apikey请求头及其格式为：
 `"X-DreamFactory-Api-Key", "3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2"`
+
 
 ## 用户
 等待接入cas以及短信验证平台，暂无。
@@ -200,13 +199,15 @@ tags: iBistu
   ]
 }
  ```
+ 
+ 
 ## 黄页
  1. 获取黄页部门列表数据
    - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_department_list`
    - 请求方法：get
    - 参数：无
    - 返回值：
-```json
+ ``json
   {
   "resource": [
     {
@@ -540,7 +541,7 @@ tags: iBistu
     }
   ]
 }
-```
+ ``
  2. 获取黄页某一部门下的电话号码数据
    - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_yellowpage`
    - 请求方法：get
@@ -663,6 +664,7 @@ tags: iBistu
   ]
 }
   ```
+  
   
 ## 模块列表
   用于控制已有模块是否显示，需结合用户模块，暂无
