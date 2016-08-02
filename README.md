@@ -13,13 +13,14 @@ tags: iBistu
  1. 本接口使用DreamFactory生成，返回的json结构固定为：
  ```
  {
-"resource": [
-  {对象1}，
-  {对象2}，
-  ...
-  {对象n}
-  ]
-}
+ 	"resource": [
+    	{对象1},
+        {对象2},
+        ...,
+        {对象n
+        }
+ 	]
+ }
  ```
  2. 访问本接口需要添加请求头，请求头内容包括：apikey，token，目前由于用户模块未完善，可仅提供apikey进行开发。目前可用的apikey请求头及其格式为：
 `"X-DreamFactory-Api-Key", "3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2"`
