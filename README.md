@@ -21,10 +21,10 @@
  > "X-DreamFactory-Api-Key", "3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2"
 
   - 也可以不使用请求头，直接以URL参数的形式进行接口访问。例如：
- > http://45.32.11.169/api/v2/ibistu/_table/module_map?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2
+ > http://api.ifalb.org/api/v2/ibistu/_table/module_map?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2
 
  * 本文档提供的接口均可以通过添加可选参数`include_count=true`以获得包含数据对象总数的json数据。例如：
- > http://45.32.11.169/api/v2/ibistu/_table/module_map?include_count=true&api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2
+ > http://api.ifalb.org/api/v2/ibistu/_table/module_map?include_count=true&api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2
 
   - 返回值结构：
  ```
@@ -53,7 +53,7 @@
 
 ## 关于模块
  * 获取iBistu相关的介绍数据
-   - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_about`
+   - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_about`
    - 请求方法：get
    - 参数：无
    - 示例返回值：
@@ -83,7 +83,7 @@
 
 ## 班车模块
  * 获取班车数据
-   - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_bus`
+   - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_bus`
    - 请求方法：get
    - 参数：无
    - 示例返回值：
@@ -133,7 +133,7 @@
 
 ## 黄页模块
  * 获取黄页部门列表数据
-   - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_department_list`
+   - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_department_list`
    - 请求方法：get
    - 参数：无
    - 示例返回值：
@@ -172,12 +172,12 @@
 }
  ```
  * 获取黄页某一部门下的电话号码数据
-   - 接口：`http://45.32.11.169/api/v2/ibistu/_table/module_yellowpage`
+   - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_yellowpage`
    - 请求方法：get
    - 参数：
       * `offset`：固定参数，值为`1`
       * `filter`：固定前缀`department=`，值为黄页接口1返回的数据中的`department`字段值
-   - 示例：获取研究生工作办公室的电话号码：（此处参数值为：`department=10`）：`http://45.32.11.169/api/v2/ibistu/_table/module_yellowpage?offset=1&filter=department=10`
+   - 示例：获取研究生工作办公室的电话号码：（此处参数值为：`department=10`）：`http://api.ifalb.org/api/v2/ibistu/_table/module_yellowpage?offset=1&filter=department=10`
    - 示例返回值：
  ```
 {
@@ -210,7 +210,7 @@
 
 ## 地图模块
  * 获取校区位置数据
-   - 接口：http://45.32.11.169/api/v2/ibistu/_table/module_map
+   - 接口：http://api.ifalb.org/api/v2/ibistu/_table/module_map
    - 请求方法：get
    - 参数：无
    - 示例返回值：
