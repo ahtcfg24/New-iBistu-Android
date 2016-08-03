@@ -22,8 +22,8 @@
 
   - 也可以不使用请求头，直接以URL参数的形式进行接口访问。例如：
  > http://45.32.11.169/api/v2/ibistu/_table/module_map?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2
- *
-  - 本文档提供的接口均可以通过添加可选参数`include_count=true`以获得包含数据对象总数的json数据，例如：
+
+ * 本文档提供的接口均可以通过添加可选参数`include_count=true`以获得包含数据对象总数的json数据。例如：
  > http://45.32.11.169/api/v2/ibistu/_table/module_map?include_count=true&api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2
 
   - 返回值结构：
