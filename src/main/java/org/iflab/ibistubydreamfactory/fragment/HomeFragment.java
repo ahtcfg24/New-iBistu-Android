@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import org.iflab.ibistubydreamfactory.BusActivity;
+import org.iflab.ibistubydreamfactory.MapActivity;
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.YellowPageActivity;
@@ -41,7 +42,7 @@ public class HomeFragment extends Fragment {
         modules = new ArrayList<>();
 //        modules.add(new HomeItem(R.drawable.news, "新闻", NewsActivity.class));
         modules.add(new HomeItem(R.drawable.yellowpage, "黄页", YellowPageActivity.class));
-//        modules.add(new HomeItem(R.drawable.map, "地图", AMapActivity.class));
+        modules.add(new HomeItem(R.drawable.map, "地图", MapActivity.class));
         modules.add(new HomeItem(R.drawable.schoolbus, "校车", BusActivity.class));
         //        modules.add(new HomeItem(R.drawable.wifi, "WiFi", WiFiActivity.class));
         //        modules.add(new HomeItem(R.drawable.job, "工作", JobActivity.class));

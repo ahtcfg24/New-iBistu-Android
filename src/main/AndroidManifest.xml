@@ -3,7 +3,23 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
 
     <application
         android:name=".MyApplication"
@@ -17,10 +33,18 @@
             android:value="session_token"/>
         <meta-data
             android:name="instanceUrl"
-            android:value="http://45.32.11.169/api/v2/"/>
+            android:value="http://104.155.211.143/api/v2/"/>
         <meta-data
             android:name="apiKey"
             android:value="3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2"/>
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="6d7d40437914484588812f774f470959">
+
+        </meta-data>
+
+        <service android:name="com.amap.api.location.APSService"/>
 
         <activity android:name=".LoginActivity">
         </activity>
@@ -59,8 +83,7 @@
         </activity>
         <activity
             android:name=".BusActivity"
-            android:label="校车"
-            >
+            android:label="校车">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.iflab.ibistubydreamfactory.HomeActivity"/>
@@ -69,6 +92,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.iflab.ibistubydreamfactory.BusActivity"/>
+        </activity>
+        <activity
+            android:name=".MapActivity"
+            android:label="地图"
+            >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.iflab.ibistubydreamfactory.HomeActivity"/>
         </activity>
     </application>
 
