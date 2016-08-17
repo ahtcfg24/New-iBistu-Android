@@ -16,12 +16,14 @@
               ]
  }
  ```
- * 访问本文档提供的接口需要添加请求头，请求头内容包括：apikey，token，目前由于用户模块未完善，可仅提供apikey进行开发。
-  - 目前可用的apikey请求头及其格式为：
- > "X-DreamFactory-Api-Key", "3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2"
+ * 本文档提供的接口除注册、登录只需要添加请求头`X-DreamFactory-Api-Key`以外，其它接口均需要添加`X-DreamFactory-Api-Key`和`X-DreamFactory-Session-Token`。
+  - 请求头及其格式为：
+ > "X-DreamFactory-Api-Key", "dreamfactory提供的apikey"
 
-  - 也可以不使用请求头，直接以URL参数的形式进行接口访问。例如：
- > http://api.ifalb.org/api/v2/ibistu/_table/module_map?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2
+    > "X-DreamFactory-Session-Token","当前登录获取到的token"
+
+  - 也可以不使用请求头，直接以URL参数的形式添加api_key和session_token代替请求头进行接口访问。例如：
+ > http://api.ifalb.org/api/v2/ibistu/_table/module_map?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQ0MjM5MCwiZXhwIjoxNDcxNDQ1OTkwLCJuYmYiOjE0NzE0NDIzOTAsImp0aSI6IjdjNTAyNzIwOGNjMjE5MzE1NjEzYmYxMTRmNGMzMjgzIn0.6UjkOIX8rPyTEIF8SgVN0IsPZDBZy1D2THareQ3Crx0
 
  * 本文档提供的接口均可以通过添加可选参数`include_count=true`以获得包含数据对象总数的json数据。例如：
  > http://api.ifalb.org/api/v2/ibistu/_table/module_map?include_count=true&api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2
@@ -47,7 +49,110 @@
 
 
 ## 用户模块
-等待接入cas以及短信验证平台，暂无。
+
+ * 注册
+    - 接口：`http://api.ifalb.org/api/v2/user/register`
+    - 请求方法：post
+    - 请求体：
+    ```
+    {
+      "email": "111@example.com",
+      "password":"abc123",
+      "phone":"15600909030",
+      "name": "jdoe jdoe",
+      "first_name": "jdoe",
+      "last_name": "jdoe"
+    }
+    ```
+      + name、first_name、last_name是可选参数
+      + email字段必须符合邮箱格式
+    - 示例返回值：
+    ```
+    {
+    "success":true
+    }
+    ```
+ * 注册验证
+    - 注册验证使用网易云信对手机进行短信验证，详见[官方文档](http://dev.netease.im/docs?doc=server_sms)
+ * 登录
+    - 接口：`http://api.ifalb.org/api/v2/user/session`
+    - 请求方法：post
+    - 请求体：
+    ```
+    {
+      "email": "jdoe@example.com",
+      "password":"secret"
+    }
+    ```
+    - 示例返回值：
+    ```
+    {
+    "session_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQzNzg0NSwiZXhwIjoxNDcxNDQxNDQ1LCJuYmYiOjE0NzE0Mzc4NDUsImp0aSI6IjhlZTJmMGMyOWQzNjE2ZmIxMWY1NDNmYzU3YjRmNTE3In0.olFYLD0QnNwE19kHaSUE2tKcSXcuVImvGZ6AcXsvzEw",
+    "session_id": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQzNzg0NSwiZXhwIjoxNDcxNDQxNDQ1LCJuYmYiOjE0NzE0Mzc4NDUsImp0aSI6IjhlZTJmMGMyOWQzNjE2ZmIxMWY1NDNmYzU3YjRmNTE3In0.olFYLD0QnNwE19kHaSUE2tKcSXcuVImvGZ6AcXsvzEw",
+    "id": 11,
+    "name": "jdoe jdoe",
+    "first_name": "jdoe",
+    "last_name": "jdoe",
+    "email": "jdoe@example.com",
+    "is_sys_admin": false,
+    "last_login_date": "2016-08-17 12:44:05",
+    "host": "dreamfactory",
+    "role": "NoTokenRole",
+    "role_id": 1
+    }
+    ```
+ * 退出登录：
+    - 接口：`http://api.ifalb.org/api/v2/user/session`
+    - 请求方法：delete
+    - 参数：无
+    - 示例返回值：
+    ```
+    {
+        "success": true
+    }
+    ```
+ * 修改密码：
+  - 接口：`http://api.ifalb.org/api/v2/user/password`
+  - 请求方法：post
+  - 参数：无
+  - 请求体：
+  ```
+  {
+    "old_password": "ABC123",
+    "new_password": "abc123",
+    "email": "222@example.com"
+  }
+  ```
+  - 示例返回值：
+  ```
+  {
+  "success": true
+  }
+  ```
+ * 刷新token：
+    - 接口：`http://api.ifalb.org/api/v2/user/session`
+    - 请求方法：put
+    - 参数：无
+    - 示例：刷新当前token（此处参数值为登录后获取到的token）：`http://104.155.211.143/api/v2/user/session`
+    - 示例返回值：
+    ```
+    {
+    "session_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQzNzg0NSwiZXhwIjoxNDcxNDQxNjcyLCJuYmYiOjE0NzE0MzgwNzIsImp0aSI6ImJkZTQ3NzA0NmQ2M2FmMWYzZDJiOTVkMjJjZjEzZWZhIn0.AnqB40vdntLkxyD6WHtes7DZEQ8wsrCtpWq9aXC8MzE",
+    "session_id": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQzNzg0NSwiZXhwIjoxNDcxNDQxNjcyLCJuYmYiOjE0NzE0MzgwNzIsImp0aSI6ImJkZTQ3NzA0NmQ2M2FmMWYzZDJiOTVkMjJjZjEzZWZhIn0.AnqB40vdntLkxyD6WHtes7DZEQ8wsrCtpWq9aXC8MzE",
+    "id": 11,
+    "name": "jdoe jdoe",
+    "first_name": "jdoe",
+    "last_name": "jdoe",
+    "email": "jdoe@example.com",
+    "is_sys_admin": false,
+    "last_login_date": "2016-08-17 12:44:05",
+    "host": "dreamfactory",
+    "role": "NoTokenRole",
+    "role_id": 1
+    }
+
+    ```
+
 
 
 

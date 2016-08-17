@@ -1,4 +1,4 @@
-package org.iflab.ibistubydreamfactory;
+package org.iflab.ibistubydreamfactory.activities;
 
 
 import android.graphics.Color;
@@ -25,6 +25,8 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.MyTrafficStyle;
 
+import org.iflab.ibistubydreamfactory.MyApplication;
+import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.apis.APISource;
 import org.iflab.ibistubydreamfactory.apis.MapAPI;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;

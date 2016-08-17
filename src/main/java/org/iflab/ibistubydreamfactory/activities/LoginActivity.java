@@ -1,4 +1,4 @@
-package org.iflab.ibistubydreamfactory;
+package org.iflab.ibistubydreamfactory.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import junit.framework.Assert;
 
+import org.iflab.ibistubydreamfactory.MyApplication;
+import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.apis.APISource;
 import org.iflab.ibistubydreamfactory.apis.AuthAPI;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;

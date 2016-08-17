@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".activities.VRPlayerActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <android.opengl.GLSurfaceView
+            android:id="@+id/gl_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+<!--屏幕中间的+准星-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/hotspot_point1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/hotspot_point2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+<!--底部进度控制模块-->
+        <LinearLayout
+            android:id="@+id/playControlBar"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/button_normal"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            >
+
+            <ImageButton
+                android:id="@+id/imageButton_playOrPause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_play_button"
+                />
+
+            <SeekBar
+                android:id="@+id/seekBar_videoProgress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:progress="0"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_currentTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00"
+                    android:textColor="@color/white"
+                    />
+
+                <TextView
+                    android:id="@+id/text_durationTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00"
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </FrameLayout>
+<!--顶部按钮-->
+    <LinearLayout
+        android:id="@+id/spinner_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/spinner_interactive"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:minWidth="100dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"/>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/spinner_display"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:minWidth="100dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"/>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/spinner_projection"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:minWidth="100dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"/>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/spinner_distortion"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:minWidth="100dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"/>
+
+    </LinearLayout>
+
+    <!--<LinearLayout-->
+    <!--android:layout_below="@id/spinner_layout"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal">-->
+    <!--<Button-->
+    <!--android:id="@+id/button_add_plugin"-->
+    <!--android:textSize="13sp"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:text="addPlugin"-->
+    <!--android:paddingLeft="8dp"-->
+    <!--android:paddingRight="8dp"-->
+    <!--android:includeFontPadding="false"-->
+    <!--android:background="@drawable/selector_bg_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="42dp" />-->
+    <!--<Button-->
+    <!--android:id="@+id/button_remove_plugin"-->
+    <!--android:textSize="13sp"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:text="removePlugin"-->
+    <!--android:paddingLeft="8dp"-->
+    <!--android:paddingRight="8dp"-->
+    <!--android:includeFontPadding="false"-->
+    <!--android:background="@drawable/selector_bg_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="42dp" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/button_add_plugin_logo"-->
+    <!--android:textSize="13sp"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:text="addPluginLogo"-->
+    <!--android:paddingLeft="8dp"-->
+    <!--android:paddingRight="8dp"-->
+    <!--android:includeFontPadding="false"-->
+    <!--android:background="@drawable/selector_bg_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="42dp" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/button_remove_plugins"-->
+    <!--android:textSize="13sp"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:text="removePlugins"-->
+    <!--android:paddingLeft="8dp"-->
+    <!--android:paddingRight="8dp"-->
+    <!--android:includeFontPadding="false"-->
+    <!--android:background="@drawable/selector_bg_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="42dp" />-->
+    <!--</LinearLayout>-->
+
+    <!--<TextView-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:id="@+id/hotspot_text"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:background="@drawable/selector_bg_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

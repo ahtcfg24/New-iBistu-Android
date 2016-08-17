@@ -1,4 +1,4 @@
-package org.iflab.ibistubydreamfactory;
+package org.iflab.ibistubydreamfactory.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.adapters.BusLineAdapter;
 import org.iflab.ibistubydreamfactory.models.BusStation;
 import org.json.JSONArray;

@@ -1,4 +1,4 @@
-package org.iflab.ibistubydreamfactory;
+package org.iflab.ibistubydreamfactory.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import com.yalantis.contextmenu.lib.MenuParams;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 
+import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.fragment.HomeFragment;
 import org.iflab.ibistubydreamfactory.models.User;
 

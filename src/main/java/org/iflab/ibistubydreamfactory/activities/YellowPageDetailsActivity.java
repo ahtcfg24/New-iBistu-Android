@@ -1,4 +1,4 @@
-package org.iflab.ibistubydreamfactory;
+package org.iflab.ibistubydreamfactory.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import org.iflab.ibistubydreamfactory.MyApplication;
+import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.adapters.yellowPageDetailsAdapter;
 import org.iflab.ibistubydreamfactory.apis.APISource;
 import org.iflab.ibistubydreamfactory.apis.YellowPageAPI;
