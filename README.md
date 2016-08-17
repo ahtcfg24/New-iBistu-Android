@@ -1,4 +1,4 @@
-# 2016-8-3 iBistu接口文档
+# 2016-8-18 iBistu接口文档
 
 
 # 前言
@@ -112,23 +112,39 @@
     }
     ```
  * 修改密码：
-  - 接口：`http://api.ifalb.org/api/v2/user/password`
-  - 请求方法：post
-  - 参数：无
-  - 请求体：
-  ```
-  {
-    "old_password": "ABC123",
-    "new_password": "abc123",
-    "email": "222@example.com"
-  }
-  ```
-  - 示例返回值：
-  ```
-  {
-  "success": true
-  }
-  ```
+    - 接口：`http://api.ifalb.org/api/v2/user/password`
+    - 请求方法：post
+    - 请求体：
+    ```
+    {
+      "old_password": "ABC123",
+      "new_password": "abc123",
+      "email": "222@example.com"
+    }
+    ```
+    - 示例返回值：
+    ```
+    {
+      "success": true
+    }
+    ```
+ * 请求重置密码：
+    - 接口：`http://api.ifalb.org/api/v2/user/password?reset=true`
+    - 请求方法：post
+    - 请求体：
+    ```
+    {
+      "email": "username@example.com"
+    }
+    ```
+      + 此处email值必须是当前登录用户的email
+      + 该请求发出后就会往该用户的邮箱里发送重置密码邮件
+    - 示例返回值：
+    ```
+    {
+      "success": true
+    }
+    ```
  * 刷新token：
     - 接口：`http://api.ifalb.org/api/v2/user/session`
     - 请求方法：put
@@ -355,11 +371,11 @@
 
 
 ## 模块列表
-  用于控制已有模块是否显示，需结合用户模块，暂无
+  用于控制已有模块是否显示，暂无
 
 
 ## 异常接口
- * 异常接口指由于接口参数错误导致返回的数据异常
+ * 异常接口指由于接口访问失败时返回的json数据
    - 异常返回值结构：
   ```
   {
@@ -370,7 +386,7 @@
     }
   }
   ```
-   - 关于异常数据的处理可参考DreamFacotory官方Demo中的处理流程：
+   - 关于json的处理可参考DreamFacotory官方Demo中的处理流程：
       + [iOS-Objective-C](https://github.com/dreamfactorysoftware/ios-sdk)
       + [iOS-Swift](https://github.com/dreamfactorysoftware/ios-swift-sdk)
       + [ReactJS](https://github.com/dreamfactorysoftware/reactjs-sdk)
