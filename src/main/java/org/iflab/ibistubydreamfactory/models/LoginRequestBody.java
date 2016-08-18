@@ -3,7 +3,7 @@ package org.iflab.ibistubydreamfactory.models;
 import java.io.Serializable;
 
 /**
- * 登录请求模型
+ * 登录请求体模型
  */
 public class LoginRequest implements Serializable {
 

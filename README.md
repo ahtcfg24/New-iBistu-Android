@@ -1,10 +1,11 @@
-# 2016-8-18 iBistu接口文档
+# 2016-8-19 iBistu接口文档
 
 
 # 前言
 ---
 
  * 本文档提供的接口使用DreamFactory生成，默认返回json数据。
+
   - 返回的json结构：
  ```
  {
@@ -16,17 +17,18 @@
               ]
  }
  ```
- * 本文档提供的接口除注册、登录只需要添加请求头`X-DreamFactory-Api-Key`以外，其它接口均需要添加`X-DreamFactory-Api-Key`和`X-DreamFactory-Session-Token`。
+ * 本文档提供的接口除注册、登录、请求重置密码只需要添加请求头`X-DreamFactory-Api-Key`以外，其它接口均需要添加`X-DreamFactory-Api-Key`和`X-DreamFactory-Session-Token`。
+
   - 请求头及其格式为：
  > "X-DreamFactory-Api-Key", "dreamfactory提供的apikey"
 
     > "X-DreamFactory-Session-Token","当前登录获取到的token"
 
   - 也可以不使用请求头，直接以URL参数的形式添加api_key和session_token代替请求头进行接口访问。例如：
- > http://api.ifalb.org/api/v2/ibistu/_table/module_map?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQ0MjM5MCwiZXhwIjoxNDcxNDQ1OTkwLCJuYmYiOjE0NzE0NDIzOTAsImp0aSI6IjdjNTAyNzIwOGNjMjE5MzE1NjEzYmYxMTRmNGMzMjgzIn0.6UjkOIX8rPyTEIF8SgVN0IsPZDBZy1D2THareQ3Crx0
+ > http://api.ifalb.org/api/v2/ibistu/_table/module_map?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M
 
  * 本文档提供的接口均可以通过添加可选参数`include_count=true`以获得包含数据对象总数的json数据。例如：
- > http://api.ifalb.org/api/v2/ibistu/_table/module_map?include_count=true&api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2
+ > http://api.ifalb.org/api/v2/ibistu/_table/module_map?include_count=true&api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M
 
   - 返回值结构：
  ```
@@ -51,17 +53,19 @@
 ## 用户模块
 
  * 注册
+
     - 接口：`http://api.ifalb.org/api/v2/user/register`
     - 请求方法：post
     - 请求体：
+
     ```
     {
-      "email": "111@example.com",
-      "password":"abc123",
-      "phone":"15600909030",
-      "name": "jdoe jdoe",
-      "first_name": "jdoe",
-      "last_name": "jdoe"
+      "email": "testuser@test.com",
+      "password":"testuser",
+      "phone":"13800001000",
+      "name": "test user",
+      "first_name": "test",
+      "last_name": "user"
     }
     ```
       + name、first_name、last_name是可选参数
@@ -73,35 +77,41 @@
     }
     ```
  * 注册验证
+
     - 注册验证使用网易云信对手机进行短信验证，详见[官方文档](http://dev.netease.im/docs?doc=server_sms)
  * 登录
+
     - 接口：`http://api.ifalb.org/api/v2/user/session`
     - 请求方法：post
     - 请求体：
     ```
     {
-      "email": "jdoe@example.com",
-      "password":"secret"
+    "email": "testuser@test.com",
+    "password":"testuser",
+    "remember_me":true
     }
     ```
+
+      + 此处remember_me字段为true时，返回的session_token将不会过期，除非请求刷新token或者注销登录；若为false，则返回的token只有一个小时的有效期，一小时后将要求重新登录。
     - 示例返回值：
     ```
     {
-    "session_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQzNzg0NSwiZXhwIjoxNDcxNDQxNDQ1LCJuYmYiOjE0NzE0Mzc4NDUsImp0aSI6IjhlZTJmMGMyOWQzNjE2ZmIxMWY1NDNmYzU3YjRmNTE3In0.olFYLD0QnNwE19kHaSUE2tKcSXcuVImvGZ6AcXsvzEw",
-    "session_id": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQzNzg0NSwiZXhwIjoxNDcxNDQxNDQ1LCJuYmYiOjE0NzE0Mzc4NDUsImp0aSI6IjhlZTJmMGMyOWQzNjE2ZmIxMWY1NDNmYzU3YjRmNTE3In0.olFYLD0QnNwE19kHaSUE2tKcSXcuVImvGZ6AcXsvzEw",
-    "id": 11,
-    "name": "jdoe jdoe",
-    "first_name": "jdoe",
-    "last_name": "jdoe",
-    "email": "jdoe@example.com",
-    "is_sys_admin": false,
-    "last_login_date": "2016-08-17 12:44:05",
-    "host": "dreamfactory",
-    "role": "NoTokenRole",
-    "role_id": 1
+        "session_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M",
+        "session_id": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M",
+        "id": 29,
+        "name": "test user",
+        "first_name": "test",
+        "last_name": "user",
+        "email": "testuser@test.com",
+        "is_sys_admin": false,
+        "last_login_date": "2016-08-18 17:11:20",
+        "host": "dreamfactory",
+        "role": "RegisterRole",
+        "role_id": 5
     }
     ```
  * 退出登录：
+
     - 接口：`http://api.ifalb.org/api/v2/user/session`
     - 请求方法：delete
     - 参数：无
@@ -112,14 +122,15 @@
     }
     ```
  * 修改密码：
+
     - 接口：`http://api.ifalb.org/api/v2/user/password`
     - 请求方法：post
     - 请求体：
     ```
     {
-      "old_password": "ABC123",
-      "new_password": "abc123",
-      "email": "222@example.com"
+      "old_password": "testuser",
+      "new_password": "newtestuser",
+      "email": "testuser@test.com"
     }
     ```
     - 示例返回值：
@@ -129,12 +140,14 @@
     }
     ```
  * 请求重置密码：
+
     - 接口：`http://api.ifalb.org/api/v2/user/password?reset=true`
     - 请求方法：post
     - 请求体：
+
     ```
     {
-      "email": "username@example.com"
+      "email": "testuser@test.com"
     }
     ```
       + 此处email值必须是当前登录用户的email
@@ -146,6 +159,7 @@
     }
     ```
  * 刷新token：
+
     - 接口：`http://api.ifalb.org/api/v2/user/session`
     - 请求方法：put
     - 参数：无
@@ -155,16 +169,16 @@
     {
     "session_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQzNzg0NSwiZXhwIjoxNDcxNDQxNjcyLCJuYmYiOjE0NzE0MzgwNzIsImp0aSI6ImJkZTQ3NzA0NmQ2M2FmMWYzZDJiOTVkMjJjZjEzZWZhIn0.AnqB40vdntLkxyD6WHtes7DZEQ8wsrCtpWq9aXC8MzE",
     "session_id": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQzNzg0NSwiZXhwIjoxNDcxNDQxNjcyLCJuYmYiOjE0NzE0MzgwNzIsImp0aSI6ImJkZTQ3NzA0NmQ2M2FmMWYzZDJiOTVkMjJjZjEzZWZhIn0.AnqB40vdntLkxyD6WHtes7DZEQ8wsrCtpWq9aXC8MzE",
-    "id": 11,
-    "name": "jdoe jdoe",
-    "first_name": "jdoe",
-    "last_name": "jdoe",
-    "email": "jdoe@example.com",
+    "id": 29,
+    "name": "test user",
+    "first_name": "test",
+    "last_name": "user",
+    "email": "testuser@test.com",
     "is_sys_admin": false,
     "last_login_date": "2016-08-17 12:44:05",
     "host": "dreamfactory",
-    "role": "NoTokenRole",
-    "role_id": 1
+    "role": "RegisterRole",
+    "role_id": 5
     }
 
     ```
@@ -173,7 +187,9 @@
 
 
 ## 关于模块
+
  * 获取iBistu相关的介绍数据
+
    - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_about`
    - 请求方法：get
    - 参数：无
@@ -203,7 +219,9 @@
 
 
 ## 班车模块
+
  * 获取班车数据
+
    - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_bus`
    - 请求方法：get
    - 参数：无
@@ -253,7 +271,9 @@
 
 
 ## 黄页模块
+
  * 获取黄页部门列表数据
+
    - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_department_list`
    - 请求方法：get
    - 参数：无
@@ -293,9 +313,11 @@
 }
  ```
  * 获取黄页某一部门下的电话号码数据
+
    - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_yellowpage`
    - 请求方法：get
    - 参数：
+
       * `offset`：固定参数，值为`1`
       * `filter`：固定前缀`department=`，值为黄页接口1返回的数据中的`department`字段值
    - 示例：获取研究生工作办公室的电话号码：（此处参数值为：`department=10`）：`http://api.ifalb.org/api/v2/ibistu/_table/module_yellowpage?offset=1&filter=department=10`
@@ -330,8 +352,10 @@
 
 
 ## 地图模块
+
  * 获取校区位置数据
-   - 接口：http://api.ifalb.org/api/v2/ibistu/_table/module_map
+
+   - 接口: `http://api.ifalb.org/api/v2/ibistu/_table/module_map`
    - 请求方法：get
    - 参数：无
    - 示例返回值：
@@ -371,12 +395,15 @@
 
 
 ## 模块列表
+
   用于控制已有模块是否显示，暂无
 
 
-## 异常接口
- * 异常接口指由于接口访问失败时返回的json数据
-   - 异常返回值结构：
+## 错误接口
+
+ * 错误接口指接口访问失败时返回的json数据
+
+   - 返回值结构：
   ```
   {
     "error": {
