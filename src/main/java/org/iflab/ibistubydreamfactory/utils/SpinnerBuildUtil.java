@@ -9,9 +9,8 @@ import android.widget.Spinner;
 
 import org.iflab.ibistubydreamfactory.R;
 
-
 /**
- * 用于快速构建Spinner
+ * 用于快速构建spinner
  */
 public class SpinnerBuildUtil {
 

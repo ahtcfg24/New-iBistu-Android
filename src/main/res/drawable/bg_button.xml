@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--弧形边角 -->
-    <corners android:radius="4dp"/>
-    <!-- 背景色-->
-    <solid android:color="@color/colorButtonBlue"/>
-
-</shape>

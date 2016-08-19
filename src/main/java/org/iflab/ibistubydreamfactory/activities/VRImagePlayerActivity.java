@@ -62,21 +62,21 @@ public class VRImagePlayerActivity extends VRPlayerActivity {
     @Override
     protected MDVRLibrary createVRLibrary() {
         return MDVRLibrary.with(this)
-                          .displayMode(MDVRLibrary.DISPLAY_MODE_NORMAL)
-                          .interactiveMode(MDVRLibrary.INTERACTIVE_MODE_MOTION_WITH_TOUCH)
-                          .asBitmap(new MDVRLibrary.IBitmapProvider() {
+                .displayMode(MDVRLibrary.DISPLAY_MODE_NORMAL)
+                .interactiveMode(MDVRLibrary.INTERACTIVE_MODE_MOTION_WITH_TOUCH)
+                .asBitmap(new MDVRLibrary.IBitmapProvider() {
                     @Override
                     public void onProvideBitmap(final MD360BitmapTexture.Callback callback) {
                         loadImage(getUri(),callback);
                     }
                 })
-                          .listenGesture(new MDVRLibrary.IGestureListener() {
+                .listenGesture(new MDVRLibrary.IGestureListener() {
                     @Override
                     public void onClick(MotionEvent e, MDRay ray, IMDHotspot hitHotspot) {
                         Log.d(TAG,"Ray:" + ray + ", hitHotspot:" + hitHotspot);
                     }
                 })
-                          .pinchEnabled(true)
-                          .build(R.id.gl_view);
+                .pinchEnabled(true)
+                .build(R.id.gl_view);
     }
 }

@@ -20,5 +20,5 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/option_fold_right"/>
+        android:src="@drawable/ic_option_fold_right"/>
 </RelativeLayout>

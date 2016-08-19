@@ -3,7 +3,20 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="transparent">#00ffffff</color>
-    <color name="toolbar_color">#0099CC</color>
+    <color name="button_normal">#44000000</color>
+    <color name="button_pressed">#AA000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="colorToolBar">#0099CC</color>
+    <color name="colorEightABlack">#8a000000</color>
+    <color name="colorMaterialBlue">#3949ab</color>
+    <color name="colorSixSixBlack">#66000000</color>
+    <color name="colorPureWhite">#ffffffff</color>
+    <color name="colorButtonBlue">#5c6bc0</color>
+    <color name="colorPureBlack">#ff000000</color>
+    <color name="colorTwoCBlack">#2c000000</color>
+    <color name="colorOneABlack">#1a000000</color>
+    <color name="colorTwoOneBlue">#2196f3</color>
+    <color name="colorBackgroundGray">#eeeeee</color>
 
 </resources>

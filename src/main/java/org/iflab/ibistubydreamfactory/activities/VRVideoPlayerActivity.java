@@ -13,13 +13,12 @@ import android.widget.Toast;
 import com.asha.vrlib.MDVRLibrary;
 import com.asha.vrlib.model.BarrelDistortionConfig;
 
-import org.iflab.ibistubydreamfactory.R;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.iamding.md360player4android.MediaPlayerWrapper;
-import cn.iamding.md360player4android.utils.StringUtil;
+import org.iflab.ibistubydreamfactory.utils.MediaPlayerWrapper;
+import org.iflab.ibistubydreamfactory.R;
+import org.iflab.ibistubydreamfactory.utils.StringUtil;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 /**
@@ -50,7 +49,7 @@ public class VRVideoPlayerActivity extends VRPlayerActivity {
             @Override
             public void onPrepared(IMediaPlayer mp) {
                 cancelBusy();//隐藏progressBar
-                playOrPauseButton.setImageResource(R.drawable.ic_pause_button);
+                playOrPauseButton.setImageResource(R.drawable.bt_player_pause);
                 durationTime = (int) (mMediaPlayerWrapper.getPlayer().getDuration() / 1000);
                 videoProgressSeekBar.setMax(durationTime);
                 durationTimeTextView.setText(StringUtil.transToTime(durationTime));
@@ -90,7 +89,7 @@ public class VRVideoPlayerActivity extends VRPlayerActivity {
             @Override
             public void onCompletion(IMediaPlayer mp) {
                 mMediaPlayerWrapper.getPlayer().seekTo(0);
-                playOrPauseButton.setImageResource(R.drawable.ic_play_button);
+                playOrPauseButton.setImageResource(R.drawable.bt_player_play);
             }
         });
 
@@ -144,10 +143,10 @@ public class VRVideoPlayerActivity extends VRPlayerActivity {
             public void onClick(View v) {
                 if (mMediaPlayerWrapper.getPlayer().isPlaying()) {
                     mMediaPlayerWrapper.getPlayer().pause();
-                    playOrPauseButton.setImageResource(R.drawable.ic_play_button);
+                    playOrPauseButton.setImageResource(R.drawable.bt_player_play);
                 } else {
                     mMediaPlayerWrapper.getPlayer().start();
-                    playOrPauseButton.setImageResource(R.drawable.ic_pause_button);
+                    playOrPauseButton.setImageResource(R.drawable.bt_player_pause);
                 }
 
             }

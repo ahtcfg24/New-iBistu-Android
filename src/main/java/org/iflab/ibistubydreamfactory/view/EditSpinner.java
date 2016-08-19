@@ -23,7 +23,7 @@ import android.widget.ListAdapter;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
 
-import cn.iamding.md360player4android.R;
+import org.iflab.ibistubydreamfactory.R;
 
 /**
  * EditSpinner
@@ -530,7 +530,7 @@ public class EditSpinner extends EditText {
     void doAfterTextChanged() {
 
         // if the list was open before the keystroke, but closed afterwards,
-        // then something in the keystroke processing (an input filter perhaps)
+        // then something in the keystroke processing (an bg_input filter perhaps)
         // called performCompletion() and we shouldn't do any more processing.
             Log.v(TAG, "after text changed: openBefore=" + mOpenBefore
                     + " open=" + isPopupShowing());
@@ -617,7 +617,7 @@ public class EditSpinner extends EditText {
 
     @Override
     public void setCompoundDrawables(@Nullable Drawable left, @Nullable Drawable top,
-                                     @Nullable Drawable right, @Nullable Drawable bottom) {
+            @Nullable Drawable right, @Nullable Drawable bottom) {
         super.setCompoundDrawables(left, top, mDropDownDrawable != null ? mDropDownDrawable : right, bottom);
     }
 

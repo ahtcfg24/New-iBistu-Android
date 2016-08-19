@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.iflab.ibistubydreamfactory.BusLineActivity">
+    tools:context=".activities.BusLineActivity">
 
     <TextView
         android:id="@+id/textView_busName"
@@ -15,7 +15,7 @@
         android:layout_marginRight="2dp"
         android:gravity="center"
         android:textSize="30sp"
-        android:background="@drawable/rect"
+        android:background="@drawable/bg_text_bus_name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="TextView" />

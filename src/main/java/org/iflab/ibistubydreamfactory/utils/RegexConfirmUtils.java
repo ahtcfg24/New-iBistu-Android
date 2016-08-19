@@ -11,7 +11,6 @@ public class RegexConfirmUtils {
      * Email正则表达式
      */
     public static final String EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-    ;
     /**
      * 手机号码正则表达式
      */

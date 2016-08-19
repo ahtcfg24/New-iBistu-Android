@@ -5,29 +5,21 @@ import java.io.Serializable;
 /**
  * 登录请求体模型
  */
-public class LoginRequest implements Serializable {
+public class LoginRequestBody implements Serializable {
 
     private String email;
 
     private String password;
 
-    private boolean remember_me;
 
-    public LoginRequest(){}
+    public LoginRequestBody(){}
 
-    public LoginRequest(String email, String password, boolean remember_me) {
+    public LoginRequestBody(String email, String password) {
         this.email = email;
         this.password = password;
-        this.remember_me = remember_me;
     }
 
-    public boolean isRemember_me() {
-        return remember_me;
-    }
 
-    public void setRemember_me(boolean remember_me) {
-        this.remember_me = remember_me;
-    }
 
     public String getEmail() {
         return email;

@@ -8,6 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
+import org.iflab.ibistubydreamfactory.models.User;
+import org.iflab.ibistubydreamfactory.utils.ACache;
+import org.iflab.ibistubydreamfactory.utils.SharedPreferenceUtil;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -16,6 +19,8 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -34,36 +39,54 @@ public class APISource {
 
     private static Converter<ResponseBody, ErrorMessage> errorConverter;
 
-    public static String testToken;
+    public static String token;//当前登录的token
+    private String toRefreshToken;//用于刷新token的旧token
+    private ACache aCache = ACache.get(MyApplication.getAppContext());
 
-    public static Boolean isHaveLogin = false;
 
     private APISource() {
         //构建httpclient
         httpClient = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request.Builder ongoing = chain.request().newBuilder();
+                Request.Builder request = chain.request().newBuilder();
+                //将ApiKey添加到请求头信息里
+                request.addHeader("X-DreamFactory-Api-Key", MyApplication.API_KEY);
+                toRefreshToken = SharedPreferenceUtil.getString(MyApplication.getAppContext(), "TO_REFRESH_SESSION_TOKEN");
+                token = aCache.getAsString("SESSION_TOKEN");
+                if (toRefreshToken != null && !toRefreshToken.isEmpty()) {//如果旧token存在，说明已经登录了
+                    if (token != null && !token.isEmpty()) {//token不为空时说明token没有过期
+                        //将token添加到请求头信息里
+                        request.addHeader("X-DreamFactory-Session-Token", token);
+                    } else {//否则说明token已经过期，需要刷新token
+                        AuthAPI authAPI = getInstance().getAPIObject(AuthAPI.class);
+                        Call<User> call=authAPI.refreshToken();
+                        call.enqueue(new Callback<User>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
+                                if (response.isSuccessful()) {//如果登录成功
+                                    User user = response.body();
+                                    aCache.put("user",user,24*ACache.TIME_HOUR);//保存user对象
+                                    //记录token,保存到缓存是位了检测token是否过期，保存到preference是为了刷新token时读取旧token
+                                    SharedPreferenceUtil.putString(MyApplication.getAppContext(), "TO_REFRESH_SESSION_TOKEN", user
+                                            .getSessionToken());
+                                    aCache.put("SESSION_TOKEN",user.getSessionToken(),24*ACache.TIME_HOUR);//token保存24小时
+                                    System.out.println("刷新token成功");
+                                } else {//刷新失败
+                                    ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
+                                    onFailure(call, e.toException());
+                                }
+                            }
 
-                if (MyApplication.API_KEY == null) {
-                    Log.w(APISource.class.getSimpleName(), "ApiKey为空");
-                } else {
-                    //将ApiKey添加到请求头信息里
-                    ongoing.addHeader("X-DreamFactory-Api-Key", MyApplication.API_KEY);
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+                                System.out.println("刷新token失败：Throwable是{" + t.getMessage() + "}");
+                            }
+                        });
+                    }
                 }
-//不使用token，只使用apikey
-//                if (!isHaveLogin) {
-//                    String token = SharedPreferenceUtil.getString(MyApplication.getAppContext(), MyApplication.SESSION_TOKEN);
-//                    if (token != null && !token.isEmpty()) {
-//                        //将token添加到请求头信息里
-//                        ongoing.addHeader("X-DreamFactory-Session-Token", token);
-//                    }
-//                } else if (testToken != null) {
-//                    //将token添加到请求头信息里
-//                    ongoing.addHeader("X-DreamFactory-Session-Token", testToken);
-//                }
 
-                return chain.proceed(ongoing.build());
+                return chain.proceed(request.build());
             }
         }).build();
 
@@ -82,8 +105,6 @@ public class APISource {
 
     /**
      * 处理接口访问错误时返回的信息
-     * @param response
-     * @return
      */
     public static ErrorMessage getErrorMessage(Response response) {
         ErrorMessage error = null;

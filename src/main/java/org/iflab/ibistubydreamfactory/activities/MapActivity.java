@@ -100,7 +100,7 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
             public void onResponse(Call<Resource<MapLocation>> call, Response<Resource<MapLocation>> response) {
                 if (response.isSuccessful()) {
                     mapLocationResource = response.body();
-                    aCache.put("introductionResource", mapLocationResource);
+                    aCache.put("mapLocationResource", mapLocationResource);
                     loadData();
                 } else {
                     ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
@@ -172,7 +172,7 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
      */
     private void setLocation() {
         MyLocationStyle myLocationStyle = new MyLocationStyle();//创建定位中心样式
-        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.location_marker));// 设置小蓝点的图标
+        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_marker));// 设置小蓝点的图标
         myLocationStyle.strokeColor(Color.BLACK);// 设置圆形的边框颜色
         myLocationStyle.radiusFillColor(Color.argb(100, 0, 0, 180));// 设置圆形的填充颜色
         myLocationStyle.strokeWidth(0.1f);// 设置圆形的边框粗细

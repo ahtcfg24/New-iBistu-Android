@@ -12,7 +12,7 @@
         android:layout_marginTop="12dp"
         android:text="输入示例视频、图片URL"/>
 
-    <cn.iamding.md360player4android.view.EditSpinner
+    <org.iflab.ibistubydreamfactory.view.EditSpinner
         android:id="@+id/edit_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

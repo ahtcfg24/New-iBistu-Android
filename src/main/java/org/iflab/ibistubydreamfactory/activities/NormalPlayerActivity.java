@@ -61,7 +61,7 @@ public class NormalPlayerActivity extends Activity implements TextureView.Surfac
             @Override
             public void onPrepared(IMediaPlayer mp) {
                 cancelBusy();
-                playOrPauseButton.setImageResource(R.drawable.ic_pause_button);
+                playOrPauseButton.setImageResource(R.drawable.bt_player_pause);
                 durationTime = (int) (mMediaPlayerWrapper.getPlayer().getDuration() / 1000);
                 videoProgressSeekBar.setMax(durationTime);
                 durationTimeTextView.setText(StringUtil.transToTime(durationTime));
@@ -84,7 +84,7 @@ public class NormalPlayerActivity extends Activity implements TextureView.Surfac
             @Override
             public void onCompletion(IMediaPlayer mp) {
                 mMediaPlayerWrapper.getPlayer().seekTo(0);
-                playOrPauseButton.setImageResource(R.drawable.ic_play_button);
+                playOrPauseButton.setImageResource(R.drawable.bt_player_play);
             }
         });
 
@@ -140,10 +140,10 @@ public class NormalPlayerActivity extends Activity implements TextureView.Surfac
             public void onClick(View v) {
                 if (mMediaPlayerWrapper.getPlayer().isPlaying()) {
                     mMediaPlayerWrapper.getPlayer().pause();
-                    playOrPauseButton.setImageResource(R.drawable.ic_play_button);
+                    playOrPauseButton.setImageResource(R.drawable.bt_player_play);
                 } else {
                     mMediaPlayerWrapper.getPlayer().start();
-                    playOrPauseButton.setImageResource(R.drawable.ic_pause_button);
+                    playOrPauseButton.setImageResource(R.drawable.bt_player_pause);
                 }
 
             }

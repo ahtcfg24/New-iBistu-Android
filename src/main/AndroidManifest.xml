@@ -20,7 +20,6 @@
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -29,39 +28,84 @@
         android:supportsRtl="true"
         android:theme="@style/CustomActionBarTheme">
         <meta-data
-            android:name="sessionToken"
-            android:value="session_token"/>
-        <meta-data
             android:name="instanceUrl"
             android:value="http://104.155.211.143/api/v2/"/>
         <meta-data
             android:name="apiKey"
             android:value="3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2"/>
-
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="6d7d40437914484588812f774f470959">
-
         </meta-data>
 
         <service android:name="com.amap.api.location.APSService"/>
 
-        <activity android:name=".LoginActivity">
-        </activity>
         <activity
-            android:name=".YellowPageActivity"
+            android:name=".activities.YellowPageActivity"
             android:label="黄页">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.iflab.ibistubydreamfactory.HomeActivity"/>
+                android:value=".activities.HomeActivity"/>
         </activity>
-        <activity android:name=".YellowPageDetailsActivity">
+        <activity android:name=".activities.YellowPageDetailsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.iflab.ibistubydreamfactory.YellowPageActivity"/>
+                android:value=".activities.YellowPageActivity"/>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.HomeActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.AboutActivity"
+            android:label="关于">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity"/>
+        </activity>
+        <activity android:name=".activities.AboutDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.AboutActivity"/>
+        </activity>
+        <activity
+            android:name=".activities.BusActivity"
+            android:label="校车">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity"/>
+        </activity>
+        <activity android:name=".activities.BusLineActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.BusActivity"/>
+        </activity>
+        <activity
+            android:name=".activities.MapActivity"
+            android:label="地图">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity"/>
+        </activity>
+        <activity
+            android:name=".activities.NormalPlayerActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="MDMultiDemoActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activities.VRVideoPlayerActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="MDMultiDemoActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activities.VRImagePlayerActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="MDMultiDemoActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activities.PlayerActivity">
+        </activity>
+        <activity
+            android:name=".activities.WelcomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -70,37 +114,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AboutActivity"
-            android:label="关于">
+            android:name=".activities.UserCenterActivity"
+            android:label="个人中心">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.iflab.ibistubydreamfactory.HomeActivity"/>
-        </activity>
-        <activity android:name=".AboutDetailsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.iflab.ibistubydreamfactory.AboutActivity"/>
+                android:value=".activities.HomeActivity"/>
         </activity>
         <activity
-            android:name=".BusActivity"
-            android:label="校车">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.iflab.ibistubydreamfactory.HomeActivity"/>
-        </activity>
-        <activity android:name=".BusLineActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.iflab.ibistubydreamfactory.BusActivity"/>
-        </activity>
-        <activity
-            android:name=".MapActivity"
-            android:label="地图"
+            android:name=".activities.RegisterActivity"
+            android:label="注册"
+            android:theme="@style/CustomNoActionBar"
             >
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.iflab.ibistubydreamfactory.HomeActivity"/>
         </activity>
     </application>
 

@@ -3,7 +3,7 @@
     <!--ToolBar上一排的的按钮item-->
     <item
         android:id="@+id/context_menu"
-        android:icon="@layout/selector_menu"
+        android:icon="@drawable/selector_menu"
         android:orderInCategory="100"
         android:title="菜单"
         app:showAsAction="always"/>

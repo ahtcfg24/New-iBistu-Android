@@ -23,7 +23,7 @@
         android:layout_gravity="center_horizontal"
 
         android:text="测试"
-        android:textColor="@color/toolbar_color"
+        android:textColor="@color/colorToolBar"
         android:textSize="20sp"
             />
 
@@ -31,7 +31,7 @@
             android:id="@+id/dialog_num_textView"
             android:text="000000"
             android:textSize="17sp"
-            android:textColor="@color/toolbar_color"
+            android:textColor="@color/colorToolBar"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -22,7 +22,6 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.fragment.HomeFragment;
-import org.iflab.ibistubydreamfactory.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +32,10 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity implements OnMenuItemClickListener, OnMenuItemLongClickListener {
 
     private FragmentManager fragmentManager;
-    private ContextMenuDialogFragment  menuDialogFragment;
+    private ContextMenuDialogFragment menuDialogFragment;
     private long exitTime = 0;//记录按返回键的时间点
 
     private Intent intent;
-    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +48,6 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
         addFragment(new HomeFragment(), true, R.id.container);
         intent = new Intent();
     }
-
 
 
     /**
@@ -74,19 +71,16 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
         List<MenuObject> menuObjects = new ArrayList<>();
 
         MenuObject cancelOption = new MenuObject();
-        cancelOption.setResource(R.layout.selector_option_fold);
+        cancelOption.setResource(R.drawable.selector_option_fold);
 
-        MenuObject userOption = new MenuObject("用户中心");
-        userOption.setResource(R.drawable.option_user);
-//        userOption.setMenuTextAppearanceStyle(R.style.MenuTextStyle);//设置选项样式
+        MenuObject userOption = new MenuObject("个人中心");
+        userOption.setResource(R.drawable.ic_option_user);
 
         MenuObject aboutOption = new MenuObject("关于我们");
-        aboutOption.setResource(R.drawable.option_about);
-//        aboutOption.setMenuTextAppearanceStyle(R.style.MenuTextStyle);
+        aboutOption.setResource(R.drawable.ic_option_about);
 
         MenuObject updateOption = new MenuObject("检查更新");
-        updateOption.setResource(R.drawable.option_update);
-//        updateOption.setMenuTextAppearanceStyle(R.style.MenuTextStyle);
+        updateOption.setResource(R.drawable.ic_option_update);
 
         menuObjects.add(cancelOption);
         menuObjects.add(userOption);
@@ -101,7 +95,7 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("iBistu");
-        toolbar.setLogo(R.drawable.ic_logo_bistu);//设置静态logo
+        toolbar.setLogo(R.drawable.ic_action_logo_bistu);//设置静态logo
         setSupportActionBar(toolbar);//把ToolBar设置为ActionBar
     }
 
@@ -169,28 +163,9 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
         switch (position) {
             case 0://返回主界面
                 break;
-            case 1:
-//                String token = SharedPreferenceUtil.getString(MyApplication.getAppContext(), MyApplication.SESSION_TOKEN);
-//                if(token!=null&&!token.isEmpty()){
-//                    Toast.makeText(HomeActivity.this, "已经登录了", Toast.LENGTH_SHORT).show();
-//                }else {
-//                    intent.setClass(this, LoginActivity.class);
-//                    startActivity(intent);
-//                }
-//                ACache aCache = ACache.get(this);
-//                user = (User) aCache.getAsObject("user");
-//                if (TokenHandle.getAccessToken(HomeActivity.this) == null) {
-//                    intent.setClass(this, OAuthActivity.class);
-//                    startActivityForResult(intent, StaticVariable.GET_AUTHORIZATION_CODE);
-//                } else if (user == null) {
-//                    new MyToast("缓存失效了，请重新登录吧");
-//                    intent.setClass(this, OAuthActivity.class);
-//                    startActivityForResult(intent, StaticVariable.GET_AUTHORIZATION_CODE);
-//                } else {
-//                    intent.putExtra("user", user);
-//                    intent.setClass(this, UserCenterActivity.class);
-//                    startActivity(intent);
-//                }
+            case 1://个人中心
+                intent.setClass(this, UserCenterActivity.class);
+                startActivity(intent);
                 break;
             case 2://关于
                 intent.setClass(this, AboutActivity.class);
@@ -209,7 +184,7 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
     @Override
     public void onBackPressed() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(HomeActivity.this,"再按一次退出程序",Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
             exitTime = System.currentTimeMillis();
         } else {
             if (menuDialogFragment != null && menuDialogFragment.isAdded()) {
@@ -239,8 +214,6 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
 
     /**
      * 监听长安菜单选项
-     * @param clickedView
-     * @param position
      */
     @Override
     public void onMenuItemLongClick(View clickedView, int position) {

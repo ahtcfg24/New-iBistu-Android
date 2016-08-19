@@ -18,7 +18,6 @@ import org.iflab.ibistubydreamfactory.utils.SpinnerBuildUtil;
 import java.util.LinkedList;
 import java.util.List;
 
-
 /**
  * VR播放器抽象类
  */

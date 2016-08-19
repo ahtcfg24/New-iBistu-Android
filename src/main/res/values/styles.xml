@@ -48,5 +48,10 @@
         <item name="android:windowBackground">@drawable/bg_dialog</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+    <style name="CustomNoActionBar" parent="@style/CustomActionBarTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 
 </resources>

@@ -12,7 +12,6 @@ import android.util.Log;
  */
 public class MyApplication extends Application {
     private static Context context;//具有最高生存周期的Context
-    public static String SESSION_TOKEN;//用户每次登录时服务器随机生成的凭证
     public static String INSTANCE_URL;//DreamFactory的提供的接口地址
     public static String API_KEY;//DreamFactory接口的key，可在DreamFactory控制台的apps标签下找到
 
@@ -25,7 +24,6 @@ public class MyApplication extends Application {
             ApplicationInfo applicationInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = applicationInfo.metaData;
             //从AndroidManifest配置文件中获取这些值
-            SESSION_TOKEN = bundle.getString("sessionToken");
             INSTANCE_URL = bundle.getString("instanceUrl");
             API_KEY = bundle.getString("apiKey");
         } catch (PackageManager.NameNotFoundException e) {
