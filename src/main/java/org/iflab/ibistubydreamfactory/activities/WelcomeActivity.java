@@ -10,6 +10,9 @@ import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.models.User;
 import org.iflab.ibistubydreamfactory.utils.ACache;
 
+/**
+ * 程序第一个Activity，使用的是singleTask mode
+ */
 public class WelcomeActivity extends Activity {
     private Intent intent;
     private ACache aCache = ACache.get(MyApplication.getAppContext());
@@ -34,4 +37,6 @@ public class WelcomeActivity extends Activity {
             }
         }, 1500);
     }
+
+
 }

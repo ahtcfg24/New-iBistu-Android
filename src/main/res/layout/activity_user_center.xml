@@ -1,13 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorPureWhite"
+    android:orientation="vertical"
     tools:context="org.iflab.ibistubydreamfactory.activities.UserCenterActivity">
 
-</RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="44dp"
+            android:paddingRight="44dp"
+            android:paddingTop="16dp">
+
+            <ImageView
+                android:id="@+id/login_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_bistu_logo"/>
+
+            <TextView
+                android:id="@+id/textView_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="用户名"
+                android:textSize="16sp"
+                />
+
+            <EditText
+                android:id="@+id/editText_oldPassword"
+                style="@style/edit_text_style"
+                android:layout_width="match_parent"
+                android:layout_marginTop="26dp"
+                android:hint="旧密码："
+                android:inputType="textPassword"
+                />
+
+            <EditText
+                android:id="@+id/editText_newPassword"
+                style="@style/edit_text_style"
+                android:layout_width="match_parent"
+                android:layout_marginTop="4dp"
+                android:hint="新密码："
+                android:inputType="textPassword"
+                />
+
+            <EditText
+                android:id="@+id/editText_repeatNewPassword"
+                style="@style/edit_text_style"
+                android:layout_width="match_parent"
+                android:layout_marginTop="4dp"
+                android:hint="确认新密码："
+                android:inputType="textPassword"
+                />
+
+            <Button
+                android:id="@+id/button_changePassword"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bt_button_blue"
+                android:onClick="onButtonChangePasswordClick"
+                android:text="修改密码"
+                android:textColor="@color/colorPureWhite"
+                android:textSize="16sp"
+
+                />
+
+            <Button
+                android:id="@+id/button_bindStudentId"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bt_button_blue"
+                android:onClick="onButtonBindClick"
+                android:text="绑定学号"
+                android:textColor="@color/colorPureWhite"
+                android:textSize="16sp"
+
+                />
+
+
+            <Button
+                android:id="@+id/button_logout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bt_button_blue"
+                android:onClick="onButtonLogoutClick"
+                android:text="退出登录"
+                android:textColor="@color/colorPureWhite"
+                android:textSize="16sp"
+                />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+

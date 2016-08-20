@@ -51,7 +51,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         parentView = inflater.inflate(R.layout.fragment_login, container, false);
         initView(parentView);
         authAPI = APISource.getInstance().getAPIObject(AuthAPI.class);
-        Bundle bundle = getArguments();
+        bundle = getArguments();
         if (bundle != null) {
             editEmail.setText(bundle.getString("email"));
             editPassword.setText(bundle.getString("password"));

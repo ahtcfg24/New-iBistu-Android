@@ -115,7 +115,8 @@
         </activity>
         <activity
             android:name=".activities.WelcomeActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -124,7 +125,9 @@
         </activity>
         <activity
             android:name=".activities.UserCenterActivity"
-            android:label="个人中心">
+            android:label="个人中心"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HomeActivity"/>
