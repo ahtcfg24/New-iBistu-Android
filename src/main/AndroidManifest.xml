@@ -28,6 +28,15 @@
         android:supportsRtl="true"
         android:theme="@style/CustomActionBarTheme">
         <meta-data
+            android:name="smsUrl"
+            android:value="https://api.netease.im/sms/"/>
+        <meta-data
+            android:name="AppSecret"
+            android:value="ffc246976de9"/>
+        <meta-data
+            android:name="AppKey"
+            android:value="2b6894069187f6d2b43994d0633e7947"/>
+        <meta-data
             android:name="instanceUrl"
             android:value="http://104.155.211.143/api/v2/"/>
         <meta-data
@@ -124,6 +133,7 @@
             android:name=".activities.RegisterActivity"
             android:label="注册"
             android:theme="@style/CustomNoActionBar"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
             >
         </activity>
     </application>

@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:paddingBottom="4dp"
         android:paddingTop="5dp"
-        android:src="@drawable/ic_bus" />
+        android:src="@drawable/ic_bus_icon"/>
 
     <TextView
         android:id="@+id/textView_busName"
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/textView_goTime"
         android:paddingTop="9dp"
-        android:src="@drawable/ic_departure" />
+        android:src="@drawable/ic_bus_departure"/>
 
     <ImageView
         android:id="@+id/imageView_returnTime"
@@ -57,7 +57,7 @@
         android:layout_alignBottom="@+id/textView_busIntro"
         android:layout_toLeftOf="@+id/textView_backTime"
         android:paddingBottom="6dp"
-        android:src="@drawable/ic_return" />
+        android:src="@drawable/ic_bus_return"/>
 
     <TextView
         android:id="@+id/textView_backTime"

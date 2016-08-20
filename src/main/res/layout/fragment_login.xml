@@ -11,23 +11,23 @@
     <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="57dp"
         android:background="@color/colorToolBar"
-        android:paddingLeft="16dp"
-        android:layout_height="57dp">
+        android:orientation="horizontal"
+        android:paddingLeft="16dp">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_logo_bistu"
             android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_action_logo_bistu"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPureWhite"
             android:layout_gravity="center_vertical"
-            android:textSize="22sp"
             android:text="登录"
+            android:textColor="@color/colorPureWhite"
+            android:textSize="22sp"
             />
     </LinearLayout>
 
@@ -40,48 +40,78 @@
 
 
     <ScrollView
-        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="44dp"
+            android:paddingRight="44dp"
+            android:paddingTop="16dp">
+
+            <ImageView
+                android:id="@+id/login_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_bistu_logo"/>
+            <EditText
+                android:id="@+id/login_email_input"
+                style="@style/edit_text_style"
+                android:layout_width="match_parent"
+                android:hint="邮箱："
+                android:inputType="textEmailAddress"/>
 
             <EditText
-                android:id="@+id/edit_email"
+                android:id="@+id/login_password_input"
+                style="@style/edit_text_style"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="邮箱："/>
-
-            <EditText
-                android:id="@+id/edit_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:hint="密码："
                 android:inputType="textPassword"
                 />
 
+            <TextView
+                android:id="@+id/forgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="忘记密码了？"
+                android:textColor="@color/cyan_text_navigation"
+                android:textSize="12sp"/>
+
             <Button
                 android:id="@+id/button_login"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/bt_button_blue"
                 android:text="登录"
                 android:textColor="@color/colorPureWhite"
-                />
+                android:textSize="16sp"
 
+                />
 
             <Button
                 android:id="@+id/button_resetPassword"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bt_button_gray"
-                android:gravity="center"
-                android:text="忘记密码了？点此找回"
-                android:textSize="15sp"/>
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bt_button_blue"
+                android:text="找回密码"
+                android:textColor="@color/colorPureWhite"
+                android:textSize="16sp"
+                android:visibility="gone"
+                />
+
+
         </LinearLayout>
     </ScrollView>
 

@@ -53,5 +53,19 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!-- EditText theme -->
+    <style name="edit_text_style" parent="@android:style/Widget.DeviceDefault.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:maxWidth">300dp</item>
+        <item name="android:textColor">@color/grey_text</item>
+        <item name="android:background">@drawable/selector_bg_edit_text</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textColorHint">@color/hint_grey_text</item>
+    </style>
+
 
 </resources>

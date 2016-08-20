@@ -18,5 +18,9 @@
     <color name="colorOneABlack">#1a000000</color>
     <color name="colorTwoOneBlue">#2196f3</color>
     <color name="colorBackgroundGray">#eeeeee</color>
+    <color name="grey_text">#464A50</color>
+    <color name="hint_grey_text">#8c8e90</color>
+    <color name="cyan_text_navigation">#299ED7</color>
+
 
 </resources>
