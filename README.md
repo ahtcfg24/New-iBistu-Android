@@ -17,7 +17,7 @@
               ]
  }
  ```
- * 本文档提供的接口除注册、登录、请求重置密码只需要添加请求头`X-DreamFactory-Api-Key`以外，其它接口均需要添加`X-DreamFactory-Api-Key`和`X-DreamFactory-Session-Token`。注册、登录、重置密码接口会自动忽略`X-DreamFactory-Session-Token`。
+ * 本文档提供的接口除注册、登录、请求重置密码、检查更新、下载更新包只需要添加请求头`X-DreamFactory-Api-Key`以外，其它接口均需要添加`X-DreamFactory-Api-Key`和`X-DreamFactory-Session-Token`。以上不需token的接口即使添加了token也会自动忽略`X-DreamFactory-Session-Token`。
 
   - 请求头及其格式为：
  > "X-DreamFactory-Api-Key", "dreamfactory提供的apikey"
@@ -48,6 +48,34 @@
 ---
 # 正文
 ---
+## 升级更新(安卓)
+
+ * 检查更新
+
+    - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_update/1`
+    - 请求方法：get
+    - 参数：无
+    - 示例返回值
+    ```
+    {
+        "id": 1,
+        "name": "iBistu.apk",
+        "path": "files/ibistu/update/Android/",
+        "version": "1.0",
+        "versionCode": 1,
+        "versionInfo": "第二次更新",
+        "updateTime": "2016-08-21 15:06:11",
+        "updateSize": 6.38
+    }
+    ```
+
+ * 下载更新(无需添加header)
+
+    - 接口：`http://api.iflab.org/api/v2/{检查更新返回值中的path字段}{name字段}`
+    - 请求方法：get
+    - 参数：api_key
+    - 示例URL：`http://api.iflab.org/api/v2/files/ibistu/update/Android/iBistu.apk?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2`
+    - 示例返回值：iBistu.apk
 
 
 ## 用户模块
