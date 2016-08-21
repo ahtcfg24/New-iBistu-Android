@@ -82,7 +82,11 @@ public class CheckUpdateUtil {
         // 设置为可见和可管理
         downloadRequest.setVisibleInDownloadsUi(true);
         //将下载请求放入队列
-        downloadManager.enqueue(downloadRequest);
+        long downloadId = downloadManager.enqueue(downloadRequest);
+        Log.i("Id", downloadId + "");
+        //保存id
+        SharedPreferenceUtil.putString(MyApplication.getAppContext(), "DOWNLOAD_ID", downloadId + "");
+
 
     }
 

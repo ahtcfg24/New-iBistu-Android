@@ -1,4 +1,4 @@
-package org.iflab.ibistubydreamfactory.view;
+package org.iflab.ibistubydreamfactory.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -357,12 +357,12 @@ public class EditSpinner extends EditText {
         mPopup.setAdapter(mAdapter);
     }
 
-    public void setDropDownDrawableSpacing(int spacing) {
-        setCompoundDrawablePadding(spacing);
-    }
-
     public int getDropDownDrawableSpacing() {
         return getCompoundDrawablePadding();
+    }
+
+    public void setDropDownDrawableSpacing(int spacing) {
+        setCompoundDrawablePadding(spacing);
     }
 
     public void setOnDismissListener(final PopupWindow.OnDismissListener dismissListener) {

@@ -1,18 +1,11 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <!--自定义appTheme-->
+    <style name="MyAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
-    <!--自定义appTheme-->
-    <style name="CustomActionBarTheme" parent="AppTheme">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
-        <!--添加alertDialogTheme-->
-        <item name="alertDialogProTheme">@style/Theme.AppCompat.Dialog.Alert</item>
-
         <!-- 支持库兼容 -->
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
@@ -36,7 +29,7 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="CustomNoActionBar" parent="@style/CustomActionBarTheme">
+    <style name="CustomNoActionBar" parent="@style/MyAppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

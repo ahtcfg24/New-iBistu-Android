@@ -28,6 +28,13 @@ public class WelcomeActivity extends Activity {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            intent = new Intent();
+            User user = (User) aCache.getAsObject("user");
+            if (user == null) {
+                intent.setClass(WelcomeActivity.this, RegisterActivity.class);
+            } else {
+                intent.setClass(WelcomeActivity.this, HomeActivity.class);
+            }
             startActivity(intent);
             finish();
         }
@@ -39,21 +46,13 @@ public class WelcomeActivity extends Activity {
         parentView = LayoutInflater.from(this).inflate(R.layout.activity_welcome, null);
         setContentView(parentView);
         getAlertDialog();
-        intent = new Intent();
-        User user = (User) aCache.getAsObject("user");
-        if (user == null) {
-            intent.setClass(WelcomeActivity.this, RegisterActivity.class);
-            handler.postDelayed(runnable, 1000);
+        if (AndroidUtils.isWifi(MyApplication.getAppContext())) {
+            CheckUpdateUtil.checkUpdate(parentView, getAlertDialog());
         } else {
-            intent.setClass(WelcomeActivity.this, HomeActivity.class);
-            if (AndroidUtils.isWifi(MyApplication.getAppContext())) {
-                CheckUpdateUtil.checkUpdate(parentView, getAlertDialog());
-            } else {
-                handler.postDelayed(runnable, 1000);
-            }
+            handler.postDelayed(runnable, 1000);
         }
-
     }
+
 
     private AlertDialog getAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(WelcomeActivity.this);

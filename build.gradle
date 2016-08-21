@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "org.iflab.ibistubydreamfactory"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -30,21 +30,12 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
 
-    //required, enough for most devices.
-    compile project(path: ':vrlib')
     compile 'com.yalantis:contextmenu:1.0.6'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.4.5'
-    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.4.5'
-    compile 'com.android.support:support-v4:23.4.0'
     //material design风格的库
     compile 'com.android.support:design:23.3.0'
     //异步网络请求库
     compile 'com.loopj.android:android-async-http:1.4.9'
-    //自定义dialog
-    compile 'com.github.fengdai:alertdialogpro-theme-material:0.2.6'
-
 }

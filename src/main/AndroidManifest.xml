@@ -19,7 +19,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
 
     <application
         android:name=".MyApplication"
@@ -27,7 +26,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/CustomActionBarTheme">
+        android:theme="@style/MyAppTheme">
         <meta-data
             android:name="smsUrl"
             android:value="https://api.netease.im/sms/"/>
@@ -47,7 +46,14 @@
             android:name="com.amap.api.v2.apikey"
             android:value="6d7d40437914484588812f774f470959">
         </meta-data>
+
         <service android:name="com.amap.api.location.APSService"/>
+        <receiver android:name=".utils.CompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".activities.YellowPageActivity"
@@ -97,22 +103,10 @@
                 android:value=".activities.HomeActivity"/>
         </activity>
         <activity
-            android:name=".activities.NormalPlayerActivity"
-            android:configChanges="screenSize|orientation"
-            android:label="MDMultiDemoActivity"
-            android:screenOrientation="landscape"/>
-        <activity
             android:name=".activities.VRVideoPlayerActivity"
             android:configChanges="screenSize|orientation"
             android:label="MDMultiDemoActivity"
             android:screenOrientation="landscape"/>
-        <activity
-            android:name=".activities.VRImagePlayerActivity"
-            android:configChanges="screenSize|orientation"
-            android:label="MDMultiDemoActivity"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".activities.PlayerActivity">
-        </activity>
         <activity
             android:name=".activities.WelcomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
