@@ -44,5 +44,7 @@ dependencies {
     compile 'com.android.support:design:23.3.0'
     //异步网络请求库
     compile 'com.loopj.android:android-async-http:1.4.9'
+    //自定义dialog
+    compile 'com.github.fengdai:alertdialogpro-theme-material:0.2.6'
 
 }

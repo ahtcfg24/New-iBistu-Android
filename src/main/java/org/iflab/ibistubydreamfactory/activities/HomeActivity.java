@@ -1,14 +1,17 @@
 package org.iflab.ibistubydreamfactory.activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,8 +24,10 @@ import com.yalantis.contextmenu.lib.MenuParams;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 
+import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.fragment.HomeFragment;
+import org.iflab.ibistubydreamfactory.utils.CheckUpdateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,19 +41,21 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
     private FragmentManager fragmentManager;
     private ContextMenuDialogFragment menuDialogFragment;
     private long exitTime = 0;//记录按返回键的时间点
-
+    private View parentView;
     private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        parentView = LayoutInflater.from(this).inflate(R.layout.activity_home, null);
+        setContentView(parentView);
         HOMEACTIVITY_INSTANCE = this;
         fragmentManager = getSupportFragmentManager();
         initToolbar();
         initMenuFragment();
         addFragment(new HomeFragment(), true, R.id.container);
         intent = new Intent();
+
     }
 
 
@@ -174,10 +181,28 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
                 startActivity(intent);
                 break;
             case 3://检查更新
-                // TODO: 2016/8/21 检查更新接口
+                CheckUpdateUtil.checkUpdate(parentView, getAlertDialog());
                 break;
         }
 
+    }
+
+    private AlertDialog getAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        }).setPositiveButton("是", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(HomeActivity.this, "正在后台下载安装包，请查看通知栏", Toast.LENGTH_LONG).show();
+                dialog.cancel();
+                CheckUpdateUtil.downloadInNotificationBar(MyApplication.UPDATE_DOWNLOAD_URL);
+            }
+        });
+        return builder.create();
     }
 
     /**
@@ -221,4 +246,5 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
     public void onMenuItemLongClick(View clickedView, int position) {
 
     }
+
 }

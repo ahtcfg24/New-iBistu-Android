@@ -16,6 +16,7 @@ public class MyApplication extends Application {
     public static String APPSECRET;//云信短信要求的AppSecret
     public static String APPKEY;//云信短信要求的AppKey
     public static String SMSCONFIRMURL;//云信短信验证URL
+    public static String UPDATE_DOWNLOAD_URL = "";//软件更新下载URL
     private static Context context;//具有最高生存周期的Context
 
     /**

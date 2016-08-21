@@ -1,6 +1,7 @@
 package org.iflab.ibistubydreamfactory.models;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * DreamFactory返回的错误信息模型
@@ -81,14 +82,19 @@ public class ErrorMessage implements Serializable {
         }
 
         public static class Context implements Serializable {
-
+            private String[] email = new String[0];
+            private String[] password = new String[0];
 
             public Context() {
             }
 
-            private String[] email = new String[0];
-
-            private String[] password = new String[0];
+            @Override
+            public String toString() {
+                return "Context{" +
+                        "email=" + Arrays.toString(email) +
+                        ", password=" + Arrays.toString(password) +
+                        '}';
+            }
 
             public String[] getEmail() {
                 return email;

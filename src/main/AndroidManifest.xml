@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
 
     <application
         android:name=".MyApplication"
@@ -46,7 +47,6 @@
             android:name="com.amap.api.v2.apikey"
             android:value="6d7d40437914484588812f774f470959">
         </meta-data>
-
         <service android:name="com.amap.api.location.APSService"/>
 
         <activity

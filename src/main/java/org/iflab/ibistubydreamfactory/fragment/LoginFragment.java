@@ -126,7 +126,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
-                        Snackbar.make(parentView, "登录失败：" + t.getMessage(), Snackbar.LENGTH_SHORT)
+                        Snackbar.make(parentView, "登录失败：" + t.getMessage(), Snackbar.LENGTH_LONG)
                                 .show();
 
                     }
