@@ -9,10 +9,12 @@ import android.util.Log;
 
 import org.iflab.ibistubydreamfactory.MyApplication;
 
+import java.io.File;
+
 import static android.app.DownloadManager.ACTION_DOWNLOAD_COMPLETE;
 
 /**
- *
+ * 接收下载完成的广播，并自动启动安装
  */
 public class CompletedReceiver extends BroadcastReceiver {
     @Override
@@ -25,17 +27,22 @@ public class CompletedReceiver extends BroadcastReceiver {
             Log.i("savedId", savedDownLoadId);
             if (Long.parseLong(savedDownLoadId) == (myDownLoadId)) {     //如果是保存在本地的一样,那么启动并安装
                 Log.i("Receiver", "开始安装");
-                DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-                Intent updateApk = new Intent(Intent.ACTION_VIEW);
-                Uri downloadFileUri = downloadManager.getUriForDownloadedFile(myDownLoadId);//获取下载的文件的路径
-                Log.i("安装路径", downloadFileUri.toString());
-
-                updateApk.setDataAndType(downloadFileUri, "application/vnd.android.package-archive");
-                updateApk.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(updateApk);
+                openFile(context);
             }
         }
 
 
+    }
+
+    /**
+     * apk自动安装
+     */
+    private void openFile(Context context) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        Uri uri = Uri.fromFile(new File("/sdcard/Download/iBistu.apk")); //这里是APK路径
+        intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        context.startActivity(intent);
     }
 }

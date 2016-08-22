@@ -88,8 +88,10 @@ public class CheckUpdateUtil {
         DownloadManager downloadManager = (DownloadManager) MyApplication.getAppContext()
                                                                          .getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request downloadRequest = new DownloadManager.Request(Uri.parse(url));
-        //设置存储路径
-        downloadRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "iBistuDF.apk");
+        //创建存储路径
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir();
+        //设置文件存放路径
+        downloadRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "iBistu.apk");
         //设置下载名称
         downloadRequest.setTitle(MyApplication.getAppContext()
                                               .getResources()

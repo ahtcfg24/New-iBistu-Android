@@ -8,8 +8,8 @@ android {
         applicationId "org.iflab.ibistubydreamfactory"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.01"
+        versionCode 3
+        versionName "1.03"
     }
     buildTypes {
         release {
