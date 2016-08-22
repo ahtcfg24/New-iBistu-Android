@@ -2,7 +2,8 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="org.iflab.icampus.AboutDetailsActivity">
+                tools:context="org.iflab.ibistubydreamfactory.activities.AboutDetailsActivity"
+    >
 
     <WebView
         android:id="@+id/webView"

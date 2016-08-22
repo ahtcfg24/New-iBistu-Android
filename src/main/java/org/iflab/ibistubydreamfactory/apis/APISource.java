@@ -31,15 +31,11 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  */
 public class APISource {
 
-    private static APISource INSTANCE;//这个类的唯一对象
-
-    private Retrofit retrofit;//retrofit2对象
-
-    private OkHttpClient httpClient;//okHttp对象
-
-    private static Converter<ResponseBody, ErrorMessage> errorConverter;
-
     public static String token;//当前登录的token
+    private static APISource INSTANCE;//这个类的唯一对象
+    private static Converter<ResponseBody, ErrorMessage> errorConverter;
+    private Retrofit retrofit;//retrofit2对象
+    private OkHttpClient httpClient;//okHttp对象
     private String toRefreshToken;//用于刷新token的旧token
     private ACache aCache = ACache.get(MyApplication.getAppContext());
 
@@ -60,17 +56,17 @@ public class APISource {
                         request.addHeader("X-DreamFactory-Session-Token", token);
                     } else {//否则说明token已经过期，需要刷新token
                         AuthAPI authAPI = getInstance().getAPIObject(AuthAPI.class);
-                        Call<User> call=authAPI.refreshToken();
+                        Call<User> call = authAPI.refreshToken();
                         call.enqueue(new Callback<User>() {
                             @Override
                             public void onResponse(Call<User> call, Response<User> response) {
                                 if (response.isSuccessful()) {//如果登录成功
                                     User user = response.body();
-                                    aCache.put("user",user,24*ACache.TIME_HOUR);//保存user对象
+                                    aCache.put("user", user, 24 * ACache.TIME_HOUR);//保存user对象
                                     //记录token,保存到缓存是位了检测token是否过期，保存到preference是为了刷新token时读取旧token
                                     SharedPreferenceUtil.putString(MyApplication.getAppContext(), "TO_REFRESH_SESSION_TOKEN", user
                                             .getSessionToken());
-                                    aCache.put("SESSION_TOKEN",user.getSessionToken(),24*ACache.TIME_HOUR);//token保存24小时
+                                    aCache.put("SESSION_TOKEN", user.getSessionToken(), 24 * ACache.TIME_HOUR);//token保存24小时
                                     System.out.println("刷新token成功");
                                 } else {//刷新失败
                                     ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
@@ -80,7 +76,7 @@ public class APISource {
 
                             @Override
                             public void onFailure(Call<User> call, Throwable t) {
-                                System.out.println("刷新token失败：Throwable是{" + t.getMessage() + "}");
+                                System.out.println("刷新token失败：" + t.getMessage());
                             }
                         });
                     }

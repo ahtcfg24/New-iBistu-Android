@@ -95,15 +95,6 @@ public class UpdateInfo extends BaseRecord {
 
     @Override
     public String toString() {
-        return "UpdateInfo{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", path='" + path + '\'' +
-                ", version='" + version + '\'' +
-                ", versionCode=" + versionCode +
-                ", versionInfo='" + versionInfo + '\'' +
-                ", updateTime='" + updateTime + '\'' +
-                ", updateSize='" + updateSize + '\'' +
-                '}';
+        return "发现新版本：" + getVersion() + "\n更新内容：" + getVersionInfo() + "\n更新时间：" + getUpdateTime() + "\n安装包大小：" + getUpdateSize() + "M";
     }
 }

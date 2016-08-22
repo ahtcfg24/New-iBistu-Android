@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
 
     <application
         android:name=".MyApplication"
@@ -102,11 +103,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HomeActivity"/>
         </activity>
-        <activity
-            android:name=".activities.VRVideoPlayerActivity"
-            android:configChanges="screenSize|orientation"
-            android:label="MDMultiDemoActivity"
-            android:screenOrientation="landscape"/>
         <activity
             android:name=".activities.WelcomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"

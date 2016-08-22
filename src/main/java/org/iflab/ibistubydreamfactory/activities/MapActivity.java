@@ -254,7 +254,7 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
             locationClient = new AMapLocationClient(this);
             locationClient.setLocationListener(this);//设置定位监听
             AMapLocationClientOption locationClientOption = new AMapLocationClientOption();
-            //设置为高精度定位模式
+            //设置定位模式
             locationClientOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
             //设置是否强制刷新WIFI，默认为强制刷新
             locationClientOption.setWifiActiveScan(true);

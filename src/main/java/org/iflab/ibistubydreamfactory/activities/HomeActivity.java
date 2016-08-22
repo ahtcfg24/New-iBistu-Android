@@ -1,13 +1,11 @@
 package org.iflab.ibistubydreamfactory.activities;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -24,7 +22,6 @@ import com.yalantis.contextmenu.lib.MenuParams;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 
-import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.fragment.HomeFragment;
 import org.iflab.ibistubydreamfactory.utils.CheckUpdateUtil;
@@ -181,29 +178,12 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
                 startActivity(intent);
                 break;
             case 3://检查更新
-                CheckUpdateUtil.checkUpdate(parentView, getAlertDialog());
+                CheckUpdateUtil.checkUpdate(parentView, HomeActivity.this);
                 break;
         }
 
     }
 
-    private AlertDialog getAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        }).setPositiveButton("是", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(HomeActivity.this, "正在后台下载安装包，请查看通知栏", Toast.LENGTH_LONG).show();
-                dialog.cancel();
-                CheckUpdateUtil.downloadInNotificationBar(MyApplication.UPDATE_DOWNLOAD_URL);
-            }
-        });
-        return builder.create();
-    }
 
     /**
      * 当在主页按返回键时，双击退出，并确保fragment被dismiss

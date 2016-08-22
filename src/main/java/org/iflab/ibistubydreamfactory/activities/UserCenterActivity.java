@@ -20,6 +20,7 @@ import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.SuccessModel;
 import org.iflab.ibistubydreamfactory.models.User;
 import org.iflab.ibistubydreamfactory.utils.ACache;
+import org.iflab.ibistubydreamfactory.utils.ClearLocalDataUtils;
 import org.iflab.ibistubydreamfactory.utils.RegexConfirmUtils;
 
 import retrofit2.Call;
@@ -66,7 +67,7 @@ public class UserCenterActivity extends AppCompatActivity {
             public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {//如果成功
-                    aCache.clear();
+                    ClearLocalDataUtils.clearLocalData();//清空所有本地存储
                     startActivity(new Intent(UserCenterActivity.this, RegisterActivity.class));
                     finish();
                     HomeActivity.HOMEACTIVITY_INSTANCE.finish();
@@ -123,7 +124,7 @@ public class UserCenterActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {//如果成功
                         Toast.makeText(UserCenterActivity.this, "密码修改成功,请重新登录", Toast.LENGTH_SHORT)
                              .show();
-                        aCache.clear();
+                        ClearLocalDataUtils.clearLocalData();//清空所有本地存储
                         startActivity(new Intent(UserCenterActivity.this, RegisterActivity.class));
                         finish();
                         HomeActivity.HOMEACTIVITY_INSTANCE.finish();
