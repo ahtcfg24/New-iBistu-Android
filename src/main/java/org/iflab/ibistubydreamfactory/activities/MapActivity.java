@@ -138,6 +138,8 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
         myTrafficStyle.setSlowColor(0xffff7508);
         myTrafficStyle.setSmoothColor(0xff00a209);
         map.setMyTrafficStyle(myTrafficStyle);
+
+
     }
 
 
@@ -181,6 +183,7 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
         map.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示
         map.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         map.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);//设置定位类型
+
     }
 
 

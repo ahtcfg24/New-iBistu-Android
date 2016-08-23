@@ -130,6 +130,16 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged"
             >
         </activity>
+
+        <activity
+            android:name=".activities.PlayerActivity"
+            android:label="VR播放器"
+            >
+        </activity>
+        <activity
+            android:name=".activities.VRImagePlayerActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>
