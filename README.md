@@ -17,7 +17,7 @@
               ]
  }
  ```
- * 本文档提供的接口除注册、登录、请求重置密码、检查更新、下载更新包只需要添加请求头`X-DreamFactory-Api-Key`以外，其它接口均需要添加`X-DreamFactory-Api-Key`和`X-DreamFactory-Session-Token`。以上不需token的接口即使添加了token也会自动忽略`X-DreamFactory-Session-Token`。
+ * 本文档提供的接口除特非特别注明不需添加header，否则其它接口均需要添加`X-DreamFactory-Api-Key`和`X-DreamFactory-Session-Token`。以上不需token的接口即使添加了token也会自动忽略`X-DreamFactory-Session-Token`。
 
   - 请求头及其格式为：
  > "X-DreamFactory-Api-Key", "dreamfactory提供的apikey"
@@ -50,7 +50,7 @@
 ---
 ## 升级更新(安卓)
 
- * 检查更新
+ * 检查更新（只需添加header:`X-DreamFactory-Api-Key`）
 
     - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_update/1`
     - 请求方法：get
@@ -69,23 +69,22 @@
     }
     ```
 
- * 下载更新(无需添加header)
+ * 下载更新（只需添加header:`X-DreamFactory-Api-Key`）
 
     - 接口：`http://api.iflab.org/api/v2/{检查更新返回值中的path字段}{name字段}`
     - 请求方法：get
-    - 参数：api_key
-    - 示例URL：`http://api.iflab.org/api/v2/files/ibistu/update/Android/iBistu.apk?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2`
+    - 参数：无
+    - 示例URL：`http://api.iflab.org/api/v2/files/ibistu/update/Android/iBistu.apk`
     - 示例返回值：iBistu.apk
 
 
 ## 用户模块
 
- * 注册
+ * 注册（只需添加header:`X-DreamFactory-Api-Key`）
 
     - 接口：`http://api.ifalb.org/api/v2/user/register`
     - 请求方法：post
     - 请求体：
-
     ```
     {
       "email": "testuser@test.com",
@@ -104,10 +103,10 @@
     "success":true
     }
     ```
- * 注册验证
+ * 注册验证（无需添加本文档的header）
 
     - 注册验证使用网易云信对手机进行短信验证，详见[官方文档](http://dev.netease.im/docs?doc=server_sms)
- * 登录
+ * 登录（只需添加header:`X-DreamFactory-Api-Key`）
 
     - 接口：`http://api.iflab.org/api/v2/user/session?remember_m=true`
     - 请求方法：post
@@ -118,7 +117,6 @@
     "password":"testuser"
     }
     ```
-
       + 此处返回的session_token默认有效期为24小时，过期后必须刷新token，否则无法使用。
     - 示例返回值：
     ```
@@ -166,12 +164,11 @@
       "success": true
     }
     ```
- * 请求重置密码：
+ * 请求重置密码：（只需添加header:`X-DreamFactory-Api-Key`）
 
     - 接口：`http://api.ifalb.org/api/v2/user/password?reset=true`
     - 请求方法：post
     - 请求体：
-
     ```
     {
       "email": "testuser@test.com"
