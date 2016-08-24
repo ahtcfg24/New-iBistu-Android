@@ -85,6 +85,8 @@
     - 接口：`http://api.ifalb.org/api/v2/user/register`
     - 请求方法：post
     - 请求体：
+      + name、first_name、last_name是可选参数
+      + email字段必须符合邮箱格式
     ```
     {
       "email": "testuser@test.com",
@@ -95,9 +97,6 @@
       "last_name": "user"
     }
     ```
-        + name、first_name、last_name是可选参数
-        + email字段必须符合邮箱格式
-
     - 示例返回值：
     ```
     {
@@ -118,9 +117,8 @@
     "password":"testuser"
     }
     ```
-        + 此处返回的session_token默认有效期为24小时，过期后必须刷新token，否则无法使用。
-
     - 示例返回值：
+      + 此处返回的session_token默认有效期为24小时，过期后必须刷新token，否则无法使用。
     ```
     {
         "session_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M",
@@ -171,15 +169,15 @@
     - 接口：`http://api.ifalb.org/api/v2/user/password?reset=true`
     - 请求方法：post
     - 请求体：
+      + 此处email值必须是当前登录用户的email
+
     ```
     {
       "email": "testuser@test.com"
     }
     ```
-        + 此处email值必须是当前登录用户的email
-        + 该请求发出后就会往该用户的邮箱里发送重置密码邮件
-
     - 示例返回值：
+      + 该请求成功发出后就会往该用户的邮箱里发送重置密码邮件
     ```
     {
       "success": true
