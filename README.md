@@ -95,8 +95,8 @@
       "last_name": "user"
     }
     ```
-      + name、first_name、last_name是可选参数
-      + email字段必须符合邮箱格式
+        + name、first_name、last_name是可选参数
+        + email字段必须符合邮箱格式
 
     - 示例返回值：
     ```
@@ -118,7 +118,7 @@
     "password":"testuser"
     }
     ```
-      + 此处返回的session_token默认有效期为24小时，过期后必须刷新token，否则无法使用。
+        + 此处返回的session_token默认有效期为24小时，过期后必须刷新token，否则无法使用。
 
     - 示例返回值：
     ```
@@ -176,9 +176,9 @@
       "email": "testuser@test.com"
     }
     ```
-      + 此处email值必须是当前登录用户的email
-      + 该请求发出后就会往该用户的邮箱里发送重置密码邮件
-      
+        + 此处email值必须是当前登录用户的email
+        + 该请求发出后就会往该用户的邮箱里发送重置密码邮件
+
     - 示例返回值：
     ```
     {
