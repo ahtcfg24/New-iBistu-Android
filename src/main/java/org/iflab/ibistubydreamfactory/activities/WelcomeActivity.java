@@ -10,39 +10,81 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.apis.APISource;
+import org.iflab.ibistubydreamfactory.apis.AuthAPI;
 import org.iflab.ibistubydreamfactory.apis.UpdateAPI;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
+import org.iflab.ibistubydreamfactory.models.RefreshTokenRequestBody;
 import org.iflab.ibistubydreamfactory.models.UpdateInfo;
 import org.iflab.ibistubydreamfactory.models.User;
 import org.iflab.ibistubydreamfactory.utils.ACache;
 import org.iflab.ibistubydreamfactory.utils.AndroidUtils;
 import org.iflab.ibistubydreamfactory.utils.CheckUpdateUtil;
+import org.iflab.ibistubydreamfactory.utils.SharedPreferenceUtil;
 
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 /**
  * 程序第一个Activity
  */
 public class WelcomeActivity extends Activity {
     private static String TAG = "WelcomeActivity";
-    private ACache aCache = ACache.get(MyApplication.getAppContext());
     private View parentView;
     private Handler handler = new Handler();
     private Intent intent;
+    private ACache aCache = ACache.get(MyApplication.getAppContext());
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             intent = new Intent();
-            User user = (User) aCache.getAsObject("user");
-            if (user == null) {
+            String toRefreshToken = SharedPreferenceUtil.getString(MyApplication.getAppContext(), "TO_REFRESH_SESSION_TOKEN");
+            if (toRefreshToken == null || toRefreshToken.isEmpty()) {
                 intent.setClass(WelcomeActivity.this, RegisterActivity.class);
-            } else {
+            } else {//每次启动时刷新token
+                AuthAPI authAPI = new Retrofit.Builder().baseUrl(MyApplication.INSTANCE_URL)
+                                                        .addConverterFactory(JacksonConverterFactory
+                                                                .create(new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                                                                                          .setSerializationInclusion(JsonInclude.Include.NON_NULL)))
+                                                        .build()
+                                                        .create(AuthAPI.class);
+
+                RefreshTokenRequestBody refreshTokenRequestBody = new RefreshTokenRequestBody();
+                refreshTokenRequestBody.setApi_key(MyApplication.API_KEY);
+                refreshTokenRequestBody.setSession_token(toRefreshToken);
+                Call<User> call = authAPI.refreshToken(refreshTokenRequestBody);
+                call.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if (response.isSuccessful()) {//如果成功
+                            User user = response.body();
+                            aCache.put("user", user, 30 * ACache.TIME_DAY);//保存user对象
+                            //记录token,保存到缓存是为了检测token是否过期，保存到preference是为了刷新token时读取旧token
+                            SharedPreferenceUtil.putString(MyApplication.getAppContext(), "TO_REFRESH_SESSION_TOKEN", user
+                                    .getSessionToken());
+                            aCache.put("SESSION_TOKEN", user.getSessionToken(), 24 * ACache.TIME_HOUR);//token保存24小时
+                            System.out.println("刷新token成功");
+                        } else {//刷新失败
+                            ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
+                            onFailure(call, e.toException());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        System.out.println("刷新token失败：" + t.getMessage());
+                    }
+                });
                 intent.setClass(WelcomeActivity.this, HomeActivity.class);
             }
             startActivity(intent);

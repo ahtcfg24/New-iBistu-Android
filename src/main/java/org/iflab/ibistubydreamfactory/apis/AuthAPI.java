@@ -2,6 +2,7 @@ package org.iflab.ibistubydreamfactory.apis;
 
 import org.iflab.ibistubydreamfactory.models.ChangePasswordRequestBody;
 import org.iflab.ibistubydreamfactory.models.LoginRequestBody;
+import org.iflab.ibistubydreamfactory.models.RefreshTokenRequestBody;
 import org.iflab.ibistubydreamfactory.models.RegisterRequestBody;
 import org.iflab.ibistubydreamfactory.models.ResetPasswordRequestBody;
 import org.iflab.ibistubydreamfactory.models.SuccessModel;
@@ -29,7 +30,7 @@ public interface AuthAPI {
      * 刷新token
      */
     @PUT("user/session")
-    Call<User> refreshToken();
+    Call<User> refreshToken(@Body RefreshTokenRequestBody refreshTokenBody);
 
     /**
      * 注册接口

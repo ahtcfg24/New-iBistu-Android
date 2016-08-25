@@ -83,7 +83,6 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
         YellowPageAPI departmentService = APISource.getInstance()
                                                    .getAPIObject(YellowPageAPI.class);
         Call<Resource<YellowPageDepartment>> call = departmentService.getYellowPageDetails(filter + department);
-        System.out.println("filter+department" + filter + department);
         call.enqueue(new Callback<Resource<YellowPageDepartment>>() {
             @Override
             public void onResponse(Call<Resource<YellowPageDepartment>> call, Response<Resource<YellowPageDepartment>> response) {

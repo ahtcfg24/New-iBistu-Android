@@ -108,7 +108,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         progressBar.setVisibility(View.GONE);
                         if (response.isSuccessful()) {//如果登录成功
                             User user = response.body();
-                            aCache.put("user", user, 24 * ACache.TIME_HOUR);//保存user对象
+                            aCache.put("user", user, 30 * ACache.TIME_DAY);//保存user对象
                             Assert.assertEquals(user.getEmail(), request.getEmail());
                             //记录token,保存到缓存是位了检测token是否过期，保存到preference是为了刷新token时读取旧token
                             SharedPreferenceUtil.putString(MyApplication.getAppContext(), "TO_REFRESH_SESSION_TOKEN", user

@@ -25,10 +25,10 @@
     > "X-DreamFactory-Session-Token","当前登录获取到的token"
 
   - 也可以不使用请求头，直接以URL参数的形式添加api_key和session_token代替请求头进行接口访问。例如：
- > http://api.ifalb.org/api/v2/ibistu/_table/module_map?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M
+ > http://api.iflab.org/api/v2/ibistu/_table/module_map?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M
 
  * 本文档提供的接口均可以通过添加可选参数`include_count=true`以获得包含数据对象总数的json数据。例如：
- > http://api.ifalb.org/api/v2/ibistu/_table/module_map?include_count=true&api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M
+ > http://api.iflab.org/api/v2/ibistu/_table/module_map?include_count=true&api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M
 
   - 返回值结构：
  ```
@@ -82,7 +82,7 @@
 
  * 注册（只需添加header:`X-DreamFactory-Api-Key`）
 
-    - 接口：`http://api.ifalb.org/api/v2/user/register`
+    - 接口：`http://api.iflab.org/api/v2/user/register`
     - 请求方法：post
     - 请求体：
       + name、first_name、last_name是可选参数
@@ -137,7 +137,7 @@
     ```
  * 退出登录：
 
-    - 接口：`http://api.ifalb.org/api/v2/user/session`
+    - 接口：`http://api.iflab.org/api/v2/user/session`
     - 请求方法：delete
     - 参数：无
     - 示例返回值：
@@ -148,7 +148,7 @@
     ```
  * 修改密码：
 
-    - 接口：`http://api.ifalb.org/api/v2/user/password`
+    - 接口：`http://api.iflab.org/api/v2/user/password`
     - 请求方法：post
     - 请求体：
     ```
@@ -166,7 +166,7 @@
     ```
  * 请求重置密码：（只需添加header:`X-DreamFactory-Api-Key`）
 
-    - 接口：`http://api.ifalb.org/api/v2/user/password?reset=true`
+    - 接口：`http://api.iflab.org/api/v2/user/password?reset=true`
     - 请求方法：post
     - 请求体：
       + 此处email值必须是当前登录用户的email
@@ -185,7 +185,7 @@
     ```
  * 刷新token：
 
-    - 接口：`http://api.ifalb.org/api/v2/user/session`
+    - 接口：`http://api.iflab.org/api/v2/user/session`
     - 请求方法：put
     - 参数：无
     - 示例：刷新当前token（此处参数值为登录后获取到的token）：`http://104.155.211.143/api/v2/user/session`
@@ -215,7 +215,7 @@
 
  * 获取iBistu相关的介绍数据
 
-   - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_about`
+   - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_about`
    - 请求方法：get
    - 参数：无
    - 示例返回值：
@@ -247,7 +247,7 @@
 
  * 获取班车数据
 
-   - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_bus`
+   - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_bus`
    - 请求方法：get
    - 参数：无
    - 示例返回值：
@@ -299,7 +299,7 @@
 
  * 获取黄页部门列表数据
 
-   - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_department_list`
+   - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_department_list`
    - 请求方法：get
    - 参数：无
    - 示例返回值：
@@ -339,13 +339,13 @@
  ```
  * 获取黄页某一部门下的电话号码数据
 
-   - 接口：`http://api.ifalb.org/api/v2/ibistu/_table/module_yellowpage`
+   - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_yellowpage`
    - 请求方法：get
    - 参数：
 
       * `offset`：固定参数，值为`1`
       * `filter`：固定前缀`department=`，值为黄页接口1返回的数据中的`department`字段值
-   - 示例：获取研究生工作办公室的电话号码：（此处参数值为：`department=10`）：`http://api.ifalb.org/api/v2/ibistu/_table/module_yellowpage?offset=1&filter=department=10`
+   - 示例：获取研究生工作办公室的电话号码：（此处参数值为：`department=10`）：`http://api.iflab.org/api/v2/ibistu/_table/module_yellowpage?offset=1&filter=department=10`
    - 示例返回值：
  ```
 {
@@ -380,7 +380,7 @@
 
  * 获取校区位置数据
 
-   - 接口: `http://api.ifalb.org/api/v2/ibistu/_table/module_map`
+   - 接口: `http://api.iflab.org/api/v2/ibistu/_table/module_map`
    - 请求方法：get
    - 参数：无
    - 示例返回值：
