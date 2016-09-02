@@ -3,8 +3,6 @@ package org.iflab.ibistubydreamfactory.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -34,13 +32,11 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
     private List<YellowPageDepartment> yellowPageDepartmentDetailsList;
     private Resource<YellowPageDepartment> yellowPageDepartDetailsResource;
     private ACache aCache;
-    private Intent intent;
     private String branchName;//部门下分支的名字
     private String telephoneNumber;//部门下分支的号码
     private String department;
-    private String filter = "department=";//后端接口查询department的过滤字段，相当于sql中的where子句
 
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +62,7 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
 
     private void init() {
         progressBar = (ProgressBar) findViewById(R.id.progressBar_yellowPageDepartDetails);
-        intent = getIntent();
+        Intent intent = getIntent();
         department = intent.getStringExtra("department");
         getSupportActionBar().setTitle(intent.getStringExtra("name"));
         listViewYellowPageDepartDetails = (ListView) findViewById(R.id.listView_yellowPageDepartDetails);
@@ -82,6 +78,7 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
     private void getYellowPageDepartResource() {
         YellowPageAPI departmentService = APISource.getInstance()
                                                    .getAPIObject(YellowPageAPI.class);
+        String filter = "department=";
         Call<Resource<YellowPageDepartment>> call = departmentService.getYellowPageDetails(filter + department);
         call.enqueue(new Callback<Resource<YellowPageDepartment>>() {
             @Override
@@ -117,18 +114,6 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_yellow_page_depart_details, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-
-    }
 
 
 }

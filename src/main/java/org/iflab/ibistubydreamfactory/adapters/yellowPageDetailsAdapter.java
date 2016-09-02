@@ -18,7 +18,6 @@ import java.util.List;
 public class yellowPageDetailsAdapter extends BaseAdapter {
     private Context context;
     private List<YellowPageDepartment> yellowPageDepartmentBranchList;
-    private ViewHolder viewHolder;
 
     public yellowPageDetailsAdapter(Context context, List<YellowPageDepartment> yellowPageDepartmentBranchList) {
         this.context = context;
@@ -50,6 +49,7 @@ public class yellowPageDetailsAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_yellow_page_depart_details, null);
             viewHolder = new ViewHolder();

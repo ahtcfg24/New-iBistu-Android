@@ -19,10 +19,6 @@ import static org.iflab.ibistubydreamfactory.MyApplication.newsCategory;
 
 
 public class NewsActivity extends AppCompatActivity {
-    private ScrollIndicatorView categoryIndicatorView;
-    private ViewPager viewPager;
-    private IndicatorViewPager indicatorViewPager;
-    private Map<String, String> newsPathMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +29,7 @@ public class NewsActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        newsPathMap = new HashMap<>();
+        Map<String, String> newsPathMap = new HashMap<>();
         newsPathMap.put(newsCategory[0], "zhxw");
         newsPathMap.put(newsCategory[1], "tpxw");
         newsPathMap.put(newsCategory[2], "rcpy");
@@ -44,7 +40,7 @@ public class NewsActivity extends AppCompatActivity {
         newsPathMap.put(newsCategory[7], "shfw");
         newsPathMap.put(newsCategory[8], "mtgz");
 
-        categoryIndicatorView = (ScrollIndicatorView) findViewById(R.id.category_news);
+        ScrollIndicatorView categoryIndicatorView = (ScrollIndicatorView) findViewById(R.id.category_news);
 
         /**
          * 设置tab下面的滑动条
@@ -61,8 +57,8 @@ public class NewsActivity extends AppCompatActivity {
             }
         });
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager_newsList);
-        indicatorViewPager = new IndicatorViewPager(categoryIndicatorView, viewPager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager_newsList);
+        IndicatorViewPager indicatorViewPager = new IndicatorViewPager(categoryIndicatorView, viewPager);
         indicatorViewPager.setAdapter(new NewsListFragmentAdapter(getSupportFragmentManager(), NewsActivity.this, newsPathMap));
     }
 

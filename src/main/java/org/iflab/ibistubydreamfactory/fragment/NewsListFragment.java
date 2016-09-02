@@ -1,8 +1,12 @@
 package org.iflab.ibistubydreamfactory.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,11 +42,9 @@ import cz.msebera.android.httpclient.Header;
 public class NewsListFragment extends Fragment {
     private ACache aCache = ACache.get(MyApplication.getAppContext());
     private ListView newsListView;
-    private JSONArray newsListJsonArray;
-    //    private PullToRefreshView pullToRefreshView;//下拉刷新控件
+    private SwipeRefreshLayout pullToRefreshView;//下拉刷新控件
     private View loadMoreView;//上拉加载更多控件
     private View rootView;//Fragment的界面
-    private String newsCategoryPath;//对应Fragment的相对路径
     private String fragmentName;//每个fragmentTab的名字
     private String newsListURL;//缺少当前页编号参数的新闻列表URL
     private int currentPage;//分页加载的当前页编号
@@ -59,6 +61,7 @@ public class NewsListFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_news_list, container, false);
         init();
         initView();
+        initRefresh();
         loadData();
         return rootView;
     }
@@ -68,9 +71,8 @@ public class NewsListFragment extends Fragment {
      */
     private void init() {
         Bundle bundle = getArguments();
-        newsCategoryPath = bundle.getString("newsCategoryPath");
         fragmentName = bundle.getString("fragmentName");
-        newsListURL = MyApplication.newsListBaseURL + "?category=" + newsCategoryPath + "&page=";
+        newsListURL = MyApplication.newsListBaseURL + "?category=" + bundle.getString("newsCategoryPath") + "&page=";
         currentPage = 1;
         newsList = new ArrayList<>();
         newsListAdapter = new NewsListAdapter(NewsListFragment.this.getActivity());
@@ -86,8 +88,7 @@ public class NewsListFragment extends Fragment {
         loadToLastTextView = (TextView) loadMoreView.findViewById(R.id.load_to_last_textView);
         footerProgressLayout = (LinearLayout) loadMoreView.findViewById(R.id.footer_progress_layout);
         newsListView.addFooterView(loadMoreView);
-//        pullToRefreshView = (PullToRefreshView) rootView.findViewById(R.id.pull_to_refresh);
-//        pullToRefreshView.setOnRefreshListener(new RefreshListener());
+        pullToRefreshView = (SwipeRefreshLayout) rootView.findViewById(R.id.pullToRefreshView);
         newsListView.setOnScrollListener(new ScrollListener());//上拉加载
         /*监听listView*/
         newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -102,14 +103,37 @@ public class NewsListFragment extends Fragment {
         });
     }
 
+
+    /**
+     * 初始化下拉刷新功能
+     */
+    private void initRefresh() {
+        pullToRefreshView.setColorSchemeColors(Color.RED, Color.BLUE);
+        pullToRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        newsList.clear();
+                        currentPage = 1;
+                        requestByURL(newsListURL + currentPage);
+                        Snackbar.make(rootView, "刷新完成", Snackbar.LENGTH_SHORT).show();
+                    }
+                }, 1000);
+            }
+
+
+        });
+    }
+
     /**
      * 从网络或者缓存载入数据
      */
     private void loadData() {
-
-        newsListJsonArray = aCache.getAsJSONArray(newsListURL + currentPage);
+        JSONArray newsListJsonArray = aCache.getAsJSONArray(newsListURL + currentPage);
         if (newsListJsonArray == null) {
-            getNewsListDataByURL(newsListURL + currentPage);
+            requestByURL(newsListURL + currentPage);
         } else {
             handleNewsListData(newsListJsonArray);
         }
@@ -120,7 +144,7 @@ public class NewsListFragment extends Fragment {
      *
      * @param URL 按页分的数据URL
      */
-    private void getNewsListDataByURL(final String URL) {
+    private void requestByURL(final String URL) {
         HttpUtil.get(URL, new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -139,6 +163,12 @@ public class NewsListFragment extends Fragment {
                     aCache.put(URL, response);
                     handleNewsListData(response);
                 }
+            }
+
+            @Override
+            public void onFinish() {
+                pullToRefreshView.setRefreshing(false);//加载完成收起下拉刷新的进度圈
+
             }
         });
     }
@@ -217,24 +247,4 @@ public class NewsListFragment extends Fragment {
             }
         }
     }
-//
-//    /**
-//     * 下拉刷新监听器
-//     */
-//    private class RefreshListener implements PullToRefreshView.OnRefreshListener {
-//        @Override
-//        public void onRefresh() {
-//            pullToRefreshView.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    pullToRefreshView.setRefreshing(false);
-//                    currentPage = 1;
-//                    newsList.clear();//清空旧的新闻列表
-//                    getNewsListDataByURL(newsListURL + currentPage);
-//                    new MyToast("刷新完成");
-//                }
-//            }, 1000);
-//
-//        }
-//    }
 }

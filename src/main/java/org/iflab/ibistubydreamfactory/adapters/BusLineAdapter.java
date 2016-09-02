@@ -16,12 +16,11 @@ import java.util.List;
  *
  */
 public class BusLineAdapter extends BaseAdapter {
-    private List<BusStation> busStationList;
-    private Context context;
-    private ViewHolder viewHolder;
     private final int TYPE_ITEM=0;
     private final int TYPE_FOOTER=1;
     private final int TYPE_HEADER=2;
+    private List<BusStation> busStationList;
+    private Context context;
 
 
     public BusLineAdapter(List<BusStation> busStationList, Context context) {
@@ -78,6 +77,7 @@ public class BusLineAdapter extends BaseAdapter {
             textViewFooterArrivalTime.setText(busStationList.get(position).getArrivalTime());
 
         } else if(getItemViewType(position)==TYPE_ITEM){
+            ViewHolder viewHolder;
             if (convertView == null) {
                 viewHolder = new ViewHolder();
                 convertView = LayoutInflater.from(context).inflate(R.layout.item_bus_line, null);

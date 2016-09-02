@@ -3,8 +3,6 @@ package org.iflab.ibistubydreamfactory.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -52,7 +50,8 @@ public class YellowPageActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent();
-                intent.putExtra("department", yellowPageDepartmentList.get(position).getDepartment());
+                intent.putExtra("department", yellowPageDepartmentList.get(position)
+                                                                      .getDepartment());
                 intent.putExtra("name", yellowPageDepartmentList.get(position).getName());
                 intent.setClass(YellowPageActivity.this, YellowPageDetailsActivity.class);
                 startActivity(intent);
@@ -79,27 +78,11 @@ public class YellowPageActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_yellow_page_depart, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-
-    }
-
-
-
     /**
      * 获得学校部门信息
      */
     private void getYellowPageDepartResource() {
-        YellowPageAPI yellowPageAPI = APISource.getInstance()
-                                                   .getAPIObject(YellowPageAPI.class);
+        YellowPageAPI yellowPageAPI = APISource.getInstance().getAPIObject(YellowPageAPI.class);
         Call<Resource<YellowPageDepartment>> call = yellowPageAPI.getYellowPageDepart();
         call.enqueue(new Callback<Resource<YellowPageDepartment>>() {
             @Override
@@ -108,7 +91,7 @@ public class YellowPageActivity extends AppCompatActivity {
                     yellowPageDepartResource = response.body();
                     aCache.put("yellowPageDepartResource", yellowPageDepartResource);
                     loadData();
-                }else {
+                } else {
                     ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
                     onFailure(call, e.toException());
                 }

@@ -24,14 +24,11 @@ import static org.iflab.ibistubydreamfactory.MyApplication.newsCategory;
  */
 public class NewsListFragmentAdapter extends IndicatorViewPager.IndicatorFragmentPagerAdapter {
     private LayoutInflater inflater;
-    private Context context;
-
     private Map<String, String> newsPathMap;
 
 
     public NewsListFragmentAdapter(FragmentManager fragmentManager, Context context, Map<String, String> newsPathMap) {
         super(fragmentManager);
-        this.context = context;
         inflater = LayoutInflater.from(context);
         this.newsPathMap = newsPathMap;
     }
@@ -49,7 +46,6 @@ public class NewsListFragmentAdapter extends IndicatorViewPager.IndicatorFragmen
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.tab_news_category, container, false);
         }
-
         TextView textView = (TextView) convertView;
         textView.setText(newsCategory[position % newsCategory.length]);
         return convertView;

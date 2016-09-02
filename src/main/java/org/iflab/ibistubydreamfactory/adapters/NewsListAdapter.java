@@ -22,7 +22,6 @@ import java.util.List;
 public class NewsListAdapter extends BaseAdapter {
     private List<News> newsList;
     private Context context;
-    private ViewHolder viewHolder;
 
 
     public NewsListAdapter(Context context) {
@@ -54,6 +53,7 @@ public class NewsListAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_news, null);
             viewHolder = new ViewHolder();

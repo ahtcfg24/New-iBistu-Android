@@ -21,7 +21,6 @@ import static com.squareup.picasso.MemoryPolicy.NO_STORE;
  */
 public class VRImagePlayerActivity extends VRPlayerActivity {
 
-    private static final String TAG = "VRImagePlayerActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,10 +28,8 @@ public class VRImagePlayerActivity extends VRPlayerActivity {
         cancelBusy();
     }
 
-    private Target mTarget;// keep the reference for picasso.
-
     private void loadImage(Uri uri, final MD360BitmapTexture.Callback callback) {
-        mTarget = new Target() {
+        Target mTarget = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 // notify if size changed

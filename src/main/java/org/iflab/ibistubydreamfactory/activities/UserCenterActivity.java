@@ -70,7 +70,7 @@ public class UserCenterActivity extends AppCompatActivity {
                     ClearLocalDataUtils.clearLocalData();//清空所有本地存储
                     startActivity(new Intent(UserCenterActivity.this, RegisterActivity.class));
                     finish();
-                    HomeActivity.HOMEACTIVITY_INSTANCE.finish();
+                    HomeActivity.HOME_ACTIVITY_INSTANCE.finish();
                 } else {//失败
                     ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
                     onFailure(call, e.toException());
@@ -127,7 +127,7 @@ public class UserCenterActivity extends AppCompatActivity {
                         ClearLocalDataUtils.clearLocalData();//清空所有本地存储
                         startActivity(new Intent(UserCenterActivity.this, RegisterActivity.class));
                         finish();
-                        HomeActivity.HOMEACTIVITY_INSTANCE.finish();
+                        HomeActivity.HOME_ACTIVITY_INSTANCE.finish();
                     } else {//失败
                         ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
                         onFailure(call, e.toException());

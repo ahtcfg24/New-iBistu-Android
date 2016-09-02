@@ -23,7 +23,6 @@ import java.util.List;
  */
 public abstract class VRPlayerActivity extends Activity {
 
-    private static final String TAG = "VRPlayerActivity";
     //SparseArray相当于是一个优化版的HashMap，<>内表示存储的值
     private static final SparseArray<String> sDisplayMode = new SparseArray<>();
     private static final SparseArray<String> sInteractiveMode = new SparseArray<>();
@@ -52,6 +51,7 @@ public abstract class VRPlayerActivity extends Activity {
         sAntiDistortion.put(0, "隐藏边框");
     }
 
+    private MDVRLibrary mVRLibrary;
 
     public static void startBitmap(Context context, Uri uri) {
         start(context, uri, VRImagePlayerActivity.class);
@@ -62,10 +62,6 @@ public abstract class VRPlayerActivity extends Activity {
         intent.setData(uri);
         context.startActivity(intent);
     }
-
-
-    private MDVRLibrary mVRLibrary;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

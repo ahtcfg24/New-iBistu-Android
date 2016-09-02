@@ -12,15 +12,12 @@ import java.util.Date;
 /**
  * 自定义Json日期格式
  */
-public class CustomJsonDateDeserializer extends JsonDeserializer<Date>
-{
-    private static String PATTERN = "yyyy-MM-dd HH:mm:ss";
+public class CustomJsonDateDeserializer extends JsonDeserializer<Date> {
 
     @Override
-    public Date deserialize(JsonParser jsonparser,
-                            DeserializationContext deserializationcontext) throws IOException {
+    public Date deserialize(JsonParser jsonparser, DeserializationContext deserializationcontext) throws IOException {
 
-        SimpleDateFormat format = new SimpleDateFormat(PATTERN);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = jsonparser.getText();
         try {
             return format.parse(date);

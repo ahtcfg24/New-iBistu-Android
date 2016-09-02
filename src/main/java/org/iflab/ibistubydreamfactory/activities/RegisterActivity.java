@@ -43,15 +43,16 @@ import retrofit2.Response;
  */
 public class RegisterActivity extends AppCompatActivity {
 
-    private Fragment loginFragment;
     private FragmentManager fragmentManager;
-    private EditText phoneInput, confirmCodeInput, emailInput, passwordInput, confrimPasswordInput;
+    private EditText phoneInput, confirmCodeInput, emailInput, passwordInput, confirmPasswordInput;
     private Button sendCodeButton;
     private ProgressBar progressBar;
     private View parentView;
     private AuthAPI authAPI;
     private Bundle bundle;
-    private String phone, confirmCode, password, email, confirmPassword;//各输入框中输入的数据
+    private String phone;
+    private String password;
+    private String email;
     private String confirmPhone;//进行短信验证的手机号
     private AsyncHttpClient client;
 
@@ -89,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
         confirmCodeInput = (EditText) findViewById(R.id.confirmCode_input);
         emailInput = (EditText) findViewById(R.id.email_input);
         passwordInput = (EditText) findViewById(R.id.password_input);
-        confrimPasswordInput = (EditText) findViewById(R.id.confirmPassword_input);
+        confirmPasswordInput = (EditText) findViewById(R.id.confirmPassword_input);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
 
@@ -98,8 +99,8 @@ public class RegisterActivity extends AppCompatActivity {
         phone = phoneInput.getText().toString();
         password = passwordInput.getText().toString();
         email = emailInput.getText().toString();
-        confirmPassword = confrimPasswordInput.getText().toString();
-        confirmCode = confirmCodeInput.getText().toString();
+        String confirmPassword = confirmPasswordInput.getText().toString();
+        String confirmCode = confirmCodeInput.getText().toString();
 
         if (!RegexConfirmUtils.isMobile(phone)) {
             Snackbar.make(parentView, "请填写正确的手机号！", Snackbar.LENGTH_SHORT).show();
@@ -243,7 +244,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void switchToLogin(Bundle args) {
         // 开启Fragment管理事务
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        loginFragment = new LoginFragment();
+        Fragment loginFragment = new LoginFragment();
         loginFragment.setArguments(args);
         transaction.add(R.id.fragment_container, loginFragment);
         transaction.addToBackStack(null);//把fragment添加到回退栈中

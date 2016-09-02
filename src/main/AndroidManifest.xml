@@ -60,7 +60,7 @@
 
         <activity
             android:name=".activities.YellowPageActivity"
-            android:label="黄页">
+            android:label="@string/title_activity_yellow_page">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HomeActivity"/>
@@ -76,7 +76,7 @@
         </activity>
         <activity
             android:name=".activities.AboutActivity"
-            android:label="关于">
+            android:label="@string/title_activity_about">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HomeActivity"/>
@@ -88,7 +88,7 @@
         </activity>
         <activity
             android:name=".activities.BusActivity"
-            android:label="校车">
+            android:label="@string/title_activity_school_bus">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HomeActivity"/>
@@ -100,7 +100,7 @@
         </activity>
         <activity
             android:name=".activities.MapActivity"
-            android:label="地图">
+            android:label="@string/title_activity_map">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HomeActivity"/>
@@ -116,7 +116,7 @@
         </activity>
         <activity
             android:name=".activities.UserCenterActivity"
-            android:label="个人中心"
+            android:label="@string/title_activity_user_center"
             android:windowSoftInputMode="stateHidden|stateUnchanged">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -124,13 +124,13 @@
         </activity>
         <activity
             android:name=".activities.RegisterActivity"
-            android:label="注册"
+            android:label="@string/title_activity_register"
             android:theme="@style/CustomNoActionBar"
             android:windowSoftInputMode="stateHidden|stateUnchanged">
         </activity>
         <activity
             android:name=".activities.PlayerActivity"
-            android:label="VR播放器">
+            android:label="@string/title_activity_vr_player">
         </activity>
         <activity
             android:name=".activities.VRImagePlayerActivity"
@@ -138,12 +138,18 @@
             android:screenOrientation="landscape"/>
         <activity
             android:name=".activities.NewsActivity"
-            android:label="新闻">
+            android:label="@string/title_activity_news">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HomeActivity"/>
         </activity>
-        <activity android:name=".activities.NewsDetailActivity">
+        <activity
+            android:name=".activities.NewsDetailActivity"
+            android:label="@string/title_activity_news_detail"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.NewsActivity"/>
         </activity>
     </application>
 

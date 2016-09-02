@@ -178,7 +178,6 @@ public class NewsDetailActivity extends AppCompatActivity {
         @Override
         public void UpdateUI(Context context, final int position, String data) {
             Picasso.with(context).load(Uri.parse(data)).into(imageView);
-
         }
     }
 }

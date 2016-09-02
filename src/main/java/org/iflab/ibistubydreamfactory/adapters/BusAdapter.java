@@ -19,11 +19,10 @@ import java.util.List;
  * 参考：http://blog.csdn.net/androiddevelop/article/details/8316759
  */
 public class BusAdapter extends BaseAdapter {
-    private List<BusType> busData;
-    private Context context;
-    private ViewHolder viewHolder;
     private final int TYPE_NOT_ITEM = 0;//用0表示不是item类型
     private final int TYPE_ITEM = 1;//用1表示item类型
+    private List<BusType> busData;
+    private Context context;
     private String busTypeName = "默认值";
 
     public BusAdapter(List<BusType> busData, Context context) {
@@ -110,6 +109,7 @@ public class BusAdapter extends BaseAdapter {
             TextView textViewBusType = (TextView) convertView.findViewById(R.id.textView_busType);
             textViewBusType.setText(busTypeName);
         } else if (getItemViewType(position) == TYPE_ITEM) {
+            ViewHolder viewHolder;
             if (convertView == null) {
                 viewHolder = new ViewHolder();
                 convertView = LayoutInflater.from(context).inflate(R.layout.item_bus, null);

@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">iBistuDF版</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">iBistu</string>
     <string name="action_settings">设置</string>
     <string name="title_activity_home">主页</string>
     <string name="title_activity_news">新闻</string>
@@ -12,8 +11,10 @@
     <string name="title_activity_user_center">用户中心</string>
     <string name="title_activity_about">关于我们</string>
     <string name="aboutString">iBistu是北京信息科技大学官方移动应用,由本校信息网络中心ifLab（网络实践创新联盟）开发及维护。
-        如果有任何建议请在新浪微博@ifLab,安卓版本功能问题可以直接联系QQ764951578</string>
+        如果有任何建议请在新浪微博@ifLab,安卓版本功能问题可以直接联系ahtcfg24@163.com</string>
     <string name="title_activity_about_details">关于详情</string>
     <string name="title_activity_news_detail">新闻详情</string>
     <string name="title_activity_map">地图</string>
+    <string name="title_activity_vr_player">VR播放器</string>
+    <string name="title_activity_register">注册</string>
 </resources>

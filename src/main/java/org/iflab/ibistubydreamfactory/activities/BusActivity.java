@@ -3,8 +3,6 @@ package org.iflab.ibistubydreamfactory.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,9 +33,7 @@ public class BusActivity extends AppCompatActivity {
     private ListView listViewBus;
     private ProgressBar progressBar;
     private List<Bus> busSourceList;
-    private List<BusType> busData;
     private BusType scheduledBus;
-    private BusType teachBus;
     private Resource<Bus> busResource;
     private ACache aCache;
     private Intent intent;
@@ -115,7 +111,7 @@ public class BusActivity extends AppCompatActivity {
     private void loadData() {
         busSourceList = busResource.getResource();
         scheduledBus = new BusType("通勤班车");
-        teachBus = new BusType("教学班车");
+        BusType teachBus = new BusType("教学班车");
         for (Bus bus : busSourceList) {
             String busType = bus.getBusType();
             if (busType.equals("通勤班车")) {
@@ -124,7 +120,7 @@ public class BusActivity extends AppCompatActivity {
                 teachBus.addItem(bus);
             }
         }
-        busData = new ArrayList<>();
+        List<BusType> busData = new ArrayList<>();
         busData.add(scheduledBus);
         busData.add(teachBus);
 
@@ -134,17 +130,5 @@ public class BusActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_bus, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-
-    }
 }
 

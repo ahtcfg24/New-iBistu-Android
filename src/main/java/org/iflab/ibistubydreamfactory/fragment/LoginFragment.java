@@ -44,14 +44,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private TextView forgotPasswordTextView;
     private ACache aCache = ACache.get(MyApplication.getAppContext());
     private View parentView;
-    private Bundle bundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         parentView = inflater.inflate(R.layout.fragment_login, container, false);
         initView(parentView);
         authAPI = APISource.getInstance().getAPIObject(AuthAPI.class);
-        bundle = getArguments();
+        Bundle bundle = getArguments();
         if (bundle != null) {
             editEmail.setText(bundle.getString("email"));
             editPassword.setText(bundle.getString("password"));

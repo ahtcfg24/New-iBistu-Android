@@ -42,12 +42,11 @@ public class WelcomeActivity extends Activity {
     private static String TAG = "WelcomeActivity";
     private View parentView;
     private Handler handler = new Handler();
-    private Intent intent;
     private ACache aCache = ACache.get(MyApplication.getAppContext());
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            intent = new Intent();
+            Intent intent = new Intent();
             String toRefreshToken = SharedPreferenceUtil.getString(MyApplication.getAppContext(), "TO_REFRESH_SESSION_TOKEN");
             if (toRefreshToken == null || toRefreshToken.isEmpty()) {
                 intent.setClass(WelcomeActivity.this, RegisterActivity.class);
