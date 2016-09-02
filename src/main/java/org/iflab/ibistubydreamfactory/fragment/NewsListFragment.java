@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -17,6 +18,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
+import org.iflab.ibistubydreamfactory.activities.NewsDetailActivity;
 import org.iflab.ibistubydreamfactory.adapters.NewsListAdapter;
 import org.iflab.ibistubydreamfactory.models.News;
 import org.iflab.ibistubydreamfactory.utils.ACache;
@@ -36,7 +38,7 @@ import cz.msebera.android.httpclient.Header;
 public class NewsListFragment extends Fragment {
     private ACache aCache = ACache.get(MyApplication.getAppContext());
     private ListView newsListView;
-    private JSONArray newListData;
+    private JSONArray newsListJsonArray;
     //    private PullToRefreshView pullToRefreshView;//下拉刷新控件
     private View loadMoreView;//上拉加载更多控件
     private View rootView;//Fragment的界面
@@ -88,27 +90,28 @@ public class NewsListFragment extends Fragment {
 //        pullToRefreshView.setOnRefreshListener(new RefreshListener());
         newsListView.setOnScrollListener(new ScrollListener());//上拉加载
         /*监听listView*/
-//        newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                intent = new Intent();
-//                intent.putExtra("detailURL", newsList.get(position).getDetailURl());
-//                intent.putExtra("fragmentName", fragmentName);
-//                intent.setClass(getActivity(), NewsDetailActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                intent = new Intent();
+                intent.putExtra("newsLink", newsList.get(position).getNewsLink());
+                intent.putExtra("fragmentName", fragmentName);
+                intent.setClass(getActivity(), NewsDetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
      * 从网络或者缓存载入数据
      */
     private void loadData() {
-        newListData = aCache.getAsJSONArray(newsListURL + currentPage);
-        if (newListData == null) {
+
+        newsListJsonArray = aCache.getAsJSONArray(newsListURL + currentPage);
+        if (newsListJsonArray == null) {
             getNewsListDataByURL(newsListURL + currentPage);
         } else {
-            handleNewsListData(newListData);
+            handleNewsListData(newsListJsonArray);
         }
     }
 

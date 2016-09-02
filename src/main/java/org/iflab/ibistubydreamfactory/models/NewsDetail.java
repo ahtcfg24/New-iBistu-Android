@@ -9,12 +9,12 @@ public class NewsDetail extends BaseRecord {
     private String title;
     private String time;
     private String article;
-    private List<ImgListBean> imgList;
+    private List<ImgBean> imgList;
 
     public NewsDetail() {
     }
 
-    public NewsDetail(String title, String time, String article, List<ImgListBean> imgList) {
+    public NewsDetail(String title, String time, String article, List<ImgBean> imgList) {
         this.title = title;
         this.time = time;
         this.article = article;
@@ -46,24 +46,12 @@ public class NewsDetail extends BaseRecord {
         this.article = article;
     }
 
-    public List<ImgListBean> getImgList() {
+    public List<ImgBean> getImgList() {
         return imgList;
     }
 
-    public void setImgList(List<ImgListBean> imgList) {
+    public void setImgList(List<ImgBean> imgList) {
         this.imgList = imgList;
-    }
-
-    public static class ImgListBean {
-        private String url;
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
     }
 
     @Override
@@ -74,5 +62,17 @@ public class NewsDetail extends BaseRecord {
                 ", article='" + article + '\'' +
                 ", imgList=" + imgList +
                 '}';
+    }
+
+    public static class ImgBean {
+        private String url;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
     }
 }

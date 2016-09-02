@@ -138,13 +138,13 @@
             android:screenOrientation="landscape"/>
         <activity
             android:name=".activities.NewsActivity"
-            android:label="新闻"
-            >
+            android:label="新闻">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HomeActivity"/>
         </activity>
-
+        <activity android:name=".activities.NewsDetailActivity">
+        </activity>
     </application>
 
 </manifest>
