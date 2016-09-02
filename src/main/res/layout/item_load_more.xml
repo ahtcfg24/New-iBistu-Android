@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/footer_progress_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:id="@+id/loading_progressbar"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:indeterminate="false"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/loading_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正在加载中"
+            />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/load_to_last_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="已至最后"
+        android:visibility="invisible"
+        />
+</RelativeLayout>

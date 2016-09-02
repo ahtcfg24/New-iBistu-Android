@@ -50,6 +50,7 @@
         </meta-data>
 
         <service android:name="com.amap.api.location.APSService"/>
+
         <receiver android:name=".utils.CompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
@@ -106,8 +107,7 @@
         </activity>
         <activity
             android:name=".activities.WelcomeActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            >
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -117,8 +117,7 @@
         <activity
             android:name=".activities.UserCenterActivity"
             android:label="个人中心"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            >
+            android:windowSoftInputMode="stateHidden|stateUnchanged">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HomeActivity"/>
@@ -127,19 +126,25 @@
             android:name=".activities.RegisterActivity"
             android:label="注册"
             android:theme="@style/CustomNoActionBar"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            >
+            android:windowSoftInputMode="stateHidden|stateUnchanged">
         </activity>
-
         <activity
             android:name=".activities.PlayerActivity"
-            android:label="VR播放器"
-            >
+            android:label="VR播放器">
         </activity>
         <activity
             android:name=".activities.VRImagePlayerActivity"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activities.NewsActivity"
+            android:label="新闻"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity"/>
+        </activity>
+
     </application>
 
 </manifest>

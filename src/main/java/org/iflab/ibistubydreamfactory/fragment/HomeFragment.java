@@ -12,6 +12,7 @@ import android.widget.GridView;
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.activities.BusActivity;
 import org.iflab.ibistubydreamfactory.activities.MapActivity;
+import org.iflab.ibistubydreamfactory.activities.NewsActivity;
 import org.iflab.ibistubydreamfactory.activities.PlayerActivity;
 import org.iflab.ibistubydreamfactory.activities.YellowPageActivity;
 import org.iflab.ibistubydreamfactory.adapters.HomeAdapter;
@@ -39,7 +40,7 @@ public class HomeFragment extends Fragment {
     public void initGridView() {
         gridView = (GridView) rootView.findViewById(R.id.gridView_home);
         modules = new ArrayList<>();
-//        modules.add(new HomeItem(R.drawable.news, "新闻", NewsActivity.class));
+        modules.add(new HomeItem(R.drawable.ic_module_news, "新闻", NewsActivity.class));
         modules.add(new HomeItem(R.drawable.ic_module_yellowpage, "黄页", YellowPageActivity.class));
         modules.add(new HomeItem(R.drawable.ic_module_map, "地图", MapActivity.class));
         modules.add(new HomeItem(R.drawable.ic_module_schoolbus, "校车", BusActivity.class));

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/newsList_icon"
+        android:layout_width="120dp"
+        android:layout_height="90dp"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="0.5dp"
+        android:layout_marginLeft="2dp"
+        android:paddingRight="4dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_bistu_logo"
+
+
+        />
+
+    <TextView
+        android:id="@+id/newsList_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/newsList_icon"
+        android:layout_toRightOf="@+id/newsList_icon"
+        android:paddingTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="TextView"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/newsList_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/newsList_icon"
+        android:layout_alignLeft="@+id/newsList_title"
+        android:paddingBottom="4dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="TextView"
+        android:textColor="#a8a8a8" />
+
+    <TextView
+        android:id="@+id/newsList_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2015-10-1"
+        android:layout_below="@+id/newsList_preview"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="#afafaf"
+        />
+
+</RelativeLayout>

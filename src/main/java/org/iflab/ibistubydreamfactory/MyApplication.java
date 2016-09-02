@@ -18,7 +18,11 @@ public class MyApplication extends Application {
     public static String SMSCONFIRMURL;//云信短信验证URL
     public static String UPDATE_DOWNLOAD_URL = "";//软件更新下载URL
     public static String REFRESH_TOKEN_URL = "";//刷新Token的URL
+    public static String newsListBaseURL="http://iamding.cn:8080/newsapi/newslist";
     private static Context context;//具有最高生存周期的Context
+    public static String[] newsCategory = {
+            "综合新闻", "图片新闻", "人才培养", "教学科研", "文化活动", "校园人物", "交流合作", "社会服务", "媒体关注"
+    };
 
     /**
      * 提供最高生命周期的Context
