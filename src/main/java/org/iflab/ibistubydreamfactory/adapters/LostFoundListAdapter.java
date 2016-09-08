@@ -12,25 +12,25 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.iflab.ibistubydreamfactory.R;
-import org.iflab.ibistubydreamfactory.models.News;
+import org.iflab.ibistubydreamfactory.models.LostFound;
 
 import java.util.List;
 
 /**
  *
  */
-public class NewsListAdapter extends BaseAdapter {
-    private List<News> newsList;
+public class LostFoundListAdapter extends BaseAdapter {
+    private List<LostFound> lostFoundList;
     private Context context;
 
 
-    public NewsListAdapter(Context context) {
+    public LostFoundListAdapter(Context context) {
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return newsList.size();
+        return lostFoundList.size();
     }
 
     @Override
@@ -55,26 +55,24 @@ public class NewsListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_news, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_lost_found, null);
             viewHolder = new ViewHolder();
-            viewHolder.newsListTitle = (TextView) convertView.findViewById(R.id.title_lost_found);
-            viewHolder.newsListIntro = (TextView) convertView.findViewById(R.id.content_lost_found);
-            viewHolder.newsListTime = (TextView) convertView.findViewById(R.id.newsList_time);
-            viewHolder.newsListImage = (ImageView) convertView.findViewById(R.id.newsList_icon);
+            viewHolder.lostFoundTitle = (TextView) convertView.findViewById(R.id.title_lost_found);
+            viewHolder.lostFoundIntro = (TextView) convertView.findViewById(R.id.content_lost_found);
+            viewHolder.lostFoundTime = (TextView) convertView.findViewById(R.id.time_lost_found);
+            viewHolder.lostFoundImage = (ImageView) convertView.findViewById(R.id.image_lost_found);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.newsListTitle.setText(newsList.get(position).getNewsTitle());
-        viewHolder.newsListIntro.setText(newsList.get(position).getNewsIntro());
-        viewHolder.newsListTime.setText(newsList.get(position).getNewsTime());
-        String newImageUrl = newsList.get(position).getNewsImage();
-        if (!newImageUrl.equals("")) {
-            Picasso.with(context)
-                   .load(Uri.parse(newImageUrl))
-                   .placeholder(R.drawable.ic_bistu_logo)
-                   .into(viewHolder.newsListImage);
-        }
+        viewHolder.lostFoundTitle.setText(lostFoundList.get(position).getTitle());
+        viewHolder.lostFoundIntro.setText(lostFoundList.get(position).getDetails());
+        viewHolder.lostFoundTime.setText(lostFoundList.get(position).getCreateTime());
+        String newImageUrl = lostFoundList.get(position).getImage1();
+        Picasso.with(context)
+               .load(Uri.parse(newImageUrl))
+               .placeholder(R.drawable.ic_bistu_logo)
+               .into(viewHolder.lostFoundImage);
         return convertView;
     }
 
@@ -83,15 +81,15 @@ public class NewsListAdapter extends BaseAdapter {
      *
      * @param list 更新后的新闻列表
      */
-    public void addItem(List<News> list) {
-        newsList = list;
+    public void addItem(List<LostFound> list) {
+        lostFoundList = list;
     }
 
     /**
      * 起优化作用ListView的ViewHolder类，避免多次加载TextView
      */
     private class ViewHolder {
-        private ImageView newsListImage;
-        private TextView newsListTitle, newsListIntro, newsListTime;
+        private ImageView lostFoundImage;
+        private TextView lostFoundTitle, lostFoundIntro, lostFoundTime;
     }
 }

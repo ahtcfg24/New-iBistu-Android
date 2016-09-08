@@ -3,7 +3,7 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="org.iflab.ibistubydreamfactory.activities.LostFoundActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_posted"
         android:icon="@drawable/ic_action_content"
         android:title="我发布过的"
         app:showAsAction="ifRoom"/>

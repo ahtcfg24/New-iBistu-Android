@@ -44,6 +44,7 @@ public class NewsListFragment extends Fragment {
     private ListView newsListView;
     private SwipeRefreshLayout pullToRefreshView;//下拉刷新控件
     private View loadMoreView;//上拉加载更多控件
+    private LinearLayout footerProgressLayout;
     private View rootView;//Fragment的界面
     private String fragmentName;//每个fragmentTab的名字
     private String newsListURL;//缺少当前页编号参数的新闻列表URL
@@ -52,7 +53,6 @@ public class NewsListFragment extends Fragment {
     private List<News> newsList;//
     private ProgressBar progressBar;
     private TextView loadToLastTextView;
-    private LinearLayout footerProgressLayout;
     private Intent intent;
 
 

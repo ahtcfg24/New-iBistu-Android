@@ -1,25 +1,26 @@
 <resources>
     <string name="app_name">iBistu</string>
     <string name="action_settings">设置</string>
-    <string name="title_activity_home">主页</string>
-    <string name="title_activity_news">新闻</string>
-    <string name="title_activity_oauth">登录</string>
-    <string name="title_activity_yellow_page">黄页</string>
-    <string name="title_activity_school_bus">校车</string>
-    <string name="title_activity_yellow_page_details">黄页详情</string>
-    <string name="title_activity_school_bus_detail">校车详情</string>
-    <string name="title_activity_user_center">用户中心</string>
-    <string name="title_activity_about">关于我们</string>
-    <string name="aboutString">iBistu是北京信息科技大学官方移动应用,由本校信息网络中心ifLab（网络实践创新联盟）开发及维护。
+    <string name="label_activity_news">新闻</string>
+    <string name="label_activity_oauth">登录</string>
+    <string name="label_activity_yellow_page">黄页</string>
+    <string name="label_activity_school_bus">校车</string>
+    <string name="label_activity_school_bus_detail">校车详情</string>
+    <string name="label_activity_user_center">用户中心</string>
+    <string name="label_activity_about">关于我们</string>
+    <string name="about">iBistu是北京信息科技大学官方移动应用,由本校信息网络中心ifLab（网络实践创新联盟）开发及维护。
         如果有任何建议请在新浪微博@ifLab,安卓版本功能问题可以直接联系ahtcfg24@163.com</string>
-    <string name="title_activity_about_details">关于详情</string>
-    <string name="title_activity_news_detail">新闻详情</string>
-    <string name="title_activity_map">地图</string>
-    <string name="title_activity_vr_player">VR播放器</string>
-    <string name="title_activity_register">注册</string>
-    <string name="title_activity_lost_found">失物招领</string>
+    <string name="label_activity_about_details">关于详情</string>
+    <string name="label_activity_news_detail">新闻详情</string>
+    <string name="label_activity_map">地图</string>
+    <string name="label_activity_vr_player">VR播放器</string>
+    <string name="label_activity_register">注册</string>
+    <string name="label_activity_lost_found">失物招领</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="label_activity_vr_image_player">VR图片播放器界面</string>
+    <string name="label_activity_bus_detail">班车详情</string>
+    <string name="label_activity_about_detail">关于详情</string>
+    <string name="label_activity_home">主页</string>
+    <string name="label_activity_yellow_page_details">黄页详情</string>
+    <string name="label_activity_posted_lost_found">已发布的消息</string>
 </resources>

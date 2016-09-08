@@ -60,116 +60,101 @@
 
         <activity
             android:name=".activities.YellowPageActivity"
-            android:label="@string/title_activity_yellow_page">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity"/>
+            android:label="@string/label_activity_yellow_page"
+            android:parentActivityName=".activities.HomeActivity">
         </activity>
         <activity
             android:name=".activities.YellowPageDetailsActivity"
-            android:label="黄页详情"
-            >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.YellowPageActivity"/>
+            android:label="@string/label_activity_yellow_page_details"
+            android:parentActivityName=".activities.YellowPageActivity">
         </activity>
         <activity
             android:name=".activities.HomeActivity"
-            android:label="主页"
+            android:label="@string/label_activity_home"
             android:theme="@style/MyAppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".activities.AboutActivity"
-            android:label="@string/title_activity_about">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity"/>
+            android:label="@string/label_activity_about"
+            android:parentActivityName=".activities.HomeActivity">
         </activity>
         <activity
             android:name=".activities.AboutDetailsActivity"
-            android:label="关于详情"
-            >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.AboutActivity"/>
+            android:label="@string/label_activity_about_detail"
+            android:parentActivityName=".activities.AboutActivity">
         </activity>
         <activity
             android:name=".activities.BusActivity"
-            android:label="@string/title_activity_school_bus">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity"/>
+            android:label="@string/label_activity_school_bus"
+            android:parentActivityName=".activities.HomeActivity">
         </activity>
         <activity
             android:name=".activities.BusLineActivity"
-            android:label="班车详情"
-            >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.BusActivity"/>
+            android:label="@string/label_activity_bus_detail"
+            android:parentActivityName=".activities.BusActivity">
         </activity>
         <activity
             android:name=".activities.MapActivity"
-            android:label="@string/title_activity_map">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity"/>
+            android:label="@string/label_activity_map"
+            android:parentActivityName=".activities.HomeActivity">
         </activity>
         <activity
             android:name=".activities.WelcomeActivity"
             android:theme="@style/MyAppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.UserCenterActivity"
-            android:label="@string/title_activity_user_center"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity"/>
+            android:label="@string/label_activity_user_center"
+            android:parentActivityName=".activities.HomeActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged">
         </activity>
         <activity
             android:name=".activities.RegisterActivity"
-            android:label="@string/title_activity_register"
+            android:label="@string/label_activity_register"
             android:theme="@style/MyAppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|stateUnchanged">
         </activity>
         <activity
             android:name=".activities.PlayerActivity"
-            android:label="@string/title_activity_vr_player">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity"/>
+            android:label="@string/label_activity_vr_player"
+            android:parentActivityName=".activities.HomeActivity">
         </activity>
         <activity
             android:name=".activities.VRImagePlayerActivity"
             android:configChanges="screenSize|orientation"
-            android:label="VR图片播放器界面"
+            android:label="@string/label_activity_vr_image_player"
             android:screenOrientation="landscape">
-
         </activity>
         <activity
             android:name=".activities.NewsActivity"
-            android:label="@string/title_activity_news"
+            android:label="@string/label_activity_news"
             android:parentActivityName=".activities.HomeActivity">
-
         </activity>
         <activity
             android:name=".activities.NewsDetailActivity"
-            android:label="@string/title_activity_news_detail">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.NewsActivity"/>
+            android:label="@string/label_activity_news_detail"
+            android:parentActivityName=".activities.NewsActivity">
         </activity>
         <activity
             android:name=".activities.LostFoundActivity"
-            android:label="@string/title_activity_lost_found"
+            android:label="@string/label_activity_lost_found"
             android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/MyAppTheme.NoActionBar"
+            android:theme="@style/MyAppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.PostedLostFoundActivity"
+            android:label="@string/label_activity_posted_lost_found"
+            android:parentActivityName=".activities.LostFoundActivity">
+        </activity>
+        <activity
+            android:name=".activities.LostFoundDetailActivity"
+            android:label="招领详情"
+            android:parentActivityName=".activities.LostFoundActivity"
             >
         </activity>
     </application>
