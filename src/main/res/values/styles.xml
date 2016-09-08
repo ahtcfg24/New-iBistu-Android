@@ -10,7 +10,7 @@
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
 
-    <!-- ActionBar 样式 -->
+    <!-- 自定义ActionBar样式 -->
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/colorPrimary</item>
         <!-- 支持库兼容 -->
@@ -19,7 +19,7 @@
     </style>
 
 
-    <!--黄页拨号Dialog-->
+    <!--自定义黄页拨号Dialog-->
     <style name="YellowPageDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -36,7 +36,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <!-- EditText theme -->
+    <!-- 自定义EditText theme -->
     <style name="edit_text_style" parent="@android:style/Widget.DeviceDefault.EditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
@@ -49,11 +49,5 @@
         <item name="android:paddingRight">10dp</item>
         <item name="android:textColorHint">@color/colorHintGrey</item>
     </style>
-
-
-    <style name="MyAppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-    <style name="MyAppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-
 
 </resources>

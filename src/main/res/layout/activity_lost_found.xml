@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_floating_button_add"/>
+            android:src="@drawable/ic_action_content_create"/>
 
     </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>

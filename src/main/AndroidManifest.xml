@@ -120,7 +120,6 @@
             android:theme="@style/MyAppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -142,18 +141,22 @@
         <activity
             android:name=".activities.PlayerActivity"
             android:label="@string/title_activity_vr_player">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity"/>
         </activity>
         <activity
             android:name=".activities.VRImagePlayerActivity"
             android:configChanges="screenSize|orientation"
             android:label="VR图片播放器界面"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity
             android:name=".activities.NewsActivity"
-            android:label="@string/title_activity_news">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity"/>
+            android:label="@string/title_activity_news"
+            android:parentActivityName=".activities.HomeActivity">
+
         </activity>
         <activity
             android:name=".activities.NewsDetailActivity"
@@ -165,11 +168,9 @@
         <activity
             android:name=".activities.LostFoundActivity"
             android:label="@string/title_activity_lost_found"
+            android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/MyAppTheme.NoActionBar"
             >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity"/>
         </activity>
     </application>
 

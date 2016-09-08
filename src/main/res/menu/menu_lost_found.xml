@@ -4,7 +4,8 @@
       tools:context="org.iflab.ibistubydreamfactory.activities.LostFoundActivity">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
+        android:icon="@drawable/ic_action_content"
+        android:title="我发布过的"
+        app:showAsAction="ifRoom"/>
+
 </menu>

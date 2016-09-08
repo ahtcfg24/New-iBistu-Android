@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_action_logo_bistu"
+                android:src="@drawable/ic_action_content_create"
                 />
 
             <TextView
