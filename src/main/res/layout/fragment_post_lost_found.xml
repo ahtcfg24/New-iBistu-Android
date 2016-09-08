@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPureWhite"
     android:orientation="vertical"
-    tools:context="org.iflab.ibistubydreamfactory.fragment.LoginFragment">
+    tools:context="org.iflab.ibistubydreamfactory.fragment.PostLostFoundFragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="登录"
+                android:text="发布新信息"
                 android:textColor="@color/colorPureWhite"
                 android:textSize="20sp"
                 />
@@ -48,7 +48,6 @@
         android:layout_gravity="center_horizontal"
         android:visibility="gone"/>
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -57,73 +56,68 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="44dp"
-            android:paddingRight="44dp"
-            android:paddingTop="16dp">
+            android:padding="16dp"
+            >
 
-            <ImageView
-                android:id="@+id/login_map"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+
+            <EditText
+                android:id="@+id/textView_title"
+                style="@style/edit_text_style"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="标题："
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:id="@+id/textView_content"
+                style="@style/edit_text_style"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
-                android:contentDescription="@string/app_name"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_bistu_logo"/>
+                android:gravity="start|top"
+                android:hint="描述："
+                android:maxLines="20"
+                android:singleLine="false"
+                android:textSize="18sp"
 
-            <EditText
-                android:id="@+id/login_email_input"
-                style="@style/edit_text_style"
-                android:layout_width="match_parent"
-                android:hint="邮箱："
-                android:inputType="textEmailAddress"/>
-
-            <EditText
-                android:id="@+id/login_password_input"
-                style="@style/edit_text_style"
-                android:layout_width="match_parent"
-                android:layout_marginTop="8dp"
-                android:hint="密码："
-                android:inputType="textPassword"
-                />
+                >
+            </EditText>
 
             <TextView
-                android:id="@+id/forgotPassword"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:text="忘记密码了？"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp"/>
-
-            <Button
-                android:id="@+id/button_login"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/bt_button_blue"
-                android:text="登录"
-                android:textColor="@color/colorPureWhite"
-                android:textSize="16sp"
-
-                />
-
-            <Button
-                android:id="@+id/button_resetPassword"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/bt_button_blue"
-                android:text="找回密码"
-                android:textColor="@color/colorPureWhite"
-                android:textSize="16sp"
-                android:visibility="gone"
+                android:layout_marginBottom="10dp"
+                android:text="请上传至少一张图片："
                 />
 
 
+            <GridView
+                android:id="@+id/gridView_selectedPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:horizontalSpacing="3dp"
+                android:numColumns="3"
+                android:scrollbars="none"
+                android:verticalSpacing="5dp">
+            </GridView>
+
+
+            <Button
+                android:id="@+id/button_post"
+                android:layout_width="100dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bt_button_blue"
+                android:text="发布"
+                android:textColor="@color/colorPureWhite"
+                android:textSize="18sp"
+                />
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>
+

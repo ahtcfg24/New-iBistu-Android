@@ -17,33 +17,33 @@
         >
 
         <TextView
-        android:id="@+id/dialog_title_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+            android:id="@+id/dialog_title_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
 
-        android:text="测试"
-        android:textColor="@color/colorToolBar"
-        android:textSize="20sp"
+            android:text="测试"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
             />
 
         <TextView
             android:id="@+id/dialog_num_textView"
-            android:text="000000"
-            android:textSize="17sp"
-            android:textColor="@color/colorToolBar"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="000000"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp"
             />
 
     </LinearLayout>
 
     <TextView
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="15dp"
         android:background="#8b8b8b"/>
 
     <LinearLayout
@@ -92,12 +92,12 @@
 
             android:id="@+id/cancel_button"
             android:layout_width="0dp"
-            android:textColor="#8b8b8b"
-
             android:layout_height="100dp"
+
             android:layout_weight="3"
             android:background="#fff"
             android:text="取消"
+            android:textColor="#8b8b8b"
             android:textSize="17sp"/>
     </LinearLayout>
 </LinearLayout>

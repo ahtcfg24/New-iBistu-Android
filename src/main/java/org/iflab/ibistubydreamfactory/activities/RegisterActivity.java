@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         parentView = LayoutInflater.from(this).inflate(R.layout.activity_register, null);
         setContentView(parentView);
+        initToolbar();
         initView();
         authAPI = APISource.getInstance().getAPIObject(AuthAPI.class);
         bundle = new Bundle();
@@ -69,6 +71,16 @@ public class RegisterActivity extends AppCompatActivity {
         initSMSConfirmClient();
 
 
+    }
+
+    /**
+     * 初始化工具栏
+     */
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("注册");
+        toolbar.setLogo(R.drawable.ic_action_logo_bistu);//设置静态logo
+        setSupportActionBar(toolbar);//把ToolBar设置为ActionBar
     }
 
     /**

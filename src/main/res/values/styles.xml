@@ -12,12 +12,13 @@
 
     <!-- ActionBar 样式 -->
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/actionbar_background</item>
+        <item name="android:background">@color/colorPrimary</item>
         <!-- 支持库兼容 -->
-        <item name="background">@drawable/actionbar_background</item>
+        <item name="titleTextColor">@color/colorPureWhite</item>
+        <item name="background">@color/colorPrimary</item>
     </style>
 
-    <drawable name="actionbar_background">#0099cc</drawable>
+
     <!--黄页拨号Dialog-->
     <style name="YellowPageDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
@@ -29,7 +30,8 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="CustomNoActionBar" parent="@style/MyAppTheme">
+    <!--自定义无ActionBar主题-->
+    <style name="MyAppTheme.NoActionBar" parent="@style/MyAppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -39,14 +41,19 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:maxWidth">300dp</item>
-        <item name="android:textColor">@color/grey_text</item>
+        <item name="android:textColor">@color/colorTextGrey</item>
         <item name="android:background">@drawable/selector_bg_edit_text</item>
         <item name="android:textSize">12sp</item>
         <item name="android:singleLine">true</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
-        <item name="android:textColorHint">@color/hint_grey_text</item>
+        <item name="android:textColorHint">@color/colorHintGrey</item>
     </style>
+
+
+    <style name="MyAppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="MyAppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 
 </resources>

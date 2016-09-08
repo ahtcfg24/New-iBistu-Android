@@ -11,6 +11,7 @@ import android.widget.GridView;
 
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.activities.BusActivity;
+import org.iflab.ibistubydreamfactory.activities.LostFoundActivity;
 import org.iflab.ibistubydreamfactory.activities.MapActivity;
 import org.iflab.ibistubydreamfactory.activities.NewsActivity;
 import org.iflab.ibistubydreamfactory.activities.PlayerActivity;
@@ -45,6 +46,7 @@ public class HomeFragment extends Fragment {
         modules.add(new HomeItem(R.drawable.ic_module_map, "地图", MapActivity.class));
         modules.add(new HomeItem(R.drawable.ic_module_schoolbus, "校车", BusActivity.class));
         modules.add(new HomeItem(R.drawable.ic_module_vr, "全景", PlayerActivity.class));
+        modules.add(new HomeItem(R.drawable.ic_module_lost_found, "招领", LostFoundActivity.class));
         //        modules.add(new HomeItem(R.drawable.wifi, "WiFi", WiFiActivity.class));
         //        modules.add(new HomeItem(R.drawable.job, "工作", JobActivity.class));
         //        modules.add(new HomeItem(R.drawable.group, "群组", GroupActivity.class));

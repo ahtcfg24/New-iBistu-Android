@@ -3,6 +3,6 @@
     <!--弧形边角 -->
     <corners android:radius="4dp"/>
     <!-- 背景色-->
-    <solid android:color="@color/colorToolBar"/>
+    <solid android:color="@color/colorPrimary"/>
 
 </shape>

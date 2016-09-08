@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <!--actionbar背景-->
+    <color name="colorPrimary">#0099CC</color>
+    <!--状态栏背景-->
+    <color name="colorPrimaryDark">#0e6c8e</color>
     <color name="colorAccent">#FF4081</color>
     <color name="button_normal">#44000000</color>
     <color name="button_pressed">#AA000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
-    <color name="colorToolBar">#0099CC</color>
     <color name="colorEightABlack">#8a000000</color>
     <color name="colorMaterialBlue">#3949ab</color>
     <color name="colorSixSixBlack">#66000000</color>
     <color name="colorPureWhite">#ffffffff</color>
     <color name="colorButtonBlue">#5c6bc0</color>
     <color name="colorPureBlack">#ff000000</color>
-    <color name="colorTwoCBlack">#2c000000</color>
     <color name="colorOneABlack">#1a000000</color>
-    <color name="colorTwoOneBlue">#2196f3</color>
     <color name="colorBackgroundGray">#eeeeee</color>
-    <color name="grey_text">#464A50</color>
-    <color name="hint_grey_text">#8c8e90</color>
-    <color name="cyan_text_navigation">#299ED7</color>
+    <color name="colorTextGrey">#464A50</color>
+    <color name="colorHintGrey">#8c8e90</color>
 
 
 </resources>
