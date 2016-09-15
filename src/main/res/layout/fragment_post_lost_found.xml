@@ -61,7 +61,7 @@
 
 
             <EditText
-                android:id="@+id/textView_title"
+                android:id="@+id/edit_title"
                 style="@style/edit_text_style"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -72,7 +72,7 @@
                 android:textSize="18sp"/>
 
             <EditText
-                android:id="@+id/textView_content"
+                android:id="@+id/edit_content"
                 style="@style/edit_text_style"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
@@ -117,7 +117,41 @@
                 android:textColor="@color/colorPureWhite"
                 android:textSize="18sp"
                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <EditText
+                    android:id="@+id/pathEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:inputType="text"
+                    />
+
+                <Button
+                    android:id="@+id/selectButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="点击选择图片"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/baseButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="转换成base64"
+                />
         </LinearLayout>
+
+
     </ScrollView>
 </LinearLayout>
 

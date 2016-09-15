@@ -1,11 +1,9 @@
 package org.iflab.ibistubydreamfactory.models;
 
-import java.io.Serializable;
-
 /**
  * 登录请求体模型
  */
-public class LoginRequestBody implements Serializable {
+public class LoginRequestBody extends BaseRecord {
 
     private String email;
 

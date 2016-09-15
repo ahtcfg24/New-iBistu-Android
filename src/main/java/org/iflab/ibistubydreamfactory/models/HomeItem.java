@@ -6,7 +6,7 @@ package org.iflab.ibistubydreamfactory.models;
  * @date 2015/8/23
  * @time 20:04
  */
-public class HomeItem {
+public class HomeItem extends BaseRecord {
     private int iconId;
     private String itemName;
     private Class itemModule;

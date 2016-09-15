@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 班车类型：教学班车或者通勤班车
  */
-public class BusType {
+public class BusType extends BaseRecord {
     private String busTypeName;//类型名
     private List<Bus> busItemList = new ArrayList<>();//该类下的班车数据
 

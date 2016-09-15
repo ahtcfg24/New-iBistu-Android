@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * DreamFactory返回的错误信息模型
  */
-public class ErrorMessage implements Serializable {
+public class ErrorMessage extends BaseRecord {
 
     private Error error = new Error();
 
@@ -32,7 +32,7 @@ public class ErrorMessage implements Serializable {
     /**
      * 自定义错误
      */
-    public static class Error implements Serializable {
+    public static class Error extends BaseRecord {
 
         private String message;
 
