@@ -131,7 +131,10 @@ public class NewsListFragment extends Fragment {
      * 从网络或者缓存载入数据
      */
     private void loadData() {
-        JSONArray newsListJsonArray = aCache.getAsJSONArray(newsListURL + currentPage);
+        JSONArray newsListJsonArray = null;
+        if (currentPage == 1) {
+            newsListJsonArray = aCache.getAsJSONArray(newsListURL + currentPage);
+        }
         if (newsListJsonArray == null) {
             requestByURL(newsListURL + currentPage);
         } else {
@@ -160,7 +163,9 @@ public class NewsListFragment extends Fragment {
                     footerProgressLayout.setVisibility(View.INVISIBLE);
                     loadToLastTextView.setVisibility(View.VISIBLE);
                 } else {
-                    aCache.put(URL, response);
+                    if (currentPage == 1) {
+                        aCache.put(URL, response);//缓存第一页数据
+                    }
                     handleNewsListData(response);
                 }
             }

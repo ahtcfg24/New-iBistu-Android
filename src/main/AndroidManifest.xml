@@ -124,12 +124,7 @@
             android:label="@string/label_activity_vr_player"
             android:parentActivityName=".activities.HomeActivity">
         </activity>
-        <activity
-            android:name=".activities.VRImagePlayerActivity"
-            android:configChanges="screenSize|orientation"
-            android:label="@string/label_activity_vr_image_player"
-            android:screenOrientation="landscape">
-        </activity>
+
         <activity
             android:name=".activities.NewsActivity"
             android:label="@string/label_activity_news"
@@ -154,8 +149,24 @@
         <activity
             android:name=".activities.LostFoundDetailActivity"
             android:label="招领详情"
-            android:parentActivityName=".activities.LostFoundActivity"
-            >
+            android:parentActivityName=".activities.LostFoundActivity">
+        </activity>
+
+        <activity
+            android:name=".activities.NormalPlayerActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="MDMultiDemoActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activities.VRVideoPlayerActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="MDMultiDemoActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activities.VRImagePlayerActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="@string/label_activity_vr_image_player"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 

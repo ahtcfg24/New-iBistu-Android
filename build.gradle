@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "org.iflab.ibistubydreamfactory"
@@ -31,10 +31,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'com.yalantis:contextmenu:1.0.6'
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
-    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:design:24.2.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'me.drakeet.materialdialog:library:1.3.1'
     compile 'com.github.ashqal:MD360Player4Android:2.0.4.beta'
@@ -42,7 +42,7 @@ dependencies {
     compile 'tv.danmaku.ijk.media:ijkplayer-java:0.4.5'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.shizhefei:ViewPagerIndicator:1.1.2'
-    compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.bigkoo:convenientbanner:2.0.5'
 }

@@ -226,6 +226,7 @@ public class LostFoundActivity extends AppCompatActivity {
      * listView的滑动监听器
      */
     private class ScrollListener implements AbsListView.OnScrollListener {
+
         boolean isLastRow = false;//是否滚动到最后一行
 
         /**

@@ -23,6 +23,7 @@ import java.util.List;
  */
 public abstract class VRPlayerActivity extends Activity {
 
+    private static final String TAG = "VRPlayerActivity";
     //SparseArray相当于是一个优化版的HashMap，<>内表示存储的值
     private static final SparseArray<String> sDisplayMode = new SparseArray<>();
     private static final SparseArray<String> sInteractiveMode = new SparseArray<>();
@@ -52,6 +53,13 @@ public abstract class VRPlayerActivity extends Activity {
     }
 
     private MDVRLibrary mVRLibrary;
+
+    /**
+     * 开始播放
+     */
+    public static void startVideo(Context context, Uri uri) {
+        start(context, uri, VRVideoPlayerActivity.class);
+    }
 
     public static void startBitmap(Context context, Uri uri) {
         start(context, uri, VRImagePlayerActivity.class);
@@ -125,6 +133,7 @@ public abstract class VRPlayerActivity extends Activity {
                             }
                         })
                         .init(R.id.spinner_distortion);
+
     }
 
     protected Uri getUri() {
