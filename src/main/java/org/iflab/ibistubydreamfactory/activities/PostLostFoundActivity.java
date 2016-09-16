@@ -48,8 +48,6 @@ public class PostLostFoundActivity extends AppCompatActivity {
     EditText editContent;
     @BindView(R.id.button_post)
     Button buttonPost;
-    @BindView(R.id.selectButton)
-    Button selectButton;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     private View rootView;
     private UploadFilesAPI uploadFilesAPI;
@@ -71,22 +69,29 @@ public class PostLostFoundActivity extends AppCompatActivity {
         uploadFilesAPI = APISource.getInstance().getAPIObject(UploadFilesAPI.class);
 
         RecyclerView recyclerViewSelectPhoto = (RecyclerView) rootView.findViewById(R.id.recyclerView_selectPhoto);
-        recyclerViewSelectPhoto.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
+        recyclerViewSelectPhoto.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
         photoAdapter = new PhotoAdapter(this, selectedPhotos);
         recyclerViewSelectPhoto.setAdapter(photoAdapter);
         recyclerViewSelectPhoto.addOnItemTouchListener(new RecyclerItemClickListener(PostLostFoundActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                PhotoPreview.builder()
-                            .setPhotos(selectedPhotos)
-                            .setCurrentItem(position)
-                            .start(PostLostFoundActivity.this);
+                if (position == selectedPhotos.size()) {
+                    PhotoPicker.builder()
+                               .setPhotoCount(3)
+                               .setGridColumnCount(3)
+                               .start(PostLostFoundActivity.this);
+                } else {
+                    PhotoPreview.builder()
+                                .setPhotos(selectedPhotos)
+                                .setCurrentItem(position)
+                                .start(PostLostFoundActivity.this);
+                }
             }
         }));
     }
 
 
-    @OnClick({R.id.button_post, R.id.selectButton})
+    @OnClick({R.id.button_post})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_post:
@@ -94,7 +99,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
                 for (String imgPath : selectedPhotos) {
                     UploadFileRequestBody.UploadResource uploadResource = new UploadFileRequestBody.UploadResource();
                     uploadResource.setName(user.getId() + System.currentTimeMillis() + imgPath.substring(imgPath
-                            .length() - 8));
+                            .length() - 8));//为防止服务器端出现同名图片，使用用户名+时间+原图片名称后三位为图片命名
                     uploadResource.setContent(FileUtil.ImageToBase64Content(imgPath));
                     uploadResource.setIs_base64(true);
                     uploadResource.setType("file");
@@ -106,11 +111,11 @@ public class PostLostFoundActivity extends AppCompatActivity {
                 call.enqueue(new Callback<UploadSuccessModel>() {
                     @Override
                     public void onResponse(Call<UploadSuccessModel> call, Response<UploadSuccessModel> response) {
-                        if (response.isSuccessful()) {//如果登录成功
+                        if (response.isSuccessful()) {//如果成功
                             UploadSuccessModel successModel = response.body();
                             editContent.setText(successModel.toString());
 
-                        } else {//登录失败
+                        } else {//失败
                             ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
                             onFailure(call, e.toException());
                         }
@@ -124,13 +129,6 @@ public class PostLostFoundActivity extends AppCompatActivity {
                 });
 
                 break;
-            case R.id.selectButton:
-                PhotoPicker.builder()
-                           .setPhotoCount(9)
-                           .setGridColumnCount(4)
-                           .start(PostLostFoundActivity.this);
-
-                break;
         }
     }
 
@@ -141,11 +139,9 @@ public class PostLostFoundActivity extends AppCompatActivity {
             if (data != null) {
                 photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
             }
+            selectedPhotos.clear();
             if (photos != null) {
                 selectedPhotos.addAll(photos);
-                for (String s : selectedPhotos) {
-                    System.out.println(s.substring(s.length() - 4));
-                }
             }
             photoAdapter.notifyDataSetChanged();
         }

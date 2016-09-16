@@ -10,18 +10,20 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import org.iflab.ibistubydreamfactory.R;
+
 import java.io.File;
 import java.util.ArrayList;
 
 
 /**
- * Created by donglua on 15/5/31.
+ * 选择图片适配器
  */
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder> {
 
-    private ArrayList<String> photoPaths = new ArrayList<String>();
+    private static int MAX_SELECT_PHOTOS_COUNT = 3;//最多可选择三张图片
+    private ArrayList<String> photoPaths = new ArrayList<>();
     private LayoutInflater inflater;
-
     private Context mContext;
 
 
@@ -42,26 +44,35 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     @Override
     public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
+        if (position == photoPaths.size()) {
+            Glide.with(mContext)
+                 .load(R.drawable.ic_image_upload)
+                 .centerCrop()
+                 .thumbnail(0.1f)
+                 .into(holder.ivPhoto);
+            if (position == MAX_SELECT_PHOTOS_COUNT) {//选择了最大图片数量时就自动隐藏选择图片入口
+                holder.ivPhoto.setVisibility(View.GONE);
+            }
+        } else {
+            Uri uri = Uri.fromFile(new File(photoPaths.get(position)));
+            Glide.with(mContext)
+                 .load(uri)
+                 .centerCrop()
+                 .thumbnail(0.1f)
+                 .placeholder(me.iwf.photopicker.R.drawable.__picker_ic_photo_black_48dp)
+                 .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
+                 .into(holder.ivPhoto);
+        }
 
-        Uri uri = Uri.fromFile(new File(photoPaths.get(position)));
-
-//    boolean canLoadImage = AndroidLifecycleUtils.canLoadImage(holder.ivPhoto.getContext());
-
-//    if (canLoadImage) {
-        Glide.with(mContext)
-             .load(uri)
-             .centerCrop()
-             .thumbnail(0.1f)
-             .placeholder(me.iwf.photopicker.R.drawable.__picker_ic_photo_black_48dp)
-             .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
-             .into(holder.ivPhoto);
-//    }
     }
 
 
     @Override
     public int getItemCount() {
-        return photoPaths.size();
+        if (photoPaths.size() == MAX_SELECT_PHOTOS_COUNT) {
+            return 3;
+        }
+        return photoPaths.size() + 1;
     }
 
 
