@@ -1,8 +1,5 @@
 package org.iflab.ibistubydreamfactory.activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +7,6 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,7 +23,6 @@ import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.adapters.LostFoundListAdapter;
 import org.iflab.ibistubydreamfactory.apis.APISource;
 import org.iflab.ibistubydreamfactory.apis.LostFoundAPI;
-import org.iflab.ibistubydreamfactory.fragment.PostLostFoundFragment;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.LostFound;
 import org.iflab.ibistubydreamfactory.models.Resource;
@@ -40,7 +35,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LostFoundActivity extends AppCompatActivity {
-    private FragmentManager fragmentManager;
     private ListView lostFoundListView;
     private List<LostFound> lostFoundList;
     private Resource<LostFound> lostFoundResource;
@@ -60,7 +54,6 @@ public class LostFoundActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         rootView = getLayoutInflater().inflate(R.layout.activity_lost_found, null);
         setContentView(rootView);
-        initToolbar();
         initView();
         initRefresh();
         if (lostFoundResource == null) {
@@ -82,15 +75,6 @@ public class LostFoundActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * 初始化工具栏
-     */
-    private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);//把ToolBar设置为ActionBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_navigation_arrow_back);
-    }
 
     private void initView() {
         lostFoundListAdapter = new LostFoundListAdapter(this);
@@ -98,7 +82,6 @@ public class LostFoundActivity extends AppCompatActivity {
         loadMoreView = getLayoutInflater().inflate(R.layout.item_load_more, null);
         loadToLastTextView = (TextView) loadMoreView.findViewById(R.id.load_to_last_textView);
         footerProgressLayout = (LinearLayout) loadMoreView.findViewById(R.id.footer_progress_layout);
-        fragmentManager = getFragmentManager();
         pullToRefreshView = (SwipeRefreshLayout) findViewById(R.id.pullToRefreshView);
         lostFoundListView = (ListView) findViewById(R.id.listView_lostFound);
         lostFoundListView.addFooterView(loadMoreView);
@@ -108,7 +91,7 @@ public class LostFoundActivity extends AppCompatActivity {
         findViewById(R.id.floatingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switchToPost();
+                startActivity(new Intent(LostFoundActivity.this, PostLostFoundActivity.class));
             }
         });
     }
@@ -190,18 +173,6 @@ public class LostFoundActivity extends AppCompatActivity {
         currentPage++;
     }
 
-
-    /**
-     * 跳转到发布页面
-     */
-    private void switchToPost() {
-        // 开启Fragment管理事务
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Fragment postFragment = PostLostFoundFragment.newInstance();
-        transaction.add(R.id.fragment_container, postFragment);
-        transaction.addToBackStack(null);//把fragment添加到回退栈中
-        transaction.commit();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

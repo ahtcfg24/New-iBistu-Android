@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".MyApplication"
@@ -124,7 +125,6 @@
             android:label="@string/label_activity_vr_player"
             android:parentActivityName=".activities.HomeActivity">
         </activity>
-
         <activity
             android:name=".activities.NewsActivity"
             android:label="@string/label_activity_news"
@@ -139,7 +139,7 @@
             android:name=".activities.LostFoundActivity"
             android:label="@string/label_activity_lost_found"
             android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/MyAppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".activities.PostedLostFoundActivity"
@@ -151,7 +151,6 @@
             android:label="招领详情"
             android:parentActivityName=".activities.LostFoundActivity">
         </activity>
-
         <activity
             android:name=".activities.NormalPlayerActivity"
             android:configChanges="screenSize|orientation"
@@ -167,6 +166,19 @@
             android:configChanges="screenSize|orientation"
             android:label="@string/label_activity_vr_image_player"
             android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
+            android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
+            android:name=".activities.PostLostFoundActivity"
+            android:label="@string/label_activity_post_lost_found"
+            android:parentActivityName=".activities.LostFoundActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            >
         </activity>
     </application>
 

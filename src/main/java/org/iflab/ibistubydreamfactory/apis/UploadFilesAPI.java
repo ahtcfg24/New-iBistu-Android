@@ -14,11 +14,8 @@ public interface UploadFilesAPI {
     /**
      * 多文件上传
      *
-     * @param uploadResourceList 要上传的文件列表
+     * @param uploadFileRequestBody 要上传的文件请求体，可以多文件上传
      */
-//    @Multipart
-//    @POST("files/ibistu/lost_found/image/")
-//    Call<UploadSuccessModel> uploadFile(@Part() List<UploadFileRequestBody.UploadResource> uploadResourceList);
     @POST("files/ibistu/lost_found/image/")
     Call<UploadSuccessModel> uploadFile(@Body UploadFileRequestBody uploadFileRequestBody);
 

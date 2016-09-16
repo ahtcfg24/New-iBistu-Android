@@ -1,96 +1,101 @@
-package org.iflab.ibistubydreamfactory.fragment;
+package org.iflab.ibistubydreamfactory.activities;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.util.Base64;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ProgressBar;
 
+import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
+import org.iflab.ibistubydreamfactory.adapters.PhotoAdapter;
+import org.iflab.ibistubydreamfactory.adapters.RecyclerItemClickListener;
 import org.iflab.ibistubydreamfactory.apis.APISource;
 import org.iflab.ibistubydreamfactory.apis.UploadFilesAPI;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.UploadFileRequestBody;
 import org.iflab.ibistubydreamfactory.models.UploadSuccessModel;
-import org.iflab.ibistubydreamfactory.utils.UriUtils;
+import org.iflab.ibistubydreamfactory.models.User;
+import org.iflab.ibistubydreamfactory.utils.ACache;
+import org.iflab.ibistubydreamfactory.utils.FileUtil;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.iwf.photopicker.PhotoPicker;
+import me.iwf.photopicker.PhotoPreview;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PostLostFoundFragment extends Fragment {
+public class PostLostFoundActivity extends AppCompatActivity {
+
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.edit_title)
     EditText editTitle;
     @BindView(R.id.edit_content)
     EditText editContent;
-    @BindView(R.id.gridView_selectedPhoto)
-    GridView gridViewSelectedPhoto;
-    @BindView(R.id.pathEdit)
-    EditText pathEdit;
     @BindView(R.id.button_post)
     Button buttonPost;
     @BindView(R.id.selectButton)
     Button selectButton;
-    @BindView(R.id.baseButton)
-    Button baseButton;
+    ArrayList<String> selectedPhotos = new ArrayList<>();
     private View rootView;
-    private String base64Content = "";
     private UploadFilesAPI uploadFilesAPI;
-
-
-    public PostLostFoundFragment() {
-    }
-
-    public static PostLostFoundFragment newInstance() {
-        return new PostLostFoundFragment();
-    }
-
+    private PhotoAdapter photoAdapter;
+    private ACache aCache = ACache.get(MyApplication.getAppContext());
+    private User user;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_post_lost_found, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        rootView = getLayoutInflater().inflate(R.layout.activity_post_lost_found, null);
+        setContentView(rootView);
         initView();
         ButterKnife.bind(this, rootView);
-        return rootView;
     }
 
     private void initView() {
+        user = (User) aCache.getAsObject("user");
         uploadFilesAPI = APISource.getInstance().getAPIObject(UploadFilesAPI.class);
 
+        RecyclerView recyclerViewSelectPhoto = (RecyclerView) rootView.findViewById(R.id.recyclerView_selectPhoto);
+        recyclerViewSelectPhoto.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
+        photoAdapter = new PhotoAdapter(this, selectedPhotos);
+        recyclerViewSelectPhoto.setAdapter(photoAdapter);
+        recyclerViewSelectPhoto.addOnItemTouchListener(new RecyclerItemClickListener(PostLostFoundActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                PhotoPreview.builder()
+                            .setPhotos(selectedPhotos)
+                            .setCurrentItem(position)
+                            .start(PostLostFoundActivity.this);
+            }
+        }));
     }
 
 
-    @OnClick({R.id.button_post, R.id.selectButton, R.id.baseButton})
+    @OnClick({R.id.button_post, R.id.selectButton})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_post:
                 List<UploadFileRequestBody.UploadResource> uploadResourceList = new ArrayList<>();
-                for (int i = 0; i < 3; i++) {
+                for (String imgPath : selectedPhotos) {
                     UploadFileRequestBody.UploadResource uploadResource = new UploadFileRequestBody.UploadResource();
-                    uploadResource.setName("img_" + i + ".jpg");
-                    uploadResource.setContent(base64Content);
+                    uploadResource.setName(user.getId() + System.currentTimeMillis() + imgPath.substring(imgPath
+                            .length() - 8));
+                    uploadResource.setContent(FileUtil.ImageToBase64Content(imgPath));
                     uploadResource.setIs_base64(true);
                     uploadResource.setType("file");
                     uploadResourceList.add(uploadResource);
@@ -120,35 +125,29 @@ public class PostLostFoundFragment extends Fragment {
 
                 break;
             case R.id.selectButton:
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");//设置打开类型
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                startActivityForResult(intent, 1);
-                break;
-            case R.id.baseButton:
-                String imagePath = pathEdit.getText().toString();
-                File imageFile = new File(imagePath);
-                try {
-                    InputStream inputStream = new FileInputStream(imageFile);
-                    byte[] buffer = new byte[(int) imageFile.length()];
-                    inputStream.read(buffer);
-                    inputStream.close();
-                    base64Content = Base64.encodeToString(buffer, Base64.DEFAULT);
+                PhotoPicker.builder()
+                           .setPhotoCount(9)
+                           .setGridColumnCount(4)
+                           .start(PostLostFoundActivity.this);
 
-                    Log.i("base64:", base64Content);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 break;
         }
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {//是否选择，没选择就不会继续
-            Uri uri = data.getData();//得到uri
-            String imagePath = UriUtils.getPathByUri4kitkat(getActivity(), uri);
-            pathEdit.setText(imagePath);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK && (requestCode == PhotoPicker.REQUEST_CODE || requestCode == PhotoPreview.REQUEST_CODE)) {
+            List<String> photos = null;
+            if (data != null) {
+                photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+            }
+            if (photos != null) {
+                selectedPhotos.addAll(photos);
+                for (String s : selectedPhotos) {
+                    System.out.println(s.substring(s.length() - 4));
+                }
+            }
+            photoAdapter.notifyDataSetChanged();
         }
     }
 }

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPureWhite"
+    android:orientation="vertical"
+    tools:context="org.iflab.ibistubydreamfactory.activities.PostLostFoundActivity">
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
+
+
+            <EditText
+                android:id="@+id/edit_title"
+                style="@style/edit_text_style"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="标题："
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:id="@+id/edit_content"
+                style="@style/edit_text_style"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="start|top"
+                android:hint="描述："
+                android:maxLines="20"
+                android:singleLine="false"
+                android:textSize="18sp"
+
+                >
+            </EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="请上传至少一张图片："
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_selectPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/selectButton"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:text="点击选择图片"
+                />
+
+            <Button
+                android:id="@+id/button_post"
+                android:layout_width="100dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bt_button_blue"
+                android:text="发布"
+                android:textColor="@color/colorPureWhite"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
