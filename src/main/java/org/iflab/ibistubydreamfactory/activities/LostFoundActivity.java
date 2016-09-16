@@ -56,11 +56,15 @@ public class LostFoundActivity extends AppCompatActivity {
         setContentView(rootView);
         initView();
         initRefresh();
-        if (lostFoundResource == null) {
-            /*如果缓存没有就从网络获取*/
+        if (getIntent().getStringExtra("needRefresh") != null) {//如果需要刷新
             getLostFoundResource(currentPage);
         } else {
-            loadData();
+            if (lostFoundResource == null) {
+            /*如果缓存没有就从网络获取*/
+                getLostFoundResource(currentPage);
+            } else {
+                loadData();
+            }
         }
         lostFoundListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -87,7 +91,6 @@ public class LostFoundActivity extends AppCompatActivity {
         lostFoundListView.addFooterView(loadMoreView);
         lostFoundListView.setOnScrollListener(new ScrollListener());
         lostFoundResource = (Resource<LostFound>) aCache.getAsObject("lostFoundResource");
-
         findViewById(R.id.floatingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

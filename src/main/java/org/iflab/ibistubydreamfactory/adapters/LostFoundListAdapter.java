@@ -1,7 +1,6 @@
 package org.iflab.ibistubydreamfactory.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.models.LostFound;
+import org.iflab.ibistubydreamfactory.models.LostFoundImageURL;
+import org.iflab.ibistubydreamfactory.utils.ACache;
+import org.iflab.ibistubydreamfactory.utils.JsonUtils;
 
 import java.util.List;
 
@@ -20,6 +23,7 @@ import java.util.List;
  *
  */
 public class LostFoundListAdapter extends BaseAdapter {
+    private ACache aCache = ACache.get(MyApplication.getAppContext());
     private List<LostFound> lostFoundList;
     private Context context;
 
@@ -68,11 +72,16 @@ public class LostFoundListAdapter extends BaseAdapter {
         viewHolder.lostFoundTitle.setText(lostFoundList.get(position).getTitle());
         viewHolder.lostFoundIntro.setText(lostFoundList.get(position).getDetails());
         viewHolder.lostFoundTime.setText(lostFoundList.get(position).getCreateTime());
-        String newImageUrl = lostFoundList.get(position).getImage1();
-        Picasso.with(context)
-               .load(Uri.parse(newImageUrl))
-               .placeholder(R.drawable.ic_bistu_logo)
-               .into(viewHolder.lostFoundImage);
+        List<LostFoundImageURL> list = JsonUtils.json2List(lostFoundList.get(position)
+                                                                        .getImgUrlList(), LostFoundImageURL.class);
+        if (list != null) {
+            Picasso.with(context)
+                   .load(list.get(0)
+                             .getUrl() + "?api_key=" + MyApplication.API_KEY + "&session_token=" + aCache
+                           .getAsString("SESSION_TOKEN"))
+                   .placeholder(R.drawable.ic_bistu_logo)
+                   .into(viewHolder.lostFoundImage);
+        }
         return convertView;
     }
 

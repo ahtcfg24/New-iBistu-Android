@@ -44,16 +44,26 @@
                 style="@style/edit_text_style"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="6dp"
                 android:gravity="start|top"
                 android:hint="描述："
                 android:maxLines="20"
                 android:singleLine="false"
                 android:textSize="18sp"
+                />
 
-                >
-            </EditText>
+            <EditText
+                android:id="@+id/edit_contact"
+                style="@style/edit_text_style"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="6dp"
+                android:hint="联系电话："
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="18sp"/>
 
             <TextView
                 android:layout_width="match_parent"

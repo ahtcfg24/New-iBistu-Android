@@ -13,9 +13,24 @@ public class LostFound extends BaseRecord {
     private String author;
     private String phone;
     private boolean isFound;
-    private String image1;
-    private String image2;
-    private String image3;
+    private String imgUrlList;
+
+    public String getImgUrlList() {
+        return imgUrlList;
+    }
+
+    public void setImgUrlList(String imgUrlList) {
+        this.imgUrlList = imgUrlList;
+    }
+
+    public boolean isFound() {
+        return isFound;
+    }
+
+    public void setFound(boolean found) {
+        isFound = found;
+    }
+
 
     public int getId() {
         return id;
@@ -73,27 +88,4 @@ public class LostFound extends BaseRecord {
         this.isFound = isFound;
     }
 
-    public String getImage1() {
-        return image1;
-    }
-
-    public void setImage1(String image1) {
-        this.image1 = image1;
-    }
-
-    public String getImage2() {
-        return image2;
-    }
-
-    public void setImage2(String image2) {
-        this.image2 = image2;
-    }
-
-    public String getImage3() {
-        return image3;
-    }
-
-    public void setImage3(String image3) {
-        this.image3 = image3;
-    }
 }
