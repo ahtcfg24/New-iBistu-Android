@@ -67,7 +67,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         @Override
-        public void run() {
+        public void run() {//图片上传成功后再将返回的图片路径和lostfound信息一起发布
             LostFound lostFound = new LostFound();
             lostFound.setTitle(title);
             lostFound.setDetails(details);
@@ -128,13 +128,13 @@ public class PostLostFoundActivity extends AppCompatActivity {
         recyclerViewSelectPhoto.addOnItemTouchListener(new RecyclerItemClickListener(PostLostFoundActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (position == selectedPhotos.size()) {
+                if (position == selectedPhotos.size()) {//点击+选择图片
                     PhotoPicker.builder()
                                .setPhotoCount(3)
-                               .setGridColumnCount(3)
+                               .setGridColumnCount(3).setSelected(selectedPhotos)
                                .start(PostLostFoundActivity.this);
                 } else {
-                    PhotoPreview.builder()
+                    PhotoPreview.builder()//预览图片
                                 .setPhotos(selectedPhotos)
                                 .setCurrentItem(position)
                                 .start(PostLostFoundActivity.this);
