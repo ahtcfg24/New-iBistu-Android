@@ -13,8 +13,7 @@
         android:paddingBottom="8dp"
         android:paddingRight="4dp"
         android:paddingTop="8dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_bistu_logo"
+        android:src="@drawable/ic_image_no_picture"
 
 
         />

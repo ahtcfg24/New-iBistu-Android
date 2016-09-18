@@ -1,7 +1,6 @@
 package org.iflab.ibistubydreamfactory.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.models.News;
@@ -70,10 +69,12 @@ public class NewsListAdapter extends BaseAdapter {
         viewHolder.newsListTime.setText(newsList.get(position).getNewsTime());
         String newImageUrl = newsList.get(position).getNewsImage();
         if (!newImageUrl.equals("")) {
-            Picasso.with(context)
-                   .load(Uri.parse(newImageUrl))
-                   .placeholder(R.drawable.ic_bistu_logo)
-                   .into(viewHolder.newsListImage);
+            Glide.with(context)
+                 .load(newImageUrl)
+                 .centerCrop()
+                 .placeholder(R.drawable.ic_image_loading_picture)
+                 .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
+                 .into(viewHolder.newsListImage);
         }
         return convertView;
     }

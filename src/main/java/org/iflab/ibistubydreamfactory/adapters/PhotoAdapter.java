@@ -45,11 +45,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     @Override
     public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
         if (position == photoPaths.size()) {
-            Glide.with(mContext)
-                 .load(R.drawable.ic_image_upload)
-                 .centerCrop()
-                 .thumbnail(0.1f)
-                 .into(holder.ivPhoto);
+            holder.ivPhoto.setImageResource(R.drawable.ic_image_upload);
             if (position == MAX_SELECT_PHOTOS_COUNT) {//选择了最大图片数量时就自动隐藏选择图片入口
                 holder.ivPhoto.setVisibility(View.GONE);
             }
@@ -59,7 +55,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                  .load(uri)
                  .centerCrop()
                  .thumbnail(0.1f)
-                 .placeholder(me.iwf.photopicker.R.drawable.__picker_ic_photo_black_48dp)
+                 .placeholder(R.drawable.ic_image_loading_picture)
                  .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
                  .into(holder.ivPhoto);
         }

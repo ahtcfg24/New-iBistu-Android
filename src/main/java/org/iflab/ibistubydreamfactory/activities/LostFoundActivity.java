@@ -12,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -66,15 +65,15 @@ public class LostFoundActivity extends AppCompatActivity {
                 loadData();
             }
         }
-        lostFoundListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intent = new Intent();
-                intent.putExtra("lostFound", lostFoundList.get(position));
-                intent.setClass(LostFoundActivity.this, LostFoundDetailActivity.class);
-                startActivity(intent);
-            }
-        });
+//        lostFoundListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                intent = new Intent();
+//                intent.putExtra("lostFound", lostFoundList.get(position));
+//                intent.setClass(LostFoundActivity.this, LostFoundDetailActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
     }

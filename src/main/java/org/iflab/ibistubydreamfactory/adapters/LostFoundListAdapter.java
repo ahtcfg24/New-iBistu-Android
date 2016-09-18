@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
@@ -17,16 +17,16 @@ import org.iflab.ibistubydreamfactory.models.LostFoundImageURL;
 import org.iflab.ibistubydreamfactory.utils.ACache;
 import org.iflab.ibistubydreamfactory.utils.JsonUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  */
 public class LostFoundListAdapter extends BaseAdapter {
-    private ACache aCache = ACache.get(MyApplication.getAppContext());
     private List<LostFound> lostFoundList;
     private Context context;
-
+    private String SESSION_TOKEN = ACache.get(MyApplication.getAppContext()).getAsString("SESSION_TOKEN");
 
     public LostFoundListAdapter(Context context) {
         this.context = context;
@@ -65,6 +65,8 @@ public class LostFoundListAdapter extends BaseAdapter {
             viewHolder.lostFoundIntro = (TextView) convertView.findViewById(R.id.content_lost_found);
             viewHolder.lostFoundTime = (TextView) convertView.findViewById(R.id.time_lost_found);
             viewHolder.lostFoundImage = (ImageView) convertView.findViewById(R.id.image_lost_found);
+//            viewHolder.recyclerViewImages = (RecyclerView) convertView.findViewById(R.id.recyclerView_images);
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -75,13 +77,19 @@ public class LostFoundListAdapter extends BaseAdapter {
         List<LostFoundImageURL> list = JsonUtils.json2List(lostFoundList.get(position)
                                                                         .getImgUrlList(), LostFoundImageURL.class);
         if (list != null) {
-            Picasso.with(context)
-                   .load(list.get(0)
-                             .getUrl() + "?api_key=" + MyApplication.API_KEY + "&session_token=" + aCache
-                           .getAsString("SESSION_TOKEN"))
-                   .placeholder(R.drawable.ic_bistu_logo)
-                   .into(viewHolder.lostFoundImage);
+            final ArrayList<String> imagePaths = new ArrayList<>();
+            for (LostFoundImageURL url : list) {
+                imagePaths.add(url.getUrl() + "?api_key=" + MyApplication.API_KEY + "&session_token=" + SESSION_TOKEN);
+            }
+            Glide.with(context)
+                 .load(imagePaths.get(0))
+                 .centerCrop()
+                 .thumbnail(0.3f)
+                 .placeholder(R.drawable.ic_image_loading_picture)
+                 .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
+                 .into(viewHolder.lostFoundImage);
         }
+
         return convertView;
     }
 
@@ -100,5 +108,6 @@ public class LostFoundListAdapter extends BaseAdapter {
     private class ViewHolder {
         private ImageView lostFoundImage;
         private TextView lostFoundTitle, lostFoundIntro, lostFoundTime;
+//        private RecyclerView recyclerViewImages;
     }
 }

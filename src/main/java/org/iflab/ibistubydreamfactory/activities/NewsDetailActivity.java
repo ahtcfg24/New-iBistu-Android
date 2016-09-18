@@ -2,7 +2,6 @@ package org.iflab.ibistubydreamfactory.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,8 +13,8 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.squareup.picasso.Picasso;
 
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
@@ -171,13 +170,18 @@ public class NewsDetailActivity extends AppCompatActivity {
         }
 
         /**
-         * 结合Fresco加载图片
+         * 加载图片
          *
          * @param data 图片从图片链接线性表中遍历出的一条图片地址
          */
         @Override
         public void UpdateUI(Context context, final int position, String data) {
-            Picasso.with(context).load(Uri.parse(data)).into(imageView);
+            Glide.with(context)
+                 .load(data)
+                 .centerCrop()
+                 .placeholder(R.drawable.ic_image_loading_picture)
+                 .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
+                 .into(imageView);
         }
     }
 }

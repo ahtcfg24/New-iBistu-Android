@@ -17,7 +17,6 @@ public class MyApplication extends Application {
     public static String APPKEY;//云信短信要求的AppKey
     public static String SMSCONFIRMURL;//云信短信验证URL
     public static String UPDATE_DOWNLOAD_URL = "";//软件更新下载URL
-    public static String REFRESH_TOKEN_URL = "";//刷新Token的URL
     public static String newsListBaseURL="http://iamding.cn:8080/newsapi/newslist";
     public static String newsDetailBaseURL = "http://iamding.cn:8080/newsapi/newsDetail";
     public static String[] newsCategory = {
