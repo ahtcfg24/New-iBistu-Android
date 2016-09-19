@@ -17,7 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.adapters.LostFoundListAdapter;
 import org.iflab.ibistubydreamfactory.apis.APISource;
@@ -25,7 +24,6 @@ import org.iflab.ibistubydreamfactory.apis.LostFoundAPI;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.LostFound;
 import org.iflab.ibistubydreamfactory.models.Resource;
-import org.iflab.ibistubydreamfactory.utils.ACache;
 
 import java.util.List;
 
@@ -37,7 +35,6 @@ public class LostFoundActivity extends AppCompatActivity {
     private ListView lostFoundListView;
     private List<LostFound> lostFoundList;
     private Resource<LostFound> lostFoundResource;
-    private ACache aCache = ACache.get(MyApplication.getAppContext());
     private int currentPage;//分页加载的当前页编号
     private SwipeRefreshLayout pullToRefreshView;//下拉刷新控件
     private View rootView;
@@ -45,7 +42,7 @@ public class LostFoundActivity extends AppCompatActivity {
     private LinearLayout footerProgressLayout;
     private TextView loadToLastTextView;
     private LostFoundListAdapter lostFoundListAdapter;
-    private boolean onlyShowFound = true;
+    private String onlyShowFound = "isFound=false";//用于判断当前显示的数据是所有已发布的还是用户发布的
 
 
     @Override
@@ -55,16 +52,7 @@ public class LostFoundActivity extends AppCompatActivity {
         setContentView(rootView);
         initView();
         initRefresh();
-        if (getIntent().getStringExtra("needRefresh") != null) {//如果需要刷新
-            getLostFoundResource(currentPage, "isFound=false");
-        } else {
-            if (lostFoundResource == null) {
-            /*如果缓存没有就从网络获取*/
-                getLostFoundResource(currentPage, "isFound=false");
-            } else {
-                loadData();
-            }
-        }
+        getLostFoundResource(currentPage, onlyShowFound);
 
     }
 
@@ -79,7 +67,6 @@ public class LostFoundActivity extends AppCompatActivity {
         lostFoundListView = (ListView) findViewById(R.id.listView_lostFound);
         lostFoundListView.addFooterView(loadMoreView);
         lostFoundListView.setOnScrollListener(new ScrollListener());
-        lostFoundResource = (Resource<LostFound>) aCache.getAsObject("lostFoundResource");
         findViewById(R.id.floatingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,7 +88,7 @@ public class LostFoundActivity extends AppCompatActivity {
                     public void run() {
                         lostFoundList.clear();
                         currentPage = 1;
-                        getLostFoundResource(currentPage, "isFound=false");
+                        getLostFoundResource(currentPage, onlyShowFound);
                         Snackbar.make(rootView, "刷新完成", Snackbar.LENGTH_SHORT).show();
                     }
                 }, 1000);
@@ -120,10 +107,6 @@ public class LostFoundActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     pullToRefreshView.setRefreshing(false);//加载完成收起下拉刷新的进度圈
                     lostFoundResource = response.body();
-                    if (currentPage == 1) {//缓存第一页的数据
-                        aCache.put("lostFoundResource", lostFoundResource);
-                    }
-
                     loadData();
                 } else {
                     ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
@@ -177,13 +160,16 @@ public class LostFoundActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_posted:
-                if (onlyShowFound) {
-                    // TODO: 2016/9/19 显示发布过的
-                    onlyShowFound = false;
+                if (onlyShowFound.equals("isFound=false")) {
+                    onlyShowFound = "isFound=true";
+                    setTitle("我发布的");
                 } else {
-                    // TODO: 2016/9/19 显示正常的
-                    onlyShowFound = true;
+                    onlyShowFound = "isFound=false";
+                    setTitle("失物招领");
                 }
+                lostFoundList.clear();
+                currentPage = 1;
+                getLostFoundResource(currentPage, onlyShowFound);
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -229,7 +215,7 @@ public class LostFoundActivity extends AppCompatActivity {
             if (isLastRow && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 loadToLastTextView.setVisibility(View.INVISIBLE);
                 footerProgressLayout.setVisibility(View.VISIBLE);
-                getLostFoundResource(currentPage, "isFound=false");
+                getLostFoundResource(currentPage, onlyShowFound);
                 isLastRow = false;
             }
         }
