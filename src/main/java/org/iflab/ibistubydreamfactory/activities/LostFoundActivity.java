@@ -45,6 +45,7 @@ public class LostFoundActivity extends AppCompatActivity {
     private LinearLayout footerProgressLayout;
     private TextView loadToLastTextView;
     private LostFoundListAdapter lostFoundListAdapter;
+    private boolean onlyShowFound = true;
 
 
     @Override
@@ -55,11 +56,11 @@ public class LostFoundActivity extends AppCompatActivity {
         initView();
         initRefresh();
         if (getIntent().getStringExtra("needRefresh") != null) {//如果需要刷新
-            getLostFoundResource(currentPage);
+            getLostFoundResource(currentPage, "isFound=false");
         } else {
             if (lostFoundResource == null) {
             /*如果缓存没有就从网络获取*/
-                getLostFoundResource(currentPage);
+                getLostFoundResource(currentPage, "isFound=false");
             } else {
                 loadData();
             }
@@ -100,7 +101,7 @@ public class LostFoundActivity extends AppCompatActivity {
                     public void run() {
                         lostFoundList.clear();
                         currentPage = 1;
-                        getLostFoundResource(currentPage);
+                        getLostFoundResource(currentPage, "isFound=false");
                         Snackbar.make(rootView, "刷新完成", Snackbar.LENGTH_SHORT).show();
                     }
                 }, 1000);
@@ -110,9 +111,9 @@ public class LostFoundActivity extends AppCompatActivity {
         });
     }
 
-    private void getLostFoundResource(final int currentPage) {
+    private void getLostFoundResource(final int currentPage, String isFound) {
         LostFoundAPI lostFoundAPI = APISource.getInstance().getAPIObject(LostFoundAPI.class);
-        Call<Resource<LostFound>> call = lostFoundAPI.getLostFound((currentPage - 1) * 10 + "");
+        Call<Resource<LostFound>> call = lostFoundAPI.getLostFound((currentPage - 1) * 10 + "", isFound);
         call.enqueue(new Callback<Resource<LostFound>>() {
             @Override
             public void onResponse(Call<Resource<LostFound>> call, Response<Resource<LostFound>> response) {
@@ -176,8 +177,13 @@ public class LostFoundActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_posted:
-                startActivity(new Intent(LostFoundActivity.this, PostedLostFoundActivity.class));
-                return true;
+                if (onlyShowFound) {
+                    // TODO: 2016/9/19 显示发布过的
+                    onlyShowFound = false;
+                } else {
+                    // TODO: 2016/9/19 显示正常的
+                    onlyShowFound = true;
+                }
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -223,7 +229,7 @@ public class LostFoundActivity extends AppCompatActivity {
             if (isLastRow && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 loadToLastTextView.setVisibility(View.INVISIBLE);
                 footerProgressLayout.setVisibility(View.VISIBLE);
-                getLostFoundResource(currentPage);
+                getLostFoundResource(currentPage, "isFound=false");
                 isLastRow = false;
             }
         }
