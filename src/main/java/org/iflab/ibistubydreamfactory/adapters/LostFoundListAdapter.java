@@ -17,6 +17,7 @@ import org.iflab.ibistubydreamfactory.models.LostFound;
 import org.iflab.ibistubydreamfactory.models.LostFoundImageURL;
 import org.iflab.ibistubydreamfactory.utils.ACache;
 import org.iflab.ibistubydreamfactory.utils.JsonUtils;
+import org.iflab.ibistubydreamfactory.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,11 +73,11 @@ public class LostFoundListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.lostFoundTitle.setText(lostFoundList.get(position).getTitle());
-        viewHolder.lostFoundIntro.setText(lostFoundList.get(position).getDetails());
-        viewHolder.lostFoundTime.setText(lostFoundList.get(position).getCreateTime());
-        List<LostFoundImageURL> list = JsonUtils.json2List(lostFoundList.get(position)
-                                                                        .getImgUrlList(), LostFoundImageURL.class);
+        LostFound lostFound = lostFoundList.get(position);
+        viewHolder.lostFoundTitle.setText(lostFound.getTitle());
+        viewHolder.lostFoundIntro.setText(lostFound.getDetails());
+        viewHolder.lostFoundTime.setText(StringUtil.getToZeroTime(lostFound.getCreateTime()));
+        List<LostFoundImageURL> list = JsonUtils.json2List(lostFound.getImgUrlList(), LostFoundImageURL.class);
         if (list != null) {
             ArrayList<ImageInfo> imageInfo = new ArrayList<>();
             for (LostFoundImageURL url : list) {

@@ -142,16 +142,6 @@
             >
         </activity>
         <activity
-            android:name=".activities.PostedLostFoundActivity"
-            android:label="@string/label_activity_posted_lost_found"
-            android:parentActivityName=".activities.LostFoundActivity">
-        </activity>
-        <activity
-            android:name=".activities.LostFoundDetailActivity"
-            android:label="招领详情"
-            android:parentActivityName=".activities.LostFoundActivity">
-        </activity>
-        <activity
             android:name=".activities.NormalPlayerActivity"
             android:configChanges="screenSize|orientation"
             android:label="MDMultiDemoActivity"

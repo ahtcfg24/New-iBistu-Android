@@ -2,6 +2,8 @@ package org.iflab.ibistubydreamfactory.utils;
 
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -29,6 +31,26 @@ public class StringUtil {
         String ss = decimalFormat.format(s);
 
         return hh + ":" + mm + ":" + ss;
+    }
+
+    /**
+     * 获得距离零点的时间，距离零点超过24小时时返回日期，小于24小时返回时间
+     */
+    public static String getToZeroTime(String time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            long zeroTimeCreate = sdf.parse(time).getTime();//创建当天的零点毫秒数
+            long timeNow = System.currentTimeMillis() + 28800000;//现在的毫秒数（北京时间+8小时）
+            if (timeNow - zeroTimeCreate >= 86400000) {//如果现在的毫秒数比创建当天的零点毫秒多24小时
+                time = time.substring(0, 10);//只显示日期
+            } else {
+                time = time.substring(11, 16);//只显示时间
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return time;
     }
 
     /**
