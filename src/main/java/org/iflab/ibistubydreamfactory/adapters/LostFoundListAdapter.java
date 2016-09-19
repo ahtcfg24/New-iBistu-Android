@@ -5,10 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.lzy.ninegrid.ImageInfo;
+import com.lzy.ninegrid.NineGridView;
+import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
 
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
@@ -26,7 +27,8 @@ import java.util.List;
 public class LostFoundListAdapter extends BaseAdapter {
     private List<LostFound> lostFoundList;
     private Context context;
-    private String SESSION_TOKEN = ACache.get(MyApplication.getAppContext()).getAsString("SESSION_TOKEN");
+    private String SESSION_TOKEN = ACache.get(MyApplication.getAppContext())
+                                         .getAsString("SESSION_TOKEN");
 
     public LostFoundListAdapter(Context context) {
         this.context = context;
@@ -64,8 +66,7 @@ public class LostFoundListAdapter extends BaseAdapter {
             viewHolder.lostFoundTitle = (TextView) convertView.findViewById(R.id.title_lost_found);
             viewHolder.lostFoundIntro = (TextView) convertView.findViewById(R.id.content_lost_found);
             viewHolder.lostFoundTime = (TextView) convertView.findViewById(R.id.time_lost_found);
-            viewHolder.lostFoundImage = (ImageView) convertView.findViewById(R.id.image_lost_found);
-//            viewHolder.recyclerViewImages = (RecyclerView) convertView.findViewById(R.id.recyclerView_images);
+            viewHolder.nineGridView = (NineGridView) convertView.findViewById(R.id.nineGridView_images);
 
             convertView.setTag(viewHolder);
         } else {
@@ -77,17 +78,15 @@ public class LostFoundListAdapter extends BaseAdapter {
         List<LostFoundImageURL> list = JsonUtils.json2List(lostFoundList.get(position)
                                                                         .getImgUrlList(), LostFoundImageURL.class);
         if (list != null) {
-            final ArrayList<String> imagePaths = new ArrayList<>();
+            ArrayList<ImageInfo> imageInfo = new ArrayList<>();
             for (LostFoundImageURL url : list) {
-                imagePaths.add(url.getUrl() + "?api_key=" + MyApplication.API_KEY + "&session_token=" + SESSION_TOKEN);
+                String imageUrl = url.getUrl() + "?api_key=" + MyApplication.API_KEY + "&session_token=" + SESSION_TOKEN;
+                ImageInfo info = new ImageInfo();
+                info.setThumbnailUrl(imageUrl);
+                info.setBigImageUrl(imageUrl);
+                imageInfo.add(info);
             }
-            Glide.with(context)
-                 .load(imagePaths.get(0))
-                 .centerCrop()
-                 .thumbnail(0.3f)
-                 .placeholder(R.drawable.ic_image_loading_picture)
-                 .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
-                 .into(viewHolder.lostFoundImage);
+            viewHolder.nineGridView.setAdapter(new NineGridViewClickAdapter(context, imageInfo));
         }
 
         return convertView;
@@ -106,8 +105,7 @@ public class LostFoundListAdapter extends BaseAdapter {
      * 起优化作用ListView的ViewHolder类，避免多次加载TextView
      */
     private class ViewHolder {
-        private ImageView lostFoundImage;
         private TextView lostFoundTitle, lostFoundIntro, lostFoundTime;
-//        private RecyclerView recyclerViewImages;
+        private NineGridView nineGridView;
     }
 }

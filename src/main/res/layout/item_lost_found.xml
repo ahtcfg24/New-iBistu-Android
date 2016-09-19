@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
@@ -11,17 +12,15 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingTop="8dp"
-        android:text="Title"
-        android:textSize="14sp"
+        android:textColor="@color/colorPureBlack"
+        android:textSize="17sp"
         />
 
     <TextView
         android:id="@+id/time_lost_found"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="time"
-        android:textColor="#afafaf"
-        android:textSize="12sp"
+        android:textSize="13sp"
         />
 
 
@@ -29,27 +28,24 @@
         android:id="@+id/content_lost_found"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:ellipsize="end"
         android:maxLines="4"
         android:paddingBottom="4dp"
-        android:text="TextView"
+        android:textColor="@color/colorPureBlack"
         android:textSize="15sp"
         />
 
-    <ImageView
-        android:id="@+id/image_lost_found"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:paddingBottom="8dp"
-        android:paddingRight="4dp"
-        android:paddingTop="8dp"
+
+    <com.lzy.ninegrid.NineGridView
+        android:id="@+id/nineGridView_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ngv_gridSpacing="3dp"
+        app:ngv_maxSize="9"
+        app:ngv_mode="fill"
+        app:ngv_singleImageRatio="1"
+        app:ngv_singleImageSize="250dp"
         />
-
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/recyclerView_images"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="300dp">-->
-
-    <!--</android.support.v7.widget.RecyclerView>-->
 
 </LinearLayout>

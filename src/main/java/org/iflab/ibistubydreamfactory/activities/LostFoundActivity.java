@@ -38,7 +38,6 @@ public class LostFoundActivity extends AppCompatActivity {
     private List<LostFound> lostFoundList;
     private Resource<LostFound> lostFoundResource;
     private ACache aCache = ACache.get(MyApplication.getAppContext());
-    private Intent intent;
     private int currentPage;//分页加载的当前页编号
     private SwipeRefreshLayout pullToRefreshView;//下拉刷新控件
     private View rootView;
@@ -65,16 +64,6 @@ public class LostFoundActivity extends AppCompatActivity {
                 loadData();
             }
         }
-//        lostFoundListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                intent = new Intent();
-//                intent.putExtra("lostFound", lostFoundList.get(position));
-//                intent.setClass(LostFoundActivity.this, LostFoundDetailActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
 
     }
 

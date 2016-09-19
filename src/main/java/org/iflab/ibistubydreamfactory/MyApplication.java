@@ -4,8 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.lzy.ninegrid.NineGridView;
 
 /**
  * 代表整个APP的Application类，程序中首先加载，需要在AndroidManifest中注册
@@ -17,7 +23,7 @@ public class MyApplication extends Application {
     public static String APPKEY;//云信短信要求的AppKey
     public static String SMSCONFIRMURL;//云信短信验证URL
     public static String UPDATE_DOWNLOAD_URL = "";//软件更新下载URL
-    public static String newsListBaseURL="http://iamding.cn:8080/newsapi/newslist";
+    public static String newsListBaseURL = "http://iamding.cn:8080/newsapi/newslist";
     public static String newsDetailBaseURL = "http://iamding.cn:8080/newsapi/newsDetail";
     public static String[] newsCategory = {
             "综合新闻", "图片新闻", "人才培养", "教学科研", "文化活动", "校园人物", "交流合作", "社会服务", "媒体关注"
@@ -34,7 +40,25 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         MyApplication.context = getApplicationContext();
+        //初始化九宫格图片加载，此处使用Glide
+        NineGridView.setImageLoader(new NineGridView.ImageLoader() {
 
+            @Override
+            public void onDisplayImage(Context context, ImageView imageView, String url) {
+                Glide.with(context)
+                     .load(url)
+                     .centerCrop()
+                     .diskCacheStrategy(DiskCacheStrategy.ALL)//同一图片源有不同的显示大小时使用该策略
+                     .placeholder(R.drawable.ic_image_loading_picture)
+                     .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
+                     .into(imageView);
+            }
+
+            @Override
+            public Bitmap getCacheImage(String url) {
+                return null;
+            }
+        });
         try {
             ApplicationInfo applicationInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = applicationInfo.metaData;
@@ -48,4 +72,6 @@ public class MyApplication extends Application {
             Log.e(MyApplication.class.getSimpleName(), "读取配置文件出错", e);
         }
     }
+
+
 }

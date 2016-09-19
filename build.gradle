@@ -53,5 +53,7 @@ dependencies {
     compile 'me.iwf.photopicker:PhotoPicker:0.8.10@aar'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
+    compile 'com.android.support:support-v4:24.2.1'
+//九宫格图片预览
+    compile 'com.lzy.widget:ninegridview:0.2.0'
 }
