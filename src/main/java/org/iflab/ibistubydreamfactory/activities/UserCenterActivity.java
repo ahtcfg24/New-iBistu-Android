@@ -92,6 +92,16 @@ public class UserCenterActivity extends AppCompatActivity {
     public void onButtonBindClick(View view) {
         Snackbar.make(parentView, "敬请期待！", Snackbar.LENGTH_SHORT).show();
         // TODO: 2016/8/21 绑定学号
+        Intent intent = new Intent();
+        intent.setClass(this, CasActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && requestCode == RESULT_OK) {
+            // TODO: 2016/9/20 接收返回信息
+        }
     }
 
     /**
