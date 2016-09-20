@@ -32,7 +32,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:dividerHeight="16dp"
-                android:scrollbarStyle="outsideInset"/>
+                android:scrollbarStyle="insideOverlay"/>
         </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>

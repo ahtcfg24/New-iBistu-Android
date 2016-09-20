@@ -35,8 +35,8 @@
                 android:layout_marginTop="6dp"
                 android:gravity="start|top"
                 android:hint="描述："
+                android:inputType="textMultiLine"
                 android:maxLines="20"
-                android:singleLine="false"
                 android:textSize="18sp"
                 />
 
@@ -50,7 +50,6 @@
                 android:hint="联系电话："
                 android:inputType="text"
                 android:maxLines="1"
-                android:singleLine="true"
                 android:textSize="18sp"/>
 
             <TextView

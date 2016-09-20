@@ -156,15 +156,14 @@ public class LostFoundActivity extends AppCompatActivity {
             lostFoundListView.setAdapter(lostFoundListAdapter);
         } else {
             List<LostFound> tempList = lostFoundResource.getResource();
-            if (tempList.size() == 0) {
-                footerProgressLayout.setVisibility(View.INVISIBLE);
-                loadToLastTextView.setVisibility(View.VISIBLE);
-            } else {
+            if (tempList.size() != 0) {
                 lostFoundList.addAll(tempList);
                 lostFoundListAdapter.addItem(lostFoundList);
                 lostFoundListAdapter.notifyDataSetChanged();//更新列表视图
             }
         }
+        footerProgressLayout.setVisibility(View.INVISIBLE);
+        loadToLastTextView.setVisibility(View.VISIBLE);
         currentPage++;
     }
 
