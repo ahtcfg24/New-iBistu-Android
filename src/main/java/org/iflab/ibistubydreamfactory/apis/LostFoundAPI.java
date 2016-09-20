@@ -1,15 +1,18 @@
 package org.iflab.ibistubydreamfactory.apis;
 
 import org.iflab.ibistubydreamfactory.models.LostFound;
-import org.iflab.ibistubydreamfactory.models.PostLostFoundSuccessModel;
 import org.iflab.ibistubydreamfactory.models.Resource;
+import org.iflab.ibistubydreamfactory.models.SetIsFoundRequestBody;
 import org.iflab.ibistubydreamfactory.models.UploadFileRequestBody;
 import org.iflab.ibistubydreamfactory.models.UploadSuccessModel;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -35,6 +38,8 @@ public interface LostFoundAPI {
      * 发布新的lostfound
      */
     @POST("ibistu/_table/module_lost_found")
-    Call<PostLostFoundSuccessModel> postNewLostFound(@Body LostFound[] postLostFoundRequestBody);
+    Call<ResponseBody> postNewLostFound(@Body LostFound[] postLostFoundRequestBody);
 
+    @PATCH("ibistu/_table/module_lost_found/{id}")
+    Call<ResponseBody> setIsFound(@Path("id") int id, @Body SetIsFoundRequestBody setIsFoundRequestBody);
 }

@@ -23,7 +23,6 @@ import org.iflab.ibistubydreamfactory.apis.LostFoundAPI;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.LostFound;
 import org.iflab.ibistubydreamfactory.models.LostFoundImageURL;
-import org.iflab.ibistubydreamfactory.models.PostLostFoundSuccessModel;
 import org.iflab.ibistubydreamfactory.models.UploadFileRequestBody;
 import org.iflab.ibistubydreamfactory.models.UploadSuccessModel;
 import org.iflab.ibistubydreamfactory.models.User;
@@ -40,6 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPreview;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,10 +77,10 @@ public class PostLostFoundActivity extends AppCompatActivity {
             }
             lostFound.setImgUrlList(JsonUtils.list2Json(imgUrlList));
             LostFound[] lostFounds = new LostFound[]{lostFound};
-            Call<PostLostFoundSuccessModel> call = lostFoundAPI.postNewLostFound(lostFounds);
-            call.enqueue(new Callback<PostLostFoundSuccessModel>() {
+            Call<ResponseBody> call = lostFoundAPI.postNewLostFound(lostFounds);
+            call.enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Call<PostLostFoundSuccessModel> call, Response<PostLostFoundSuccessModel> response) {
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     progressBar.setVisibility(View.GONE);
                     if (response.isSuccessful()) {//如果成功
                         Intent intent = new Intent();
@@ -96,7 +96,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<PostLostFoundSuccessModel> call, Throwable t) {
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
                     Snackbar.make(parentView, "失败：" + t.getMessage(), Snackbar.LENGTH_LONG).show();
                 }

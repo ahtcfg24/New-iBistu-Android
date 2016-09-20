@@ -26,12 +26,14 @@ import org.iflab.ibistubydreamfactory.apis.LostFoundAPI;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.LostFound;
 import org.iflab.ibistubydreamfactory.models.Resource;
+import org.iflab.ibistubydreamfactory.models.SetIsFoundRequestBody;
 import org.iflab.ibistubydreamfactory.models.User;
 import org.iflab.ibistubydreamfactory.utils.ACache;
 
 import java.util.List;
 
 import me.drakeet.materialdialog.MaterialDialog;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,6 +51,7 @@ public class LostFoundActivity extends AppCompatActivity {
     private LostFoundListAdapter lostFoundListAdapter;
     private String onlyShowFound = "isFound=false";//用于判断当前显示的数据是所有已发布的还是用户发布的
     private User user;
+    private LostFoundAPI lostFoundAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +82,7 @@ public class LostFoundActivity extends AppCompatActivity {
                 if (onlyShowFound.equals("isFound=false")) {
                     return false;
                 } else {
-                    showFinishDialog();
+                    showFinishDialog(lostFoundList.get(i).getId());
                 }
                 return true;
             }
@@ -116,7 +119,7 @@ public class LostFoundActivity extends AppCompatActivity {
     }
 
     private void getLostFoundResource(final int currentPage, String isFound) {
-        LostFoundAPI lostFoundAPI = APISource.getInstance().getAPIObject(LostFoundAPI.class);
+        lostFoundAPI = APISource.getInstance().getAPIObject(LostFoundAPI.class);
         Call<Resource<LostFound>> call = lostFoundAPI.getLostFound((currentPage - 1) * 10 + "", isFound);
         call.enqueue(new Callback<Resource<LostFound>>() {
             @Override
@@ -196,13 +199,35 @@ public class LostFoundActivity extends AppCompatActivity {
     /**
      * 弹出更新提示框
      */
-    private void showFinishDialog() {
+    private void showFinishDialog(final int lostFoundId) {
         final MaterialDialog materialDialog = new MaterialDialog(this);
         materialDialog.setPositiveButton("是", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 materialDialog.dismiss();
-                // TODO: 2016/9/20 将isFound设为true
+                SetIsFoundRequestBody setIsFoundRequestBody = new SetIsFoundRequestBody();
+                setIsFoundRequestBody.setIsFound(1);
+                Call<ResponseBody> call = lostFoundAPI.setIsFound(lostFoundId, setIsFoundRequestBody);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            lostFoundList.clear();
+                            currentPage = 1;
+                            getLostFoundResource(currentPage, onlyShowFound);
+                        } else {
+                            ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
+                            onFailure(call, e.toException());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        System.out.println("error：" + t.toString());
+                        Toast.makeText(LostFoundActivity.this, "错误：" + t.getMessage(), Toast.LENGTH_LONG)
+                             .show();
+                    }
+                });
 
             }
         }).setNegativeButton("否", new View.OnClickListener() {
