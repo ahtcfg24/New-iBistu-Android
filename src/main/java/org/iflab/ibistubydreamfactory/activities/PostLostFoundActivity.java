@@ -48,8 +48,6 @@ public class PostLostFoundActivity extends AppCompatActivity {
 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    @BindView(R.id.edit_title)
-    EditText editTitle;
     @BindView(R.id.edit_content)
     EditText editContent;
     @BindView(R.id.button_post)
@@ -58,7 +56,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
     @BindView(R.id.edit_contact)
     EditText editContact;
     private View parentView;
-    private String title, details, phone;
+    private String details, phone;
     private LostFoundAPI lostFoundAPI;
     private PhotoAdapter photoAdapter;
     private ACache aCache = ACache.get(MyApplication.getAppContext());
@@ -69,7 +67,6 @@ public class PostLostFoundActivity extends AppCompatActivity {
         @Override
         public void run() {//图片上传成功后再将返回的图片路径和lostfound信息一起发布
             LostFound lostFound = new LostFound();
-            lostFound.setTitle(title);
             lostFound.setDetails(details);
             lostFound.setPhone(phone);
             lostFound.setAuthor(user.getName());
@@ -130,8 +127,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 if (position == selectedPhotos.size()) {//点击+选择图片
                     PhotoPicker.builder()
-                               .setPhotoCount(3)
-                               .setGridColumnCount(3).setSelected(selectedPhotos)
+                               .setPhotoCount(3).setGridColumnCount(3).setSelected(selectedPhotos)
                                .start(PostLostFoundActivity.this);
                 } else {
                     PhotoPreview.builder()//预览图片
@@ -148,15 +144,12 @@ public class PostLostFoundActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_post:
-                title = editTitle.getText().toString();
                 details = editContent.getText().toString();
                 phone = editContact.getText().toString();
                 if (!RegexConfirmUtils.isMobile(phone)) {
                     Snackbar.make(parentView, "请填写正确的手机号！", Snackbar.LENGTH_SHORT).show();
-                } else if (!RegexConfirmUtils.isLengthRight(title, 5, 30)) {
-                    Snackbar.make(parentView, "标题长度在5-30之间！", Snackbar.LENGTH_SHORT).show();
-                } else if (!RegexConfirmUtils.isLengthRight(details, 5, 250)) {
-                    Snackbar.make(parentView, "描述长度在5-250之间！", Snackbar.LENGTH_SHORT).show();
+                } else if (!RegexConfirmUtils.isLengthRight(details, 5, 120)) {
+                    Snackbar.make(parentView, "描述长度在5-120之间！", Snackbar.LENGTH_SHORT).show();
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
                     List<UploadFileRequestBody.UploadResource> uploadResourceList = new ArrayList<>();

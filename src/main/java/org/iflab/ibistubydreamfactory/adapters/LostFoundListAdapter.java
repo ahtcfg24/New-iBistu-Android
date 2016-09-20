@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lzy.ninegrid.ImageInfo;
@@ -26,6 +27,7 @@ import java.util.List;
  *
  */
 public class LostFoundListAdapter extends BaseAdapter {
+    private boolean isVisibility = false;
     private List<LostFound> lostFoundList;
     private Context context;
     private String SESSION_TOKEN = ACache.get(MyApplication.getAppContext())
@@ -60,23 +62,43 @@ public class LostFoundListAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
+        final LostFound lostFound = lostFoundList.get(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lost_found, null);
             viewHolder = new ViewHolder();
-            viewHolder.lostFoundTitle = (TextView) convertView.findViewById(R.id.title_lost_found);
+            viewHolder.lostFoundAuthor = (TextView) convertView.findViewById(R.id.author_lost_found);
             viewHolder.lostFoundIntro = (TextView) convertView.findViewById(R.id.content_lost_found);
             viewHolder.lostFoundTime = (TextView) convertView.findViewById(R.id.time_lost_found);
             viewHolder.nineGridView = (NineGridView) convertView.findViewById(R.id.nineGridView_images);
+            viewHolder.contactText = (TextView) convertView.findViewById(R.id.text_contact);
+            viewHolder.showContactImage = (ImageView) convertView.findViewById(R.id.image_showContact);
+            viewHolder.showContactImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!isVisibility) {
+                        isVisibility = true;
+                        viewHolder.contactText.setVisibility(View.VISIBLE);
+                        viewHolder.showContactImage.setImageResource(R.drawable.ic_action_visibility_off);
+                    } else {
+                        isVisibility = false;
+                        viewHolder.contactText.setVisibility(View.GONE);
+                        viewHolder.showContactImage.setImageResource(R.drawable.ic_action_visibility);
 
+                    }
+                }
+            });
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        LostFound lostFound = lostFoundList.get(position);
-        viewHolder.lostFoundTitle.setText(lostFound.getTitle());
+        viewHolder.contactText.setVisibility(View.GONE);
+        viewHolder.lostFoundAuthor.setText(lostFound.getAuthor());
         viewHolder.lostFoundIntro.setText(lostFound.getDetails());
         viewHolder.lostFoundTime.setText(StringUtil.getToZeroTime(lostFound.getCreateTime()));
+        viewHolder.contactText.setText(lostFound.getPhone());
+        viewHolder.showContactImage.setImageResource(R.drawable.ic_action_visibility);
+
         List<LostFoundImageURL> list = JsonUtils.json2List(lostFound.getImgUrlList(), LostFoundImageURL.class);
         if (list != null) {
             ArrayList<ImageInfo> imageInfo = new ArrayList<>();
@@ -106,7 +128,8 @@ public class LostFoundListAdapter extends BaseAdapter {
      * 起优化作用ListView的ViewHolder类，避免多次加载TextView
      */
     private class ViewHolder {
-        private TextView lostFoundTitle, lostFoundIntro, lostFoundTime;
+        private TextView lostFoundAuthor, lostFoundIntro, lostFoundTime, contactText;
         private NineGridView nineGridView;
+        private ImageView showContactImage;
     }
 }

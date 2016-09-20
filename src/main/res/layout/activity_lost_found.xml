@@ -23,6 +23,7 @@
             android:layout_height="wrap_content">
 
             <ListView
+
                 android:id="@+id/listView_lostFound"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,6 +31,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
+                android:dividerHeight="16dp"
                 android:scrollbarStyle="outsideInset"/>
         </android.support.v4.widget.SwipeRefreshLayout>
 

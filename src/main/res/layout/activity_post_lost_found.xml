@@ -27,18 +27,6 @@
             android:padding="16dp"
             >
 
-
-            <EditText
-                android:id="@+id/edit_title"
-                style="@style/edit_text_style"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:hint="标题："
-                android:inputType="text"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textSize="18sp"/>
-
             <EditText
                 android:id="@+id/edit_content"
                 style="@style/edit_text_style"

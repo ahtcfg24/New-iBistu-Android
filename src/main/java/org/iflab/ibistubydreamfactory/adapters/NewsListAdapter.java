@@ -56,7 +56,7 @@ public class NewsListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_news, null);
             viewHolder = new ViewHolder();
-            viewHolder.newsListTitle = (TextView) convertView.findViewById(R.id.title_lost_found);
+            viewHolder.newsListTitle = (TextView) convertView.findViewById(R.id.author_lost_found);
             viewHolder.newsListIntro = (TextView) convertView.findViewById(R.id.content_lost_found);
             viewHolder.newsListTime = (TextView) convertView.findViewById(R.id.newsList_time);
             viewHolder.newsListImage = (ImageView) convertView.findViewById(R.id.newsList_icon);

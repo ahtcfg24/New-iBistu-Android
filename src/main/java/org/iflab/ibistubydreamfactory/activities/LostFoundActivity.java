@@ -12,11 +12,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.adapters.LostFoundListAdapter;
 import org.iflab.ibistubydreamfactory.apis.APISource;
@@ -24,9 +26,12 @@ import org.iflab.ibistubydreamfactory.apis.LostFoundAPI;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.LostFound;
 import org.iflab.ibistubydreamfactory.models.Resource;
+import org.iflab.ibistubydreamfactory.models.User;
+import org.iflab.ibistubydreamfactory.utils.ACache;
 
 import java.util.List;
 
+import me.drakeet.materialdialog.MaterialDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,7 +48,7 @@ public class LostFoundActivity extends AppCompatActivity {
     private TextView loadToLastTextView;
     private LostFoundListAdapter lostFoundListAdapter;
     private String onlyShowFound = "isFound=false";//用于判断当前显示的数据是所有已发布的还是用户发布的
-
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,7 @@ public class LostFoundActivity extends AppCompatActivity {
 
 
     private void initView() {
+        user = (User) ACache.get(MyApplication.getAppContext()).getAsObject("user");
         lostFoundListAdapter = new LostFoundListAdapter(this);
         currentPage = 1;
         loadMoreView = getLayoutInflater().inflate(R.layout.item_load_more, null);
@@ -67,6 +73,17 @@ public class LostFoundActivity extends AppCompatActivity {
         lostFoundListView = (ListView) findViewById(R.id.listView_lostFound);
         lostFoundListView.addFooterView(loadMoreView);
         lostFoundListView.setOnScrollListener(new ScrollListener());
+        lostFoundListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (onlyShowFound.equals("isFound=false")) {
+                    return false;
+                } else {
+                    showFinishDialog();
+                }
+                return true;
+            }
+        });
         findViewById(R.id.floatingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,7 +178,7 @@ public class LostFoundActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_posted:
                 if (onlyShowFound.equals("isFound=false")) {
-                    onlyShowFound = "isFound=true";
+                    onlyShowFound = "(isFound=false)And(author=" + user.getName() + ")";
                     setTitle("我发布的");
                 } else {
                     onlyShowFound = "isFound=false";
@@ -174,6 +191,30 @@ public class LostFoundActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    /**
+     * 弹出更新提示框
+     */
+    private void showFinishDialog() {
+        final MaterialDialog materialDialog = new MaterialDialog(this);
+        materialDialog.setPositiveButton("是", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                materialDialog.dismiss();
+                // TODO: 2016/9/20 将isFound设为true
+
+            }
+        }).setNegativeButton("否", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                materialDialog.dismiss();
+            }
+        });
+        materialDialog.setTitle("结束招领");
+        materialDialog.setMessage("是否将该招领信息状态改为结束？");
+        materialDialog.show();
+
     }
 
     /**

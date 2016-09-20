@@ -19,7 +19,7 @@
         />
 
     <TextView
-        android:id="@+id/title_lost_found"
+        android:id="@+id/author_lost_found"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/newsList_icon"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/newsList_icon"
-        android:layout_alignLeft="@+id/title_lost_found"
+        android:layout_alignLeft="@+id/author_lost_found"
         android:ellipsize="end"
         android:maxLines="3"
         android:paddingBottom="4dp"
