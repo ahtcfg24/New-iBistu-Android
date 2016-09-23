@@ -27,7 +27,7 @@ import org.iflab.ibistubydreamfactory.models.UploadFileRequestBody;
 import org.iflab.ibistubydreamfactory.models.UploadSuccessModel;
 import org.iflab.ibistubydreamfactory.models.User;
 import org.iflab.ibistubydreamfactory.utils.ACache;
-import org.iflab.ibistubydreamfactory.utils.FileUtil;
+import org.iflab.ibistubydreamfactory.utils.ImageUtil;
 import org.iflab.ibistubydreamfactory.utils.JsonUtils;
 import org.iflab.ibistubydreamfactory.utils.RegexConfirmUtils;
 
@@ -146,10 +146,10 @@ public class PostLostFoundActivity extends AppCompatActivity {
             case R.id.button_post:
                 details = editContent.getText().toString();
                 phone = editContact.getText().toString();
-                if (!RegexConfirmUtils.isMobile(phone)) {
-                    Snackbar.make(parentView, "请填写正确的手机号！", Snackbar.LENGTH_SHORT).show();
-                } else if (!RegexConfirmUtils.isLengthRight(details, 5, 120)) {
+                if (!RegexConfirmUtils.isLengthRight(details, 5, 120)) {
                     Snackbar.make(parentView, "描述长度在5-120之间！", Snackbar.LENGTH_SHORT).show();
+                } else if (!RegexConfirmUtils.isMobile(phone)) {
+                    Snackbar.make(parentView, "请填写正确的手机号！", Snackbar.LENGTH_SHORT).show();
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
                     List<UploadFileRequestBody.UploadResource> uploadResourceList = new ArrayList<>();
@@ -157,7 +157,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
                         UploadFileRequestBody.UploadResource uploadResource = new UploadFileRequestBody.UploadResource();
                         uploadResource.setName(user.getId() + System.currentTimeMillis() + imgPath.substring(imgPath
                                 .length() - 8));//为防止服务器端出现同名图片，使用用户名+时间+原图片名称后三位为图片命名
-                        uploadResource.setContent(FileUtil.ImageToBase64Content(imgPath));
+                        uploadResource.setContent(ImageUtil.ImageToBase64Content(imgPath));
                         uploadResource.setIs_base64(true);
                         uploadResource.setType("file");
                         uploadResourceList.add(uploadResource);
@@ -180,6 +180,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<UploadSuccessModel> call, Throwable t) {
+                            progressBar.setVisibility(View.GONE);
                             Snackbar.make(parentView, "上传失败：" + t.getMessage(), Snackbar.LENGTH_LONG)
                                     .show();
                         }

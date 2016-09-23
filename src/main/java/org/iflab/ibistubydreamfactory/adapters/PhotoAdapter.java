@@ -53,8 +53,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             Uri uri = Uri.fromFile(new File(photoPaths.get(position)));
             Glide.with(mContext)
                  .load(uri)
-                 .centerCrop()
-                 .thumbnail(0.1f)
+                 .fitCenter()
                  .placeholder(R.drawable.ic_image_loading_picture)
                  .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
                  .into(holder.ivPhoto);
