@@ -25,6 +25,7 @@ import org.iflab.ibistubydreamfactory.models.ResetPasswordRequestBody;
 import org.iflab.ibistubydreamfactory.models.SuccessModel;
 import org.iflab.ibistubydreamfactory.models.User;
 import org.iflab.ibistubydreamfactory.utils.ACache;
+import org.iflab.ibistubydreamfactory.utils.AndroidUtils;
 import org.iflab.ibistubydreamfactory.utils.RegexConfirmUtils;
 import org.iflab.ibistubydreamfactory.utils.SharedPreferenceUtil;
 
@@ -81,6 +82,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
      */
     @Override
     public void onClick(View v) {
+        AndroidUtils.hideSoftInput(LoginFragment.this.getActivity());
         String email = editEmail.getText().toString();
 
         if (v.equals(loginButton)) {//监听登录按钮

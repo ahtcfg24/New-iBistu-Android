@@ -1,10 +1,16 @@
 package org.iflab.ibistubydreamfactory.activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
@@ -27,6 +34,7 @@ import org.iflab.ibistubydreamfactory.models.UploadFileRequestBody;
 import org.iflab.ibistubydreamfactory.models.UploadSuccessModel;
 import org.iflab.ibistubydreamfactory.models.User;
 import org.iflab.ibistubydreamfactory.utils.ACache;
+import org.iflab.ibistubydreamfactory.utils.AndroidUtils;
 import org.iflab.ibistubydreamfactory.utils.ImageUtil;
 import org.iflab.ibistubydreamfactory.utils.JsonUtils;
 import org.iflab.ibistubydreamfactory.utils.RegexConfirmUtils;
@@ -55,6 +63,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
     ArrayList<String> selectedPhotos = new ArrayList<>();
     @BindView(R.id.edit_contact)
     EditText editPhone;
+    private static final int PERMISSION_CODE_STORAGE = 002;
     private View parentView;
     private String details, phone;
     private LostFoundAPI lostFoundAPI;
@@ -125,11 +134,19 @@ public class PostLostFoundActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 if (position == selectedPhotos.size()) {//点击+选择图片
-                    PhotoPicker.builder()
-                               .setPhotoCount(PhotoSelectorAdapter.MAX_SELECT_PHOTOS_COUNT)
-                               .setGridColumnCount(3)
-                               .setSelected(selectedPhotos)
-                               .start(PostLostFoundActivity.this);
+                    if (Build.VERSION.SDK_INT < 23 || ContextCompat.checkSelfPermission(PostLostFoundActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        PhotoPicker.builder()
+                                   .setPhotoCount(PhotoSelectorAdapter.MAX_SELECT_PHOTOS_COUNT)
+                                   .setGridColumnCount(3)
+                                   .setSelected(selectedPhotos)
+                                   .start(PostLostFoundActivity.this);
+                    } else {
+                        ActivityCompat.requestPermissions(PostLostFoundActivity.this, new String[]{
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        }, PERMISSION_CODE_STORAGE);
+                    }
+
+
                 } else {
                     PhotoPreview.builder()//预览图片
                                 .setPhotos(selectedPhotos)
@@ -140,9 +157,33 @@ public class PostLostFoundActivity extends AppCompatActivity {
         }));
     }
 
+    /**
+     * 授权回调
+     *
+     * @param grantResults grantResults[i] 对应的权限用户是否授权
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_CODE_STORAGE://同类权限只要有一个被允许，其他都算允许
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {//用户授权了
+                    PhotoPicker.builder()
+                               .setPhotoCount(PhotoSelectorAdapter.MAX_SELECT_PHOTOS_COUNT)
+                               .setGridColumnCount(3)
+                               .setSelected(selectedPhotos)
+                               .start(PostLostFoundActivity.this);
+                } else {
+                    Toast.makeText(PostLostFoundActivity.this, "没有访问存储权限，无法选择图片！", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 
     @OnClick({R.id.button_post})
     public void onClick(View view) {
+        AndroidUtils.hideSoftInput(PostLostFoundActivity.this);
         switch (view.getId()) {
             case R.id.button_post:
                 details = editContent.getText().toString();

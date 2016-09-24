@@ -108,6 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public void onButtonRegisterClick(View view) {
+        AndroidUtils.hideSoftInput(RegisterActivity.this);
         phone = phoneInput.getText().toString();
         password = passwordInput.getText().toString();
         email = emailInput.getText().toString();
@@ -206,6 +207,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onButtonGoLoginClick(View view) {//跳转到登录页面
+        AndroidUtils.hideSoftInput(RegisterActivity.this);
         switchToLogin(bundle);
     }
 

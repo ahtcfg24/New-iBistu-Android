@@ -1,8 +1,14 @@
 package org.iflab.ibistubydreamfactory.activities;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -46,6 +52,7 @@ import retrofit2.Response;
  * AMapV2地图中简单介绍矢量地图和卫星地图模式切换
  */
 public class MapActivity extends AppCompatActivity implements LocationSource, AMapLocationListener {
+    private static final int PERMISSION_CODE_LOCATION = 001;
     private AMap map;
     private MapView mapView;
     private int mapType;
@@ -123,7 +130,33 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
         mapLocationList = mapLocationResource.getResource();
         setMapType();
         addMarkersToMap();
-        setLocation();
+        if (Build.VERSION.SDK_INT < 23 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            setLocation();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            }, PERMISSION_CODE_LOCATION);
+        }
+    }
+
+    /**
+     * 授权回调
+     *
+     * @param grantResults grantResults[i] 对应的权限用户是否授权
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_CODE_LOCATION://同类权限只要有一个被允许，其他都算允许
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {//用户授权了
+                    setLocation();
+                } else {
+                    Toast.makeText(MapActivity.this, "没有定位权限，定位功能无法使用！", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     /**
@@ -161,7 +194,7 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
             @Override
             public boolean onMarkerClick(Marker marker) {
                 LatLng clickLatLng = marker.getPosition();
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(clickLatLng, 10));
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(clickLatLng, 13));
                 marker.showInfoWindow();
                 return true;
             }

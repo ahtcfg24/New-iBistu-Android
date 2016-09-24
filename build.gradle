@@ -8,8 +8,8 @@ android {
 
     defaultConfig {
         applicationId "org.iflab.ibistubydreamfactory"
-        minSdkVersion 16
-        targetSdkVersion 22
+        minSdkVersion 19
+        targetSdkVersion 24
         versionCode 6
         versionName "1.06"
     }
