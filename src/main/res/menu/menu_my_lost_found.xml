@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="org.iflab.ibistubydreamfactory.activities.LostFoundActivity">
+    <item
+        android:id="@+id/action_posted"
+        android:icon="@drawable/ic_action_close"
+        android:title="返回"
+        app:showAsAction="ifRoom"/>
+
+</menu>

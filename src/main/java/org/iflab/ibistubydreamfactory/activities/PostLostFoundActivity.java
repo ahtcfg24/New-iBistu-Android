@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
-import org.iflab.ibistubydreamfactory.adapters.PhotoAdapter;
+import org.iflab.ibistubydreamfactory.adapters.PhotoSelectorAdapter;
 import org.iflab.ibistubydreamfactory.adapters.RecyclerItemClickListener;
 import org.iflab.ibistubydreamfactory.apis.APISource;
 import org.iflab.ibistubydreamfactory.apis.LostFoundAPI;
@@ -54,11 +54,11 @@ public class PostLostFoundActivity extends AppCompatActivity {
     Button buttonPost;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     @BindView(R.id.edit_contact)
-    EditText editContact;
+    EditText editPhone;
     private View parentView;
     private String details, phone;
     private LostFoundAPI lostFoundAPI;
-    private PhotoAdapter photoAdapter;
+    private PhotoSelectorAdapter photoSelectorAdapter;
     private ACache aCache = ACache.get(MyApplication.getAppContext());
     private User user;
     private UploadSuccessModel uploadSuccessModel;
@@ -84,7 +84,6 @@ public class PostLostFoundActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     if (response.isSuccessful()) {//如果成功
                         Intent intent = new Intent();
-                        intent.putExtra("needRefresh", "yes");
                         intent.setClass(PostLostFoundActivity.this, LostFoundActivity.class);
                         startActivity(intent);
                         finish();
@@ -120,14 +119,16 @@ public class PostLostFoundActivity extends AppCompatActivity {
 
         RecyclerView recyclerViewSelectPhoto = (RecyclerView) parentView.findViewById(R.id.recyclerView_selectPhoto);
         recyclerViewSelectPhoto.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
-        photoAdapter = new PhotoAdapter(this, selectedPhotos);
-        recyclerViewSelectPhoto.setAdapter(photoAdapter);
+        photoSelectorAdapter = new PhotoSelectorAdapter(this, selectedPhotos);
+        recyclerViewSelectPhoto.setAdapter(photoSelectorAdapter);
         recyclerViewSelectPhoto.addOnItemTouchListener(new RecyclerItemClickListener(PostLostFoundActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 if (position == selectedPhotos.size()) {//点击+选择图片
                     PhotoPicker.builder()
-                               .setPhotoCount(3).setGridColumnCount(3).setSelected(selectedPhotos)
+                               .setPhotoCount(PhotoSelectorAdapter.MAX_SELECT_PHOTOS_COUNT)
+                               .setGridColumnCount(3)
+                               .setSelected(selectedPhotos)
                                .start(PostLostFoundActivity.this);
                 } else {
                     PhotoPreview.builder()//预览图片
@@ -145,11 +146,13 @@ public class PostLostFoundActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.button_post:
                 details = editContent.getText().toString();
-                phone = editContact.getText().toString();
-                if (!RegexConfirmUtils.isLengthRight(details, 5, 120)) {
+                phone = editPhone.getText().toString();
+                if (!RegexConfirmUtils.isLengthRight(details, 4, 120)) {
                     Snackbar.make(parentView, "描述长度在5-120之间！", Snackbar.LENGTH_SHORT).show();
                 } else if (!RegexConfirmUtils.isMobile(phone)) {
                     Snackbar.make(parentView, "请填写正确的手机号！", Snackbar.LENGTH_SHORT).show();
+                } else if (selectedPhotos.size() == 0) {
+                    Snackbar.make(parentView, "请至少上传一张图片！", Snackbar.LENGTH_SHORT).show();
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
                     List<UploadFileRequestBody.UploadResource> uploadResourceList = new ArrayList<>();
@@ -171,7 +174,6 @@ public class PostLostFoundActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {//如果成功
                                 uploadSuccessModel = response.body();
                                 handler.post(runnable);
-
                             } else {//失败
                                 ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
                                 onFailure(call, e.toException());
@@ -201,7 +203,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
             if (photos != null) {
                 selectedPhotos.addAll(photos);
             }
-            photoAdapter.notifyDataSetChanged();
+            photoSelectorAdapter.notifyDataSetChanged();
         }
     }
 }

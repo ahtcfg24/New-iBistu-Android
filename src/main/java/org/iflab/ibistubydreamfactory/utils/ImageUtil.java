@@ -16,42 +16,27 @@ public class ImageUtil {
      * @param imgPath 图片路径
      */
     public static String ImageToBase64Content(String imgPath) {
-        Bitmap bitmap = getSmallBitmap(imgPath);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;//设为true时，options.outHeight返回的是原图的尺寸
+        BitmapFactory.decodeFile(imgPath, options);
+        int size = options.outWidth * options.outHeight;
+        if (size <= 1000000) {//小于一百万像素
+            options.inSampleSize = 1;//压缩尺寸，压缩原来尺寸的1/inSampleSize
+        } else if (size > 1000000 && size <= 3000000) {//一百万像素-三百万像素
+            options.inSampleSize = 2;
+        } else if (size > 3000000 && size <= 6000000) {
+            options.inSampleSize = 3;
+        } else {
+            options.inSampleSize = 4;
+        }
+        options.inJustDecodeBounds = false;
+        Bitmap bitmap = BitmapFactory.decodeFile(imgPath, options);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);//质量压缩，参数100表示不压缩
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);//压缩质量，100表示不压缩
         byte[] bytes = outputStream.toByteArray();
+
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
-
-    /**
-     * 根据路径获得图片并压缩返回bitmap
-     */
-    private static Bitmap getSmallBitmap(String filePath) {
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(filePath, options);
-        options.inSampleSize = calculateInSampleSize(options);
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeFile(filePath, options);
-    }
-
-    //计算图片的缩放值
-    private static int calculateInSampleSize(BitmapFactory.Options options) {
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int size = height * width;
-        int inSampleSize;//表示压缩为原图像素的1/inSampleSize
-        if (size >= 921600) {
-            inSampleSize = 4;
-        } else if (size < 921600 && size >= 320000) {
-            inSampleSize = 3;
-        } else if (size < 320000 && size > 153600) {
-            inSampleSize = 2;
-        } else {
-            inSampleSize = 1;
-        }
-        return inSampleSize;
-    }
 
 }

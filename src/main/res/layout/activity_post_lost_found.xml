@@ -48,7 +48,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="6dp"
                 android:hint="联系电话："
-                android:inputType="text"
+                android:inputType="number"
                 android:maxLines="1"
                 android:textSize="18sp"/>
 
@@ -73,6 +73,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/bt_button_blue"
                 android:text="发布"
                 android:textColor="@color/colorPureWhite"

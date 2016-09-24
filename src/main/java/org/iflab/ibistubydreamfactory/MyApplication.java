@@ -48,9 +48,8 @@ public class MyApplication extends Application {
             public void onDisplayImage(Context context, ImageView imageView, String url) {
                 Glide.with(context)
                      .load(url)
-                     .centerCrop()
+                     .fitCenter()//photoView的预览效果
                      .diskCacheStrategy(DiskCacheStrategy.ALL)//同一图片源有不同的显示大小时使用该策略
-                     .thumbnail(0.3f)
                      .placeholder(R.drawable.ic_image_loading_picture)
                      .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
                      .into(imageView);

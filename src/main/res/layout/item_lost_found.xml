@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         app:ngv_gridSpacing="3dp"
         app:ngv_maxSize="9"
-        app:ngv_mode="fill"
+        app:ngv_mode="grid"
         app:ngv_singleImageRatio="1"
         app:ngv_singleImageSize="250dp"
         />

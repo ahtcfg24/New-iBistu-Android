@@ -138,7 +138,8 @@
         <activity
             android:name=".activities.LostFoundActivity"
             android:label="@string/label_activity_lost_found"
-            android:parentActivityName=".activities.HomeActivity">
+            android:parentActivityName=".activities.HomeActivity"
+            >
         </activity>
         <activity
             android:name=".activities.NormalPlayerActivity"

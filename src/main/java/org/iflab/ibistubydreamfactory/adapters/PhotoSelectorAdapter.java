@@ -17,17 +17,17 @@ import java.util.ArrayList;
 
 
 /**
- * 选择图片适配器
+ * 从本地选择图片的适配器
  */
-public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder> {
+public class PhotoSelectorAdapter extends RecyclerView.Adapter<PhotoSelectorAdapter.PhotoViewHolder> {
 
-    private static int MAX_SELECT_PHOTOS_COUNT = 3;//最多可选择三张图片
+    public static int MAX_SELECT_PHOTOS_COUNT = 9;//最多可选择9张图片
     private ArrayList<String> photoPaths = new ArrayList<>();
     private LayoutInflater inflater;
     private Context mContext;
 
 
-    public PhotoAdapter(Context mContext, ArrayList<String> photoPaths) {
+    public PhotoSelectorAdapter(Context mContext, ArrayList<String> photoPaths) {
         this.photoPaths = photoPaths;
         this.mContext = mContext;
         inflater = LayoutInflater.from(mContext);
@@ -53,7 +53,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             Uri uri = Uri.fromFile(new File(photoPaths.get(position)));
             Glide.with(mContext)
                  .load(uri)
-                 .fitCenter()
+                 .centerCrop()//选择图片列表中预览图显示效果
                  .placeholder(R.drawable.ic_image_loading_picture)
                  .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
                  .into(holder.ivPhoto);
@@ -64,18 +64,18 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     @Override
     public int getItemCount() {
-        if (photoPaths.size() == MAX_SELECT_PHOTOS_COUNT) {
-            return 3;
+        if (photoPaths.size() != MAX_SELECT_PHOTOS_COUNT) {
+            return photoPaths.size() + 1;
         }
-        return photoPaths.size() + 1;
+        return MAX_SELECT_PHOTOS_COUNT;
     }
 
 
-    public static class PhotoViewHolder extends RecyclerView.ViewHolder {
+    static class PhotoViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivPhoto;
         private View vSelected;
 
-        public PhotoViewHolder(View itemView) {
+        PhotoViewHolder(View itemView) {
             super(itemView);
             ivPhoto = (ImageView) itemView.findViewById(me.iwf.photopicker.R.id.iv_photo);
             vSelected = itemView.findViewById(me.iwf.photopicker.R.id.v_selected);

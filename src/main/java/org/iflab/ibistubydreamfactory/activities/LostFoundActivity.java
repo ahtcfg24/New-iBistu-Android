@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +41,7 @@ import retrofit2.Response;
 
 public class LostFoundActivity extends AppCompatActivity {
     private ListView lostFoundListView;
+    private FloatingActionButton floatingActionButton;
     private List<LostFound> lostFoundList;
     private Resource<LostFound> lostFoundResource;
     private int currentPage;//分页加载的当前页编号
@@ -58,7 +60,17 @@ public class LostFoundActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         rootView = getLayoutInflater().inflate(R.layout.activity_lost_found, null);
         setContentView(rootView);
+
         initView();
+
+        String intentExtra = getIntent().getStringExtra("isFound");
+        if (intentExtra != null) {
+            setTitle("我发布的");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            onlyShowFound = intentExtra;
+            floatingActionButton.setVisibility(View.INVISIBLE);
+        }
+
         initRefresh();
         getLostFoundResource(currentPage, onlyShowFound);
 
@@ -87,7 +99,8 @@ public class LostFoundActivity extends AppCompatActivity {
                 return true;
             }
         });
-        findViewById(R.id.floatingButton).setOnClickListener(new View.OnClickListener() {
+        floatingActionButton=(FloatingActionButton) findViewById(R.id.floatingButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LostFoundActivity.this, PostLostFoundActivity.class));
@@ -171,7 +184,11 @@ public class LostFoundActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_lost_found, menu);
+        if (onlyShowFound.equals("isFound=false")) {
+            inflater.inflate(R.menu.menu_lost_found, menu);
+        } else {
+            inflater.inflate(R.menu.menu_my_lost_found, menu);
+        }
         return true;
     }
 
@@ -180,15 +197,14 @@ public class LostFoundActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_posted:
                 if (onlyShowFound.equals("isFound=false")) {
-                    onlyShowFound = "(isFound=false)And(author=" + user.getName() + ")";
-                    setTitle("我发布的");
+                    Intent intent = new Intent();
+                    intent.putExtra("isFound", "(isFound=false)And(author=" + user.getName() + ")");
+                    intent.setClass(this, LostFoundActivity.class);
+                    startActivity(intent);
                 } else {
-                    onlyShowFound = "isFound=false";
-                    setTitle("失物招领");
+                    finish();
                 }
-                lostFoundList.clear();
-                currentPage = 1;
-                getLostFoundResource(currentPage, onlyShowFound);
+
             default:
                 return super.onOptionsItemSelected(item);
 
