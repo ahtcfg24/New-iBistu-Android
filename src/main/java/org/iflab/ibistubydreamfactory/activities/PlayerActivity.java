@@ -22,7 +22,7 @@ import java.util.List;
 public class PlayerActivity extends AppCompatActivity implements View.OnClickListener {
     private EditSpinner mEditSpinner;
     private List<String> list;
-    private Button mVRVideoButton, imageButton, normalVideoButton;
+    private Button mVRVideoButton, imageButton;
 
 
     @Override
@@ -56,10 +56,8 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
     private void initView() {
         mVRVideoButton = (Button) findViewById(R.id.video_button);
         imageButton = (Button) findViewById(R.id.bitmap_button);
-        normalVideoButton = (Button) findViewById(R.id.ijk_button);
         mVRVideoButton.setOnClickListener(this);
         imageButton.setOnClickListener(this);
-        normalVideoButton.setOnClickListener(this);
     }
 
     /**
@@ -73,8 +71,6 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
                 VRPlayerActivity.startVideo(PlayerActivity.this, Uri.parse(url));
             } else if (v.equals(imageButton)) {
                 VRPlayerActivity.startBitmap(PlayerActivity.this, Uri.parse(url));
-            } else if (v.equals(normalVideoButton)) {
-                NormalPlayerActivity.start(PlayerActivity.this, Uri.parse(url));
             }
         } else {
             Toast.makeText(PlayerActivity.this, "URL不能为空！", Toast.LENGTH_SHORT).show();

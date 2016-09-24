@@ -23,8 +23,6 @@ import java.util.List;
  */
 public abstract class VRPlayerActivity extends Activity {
 
-    private static final String TAG = "VRPlayerActivity";
-    //SparseArray相当于是一个优化版的HashMap，<>内表示存储的值
     private static final SparseArray<String> sDisplayMode = new SparseArray<>();
     private static final SparseArray<String> sInteractiveMode = new SparseArray<>();
     private static final SparseArray<String> sProjectionMode = new SparseArray<>();
@@ -39,14 +37,7 @@ public abstract class VRPlayerActivity extends Activity {
         sInteractiveMode.put(MDVRLibrary.INTERACTIVE_MODE_MOTION_WITH_TOUCH, "感应+滑屏");
 
         sProjectionMode.put(MDVRLibrary.PROJECTION_MODE_SPHERE, "SPHERE视角");
-        sProjectionMode.put(MDVRLibrary.PROJECTION_MODE_DOME180, "半球 180度");
-        sProjectionMode.put(MDVRLibrary.PROJECTION_MODE_DOME230, "半球 230度");
-        sProjectionMode.put(MDVRLibrary.PROJECTION_MODE_DOME180_UPPER, "半球 180 UPPER");
-        sProjectionMode.put(MDVRLibrary.PROJECTION_MODE_DOME230_UPPER, "半球 230 UPPER");
         sProjectionMode.put(MDVRLibrary.PROJECTION_MODE_STEREO_SPHERE, "STEREO");
-        sProjectionMode.put(MDVRLibrary.PROJECTION_MODE_PLANE_FIT, "平面适应");
-        sProjectionMode.put(MDVRLibrary.PROJECTION_MODE_PLANE_CROP, "平面拉伸");
-        sProjectionMode.put(MDVRLibrary.PROJECTION_MODE_PLANE_FULL, "平面填充");
 
         sAntiDistortion.put(1, "显示边框");
         sAntiDistortion.put(0, "隐藏边框");

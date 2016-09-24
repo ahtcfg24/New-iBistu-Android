@@ -5,13 +5,6 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"
-        android:text="输入图片URL"/>
-
     <org.iflab.ibistubydreamfactory.customviews.EditSpinner
         android:id="@+id/edit_spinner"
         android:layout_width="match_parent"
@@ -41,13 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="全景图片"/>
-
-        <Button
-            android:id="@+id/ijk_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="普通视频"/>
 
     </LinearLayout>
 
