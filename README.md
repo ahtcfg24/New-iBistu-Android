@@ -299,7 +299,7 @@
 
  * 获取黄页部门列表数据
 
-   - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_department_list`
+   - 接口：`ibistu/_table/module_yellowpage?filter=isDisplay%3D1&offset=1&group=department`
    - 请求方法：get
    - 参数：无
    - 示例返回值：

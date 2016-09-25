@@ -49,7 +49,9 @@
                 android:orientation="vertical"
                 android:paddingLeft="44dp"
                 android:paddingRight="44dp"
-                android:paddingTop="16dp">
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                >
 
 
                 <ImageView
@@ -70,7 +72,7 @@
                     android:hint="手机号:"
                     android:inputType="phone"
                     android:maxLines="1"
-                    android:singleLine="true"/>
+                    />
 
 
                 <LinearLayout
@@ -90,7 +92,7 @@
                         android:hint="验证码:"
                         android:inputType="number"
                         android:maxLines="1"
-                        android:singleLine="true"/>
+                        />
 
 
                     <Button
@@ -119,7 +121,7 @@
                     android:hint="邮箱（用于登录和找回密码）:"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true"/>
+                    />
 
 
                 <EditText
@@ -130,8 +132,7 @@
                     android:hint="密码:"
                     android:inputType="textPassword"
                     android:maxLines="1"
-
-                    android:singleLine="true"/>
+                    />
 
                 <EditText
                     android:id="@+id/confirmPassword_input"
@@ -141,8 +142,7 @@
                     android:hint="确认密码:"
                     android:inputType="textPassword"
                     android:maxLines="1"
-
-                    android:singleLine="true"/>
+                    />
 
 
                 <Button
@@ -162,10 +162,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/bt_button_blue"
+                    android:background="@drawable/selector_bt_overlay"
                     android:onClick="onButtonGoLoginClick"
                     android:text="已经有账户了？点此登录"
-                    android:textColor="@color/colorPureWhite"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     />
             </LinearLayout>
