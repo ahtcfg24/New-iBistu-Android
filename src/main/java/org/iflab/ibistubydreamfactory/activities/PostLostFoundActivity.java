@@ -93,6 +93,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     if (response.isSuccessful()) {//如果成功
                         Intent intent = new Intent();
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//清除activity栈中该activity之上的所有的activity，最后清除该activity以前的对象，然后重建该activity
                         intent.setClass(PostLostFoundActivity.this, LostFoundActivity.class);
                         startActivity(intent);
                         finish();
@@ -173,7 +174,8 @@ public class PostLostFoundActivity extends AppCompatActivity {
                                .setSelected(selectedPhotos)
                                .start(PostLostFoundActivity.this);
                 } else {
-                    Toast.makeText(PostLostFoundActivity.this, "没有访问存储权限，无法选择图片！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PostLostFoundActivity.this, "没有访问存储权限，无法选择图片！", Toast.LENGTH_SHORT)
+                         .show();
                 }
                 break;
             default:

@@ -66,11 +66,8 @@ public class UserCenterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
                 progressBar.setVisibility(View.GONE);
-                if (response.isSuccessful()) {//如果成功
-                    ClearLocalDataUtils.clearLocalData();//清空所有本地存储
-                    startActivity(new Intent(UserCenterActivity.this, RegisterActivity.class));
-                    finish();
-                    HomeActivity.HOME_ACTIVITY_INSTANCE.finish();
+                if(response.isSuccessful()) {//如果成功
+                    logout();
                 } else {//失败
                     ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
                     onFailure(call, e.toException());
@@ -84,6 +81,18 @@ public class UserCenterActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * 注销或者修改密码后退出登录
+     */
+    private void logout() {
+        ClearLocalDataUtils.clearLocalData();//清空所有本地存储
+        Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);//清除activity栈中所有的activity,两个Flag必须一起使用
+        intent.setClass(UserCenterActivity.this, RegisterActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -134,10 +143,7 @@ public class UserCenterActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {//如果成功
                         Toast.makeText(UserCenterActivity.this, "密码修改成功,请重新登录", Toast.LENGTH_SHORT)
                              .show();
-                        ClearLocalDataUtils.clearLocalData();//清空所有本地存储
-                        startActivity(new Intent(UserCenterActivity.this, RegisterActivity.class));
-                        finish();
-                        HomeActivity.HOME_ACTIVITY_INSTANCE.finish();
+                        logout();
                     } else {//失败
                         ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
                         onFailure(call, e.toException());

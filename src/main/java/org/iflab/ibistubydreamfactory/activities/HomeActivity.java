@@ -1,6 +1,5 @@
 package org.iflab.ibistubydreamfactory.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,7 +33,6 @@ import java.util.List;
  */
 public class HomeActivity extends AppCompatActivity implements OnMenuItemClickListener, OnMenuItemLongClickListener {
 
-    public static Activity HOME_ACTIVITY_INSTANCE;//本activity的示例，以方便在其他activity中finish本activity
     private FragmentManager fragmentManager;
     private ContextMenuDialogFragment menuDialogFragment;
     private long exitTime = 0;//记录按返回键的时间点
@@ -46,7 +44,6 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
         super.onCreate(savedInstanceState);
         parentView = LayoutInflater.from(this).inflate(R.layout.activity_home, null);
         setContentView(parentView);
-        HOME_ACTIVITY_INSTANCE = this;
         fragmentManager = getSupportFragmentManager();
         initToolbar();
         initMenuFragment();

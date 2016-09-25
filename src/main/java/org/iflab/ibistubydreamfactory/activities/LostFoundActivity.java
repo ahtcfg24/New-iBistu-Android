@@ -99,7 +99,7 @@ public class LostFoundActivity extends AppCompatActivity {
                 return true;
             }
         });
-        floatingActionButton=(FloatingActionButton) findViewById(R.id.floatingButton);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
