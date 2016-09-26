@@ -43,6 +43,10 @@
         <meta-data
             android:name="instanceUrl"
             android:value="http://104.155.211.143/api/v2/"/>
+
+        <!--<meta-data-->
+            <!--android:name="instanceUrl"-->
+            <!--android:value="http://10.0.2.2/api/v2/"/>-->
         <meta-data
             android:name="apiKey"
             android:value="3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2"/>

@@ -81,7 +81,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
             lostFound.setAuthor(user.getName());
             List<LostFoundImageURL> imgUrlList = new ArrayList<>();
             for (UploadSuccessModel.UploadedResource resource : uploadSuccessModel.getResource()) {
-                imgUrlList.add(new LostFoundImageURL(MyApplication.INSTANCE_URL + "files/" + resource
+                imgUrlList.add(new LostFoundImageURL("files/" + resource
                         .getPath()));
             }
             lostFound.setImgUrlList(JsonUtils.list2Json(imgUrlList));

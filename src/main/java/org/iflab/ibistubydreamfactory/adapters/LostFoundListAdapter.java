@@ -103,7 +103,7 @@ public class LostFoundListAdapter extends BaseAdapter {
         if (list != null) {
             ArrayList<ImageInfo> imageInfo = new ArrayList<>();
             for (LostFoundImageURL url : list) {
-                String imageUrl = url.getUrl() + "?api_key=" + MyApplication.API_KEY + "&session_token=" + SESSION_TOKEN;
+                String imageUrl = MyApplication.INSTANCE_URL + url.getUrl() + "?api_key=" + MyApplication.API_KEY + "&session_token=" + SESSION_TOKEN;
                 ImageInfo info = new ImageInfo();
                 info.setThumbnailUrl(imageUrl);
                 info.setBigImageUrl(imageUrl);
