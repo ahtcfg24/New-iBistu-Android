@@ -15,32 +15,27 @@ import com.asha.vrlib.MDVRLibrary;
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.utils.SpinnerBuildUtil;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * VR播放器抽象类
  */
 public abstract class VRPlayerActivity extends Activity {
 
-    private static final SparseArray<String> sDisplayMode = new SparseArray<>();
-    private static final SparseArray<String> sInteractiveMode = new SparseArray<>();
-    private static final SparseArray<String> sProjectionMode = new SparseArray<>();
-    private static final SparseArray<String> sAntiDistortion = new SparseArray<>();
+    private static final SparseArray<String> displayMode = new SparseArray<>();
+    private static final SparseArray<String> interactiveMode = new SparseArray<>();
+    private static final SparseArray<String> projectionMode = new SparseArray<>();
+    private static final SparseArray<String> showBoderMode = new SparseArray<>();
 
     static {
-        sDisplayMode.put(MDVRLibrary.DISPLAY_MODE_NORMAL, "普通模式");
-        sDisplayMode.put(MDVRLibrary.DISPLAY_MODE_GLASS, "眼镜模式");
+        displayMode.put(MDVRLibrary.DISPLAY_MODE_NORMAL, "普通模式");
+        displayMode.put(MDVRLibrary.DISPLAY_MODE_GLASS, "眼镜模式");
 
-        sInteractiveMode.put(MDVRLibrary.INTERACTIVE_MODE_MOTION, "感应控制");
-        sInteractiveMode.put(MDVRLibrary.INTERACTIVE_MODE_TOUCH, "滑屏控制");
-        sInteractiveMode.put(MDVRLibrary.INTERACTIVE_MODE_MOTION_WITH_TOUCH, "感应+滑屏");
+        interactiveMode.put(MDVRLibrary.INTERACTIVE_MODE_MOTION, "感应控制");
+        interactiveMode.put(MDVRLibrary.INTERACTIVE_MODE_TOUCH, "滑屏控制");
+        interactiveMode.put(MDVRLibrary.INTERACTIVE_MODE_MOTION_WITH_TOUCH, "感应+滑屏");
 
-        sProjectionMode.put(MDVRLibrary.PROJECTION_MODE_SPHERE, "SPHERE视角");
-        sProjectionMode.put(MDVRLibrary.PROJECTION_MODE_STEREO_SPHERE, "STEREO");
+        projectionMode.put(MDVRLibrary.PROJECTION_MODE_SPHERE, "SPHERE视角");
+        projectionMode.put(MDVRLibrary.PROJECTION_MODE_STEREO_SPHERE, "STEREO视角");
 
-        sAntiDistortion.put(1, "显示边框");
-        sAntiDistortion.put(0, "隐藏边框");
     }
 
     private MDVRLibrary mVRLibrary;
@@ -72,28 +67,25 @@ public abstract class VRPlayerActivity extends Activity {
         // init VR Library
         mVRLibrary = createVRLibrary();
 
-        final List<View> hotspotPoints = new LinkedList<>();
-        hotspotPoints.add(findViewById(R.id.hotspot_point1));
-        hotspotPoints.add(findViewById(R.id.hotspot_point2));
-
         SpinnerBuildUtil.with(this)
-                        .setData(sDisplayMode)
+                        .setData(displayMode)
                         .setDefault(mVRLibrary.getDisplayMode())
                         .setClickHandler(new SpinnerBuildUtil.ClickHandler() {
                             @Override
                             public void onSpinnerClicked(int index, int key, String value) {
                                 mVRLibrary.switchDisplayMode(VRPlayerActivity.this, key);
-                                int i = 0;
-                                for (View point : hotspotPoints) {
-                                    point.setVisibility(i < mVRLibrary.getScreenSize() ? View.VISIBLE : View.GONE);
-                                    i++;
+                                if (key==MDVRLibrary.DISPLAY_MODE_GLASS){
+                                    mVRLibrary.setAntiDistortionEnabled(true);
+                                }else {
+                                    mVRLibrary.setAntiDistortionEnabled(false);
                                 }
+
                             }
                         })
                         .init(R.id.spinner_display);
 
         SpinnerBuildUtil.with(this)
-                        .setData(sInteractiveMode)
+                        .setData(interactiveMode)
                         .setDefault(mVRLibrary.getInteractiveMode())
                         .setClickHandler(new SpinnerBuildUtil.ClickHandler() {
                             @Override
@@ -104,7 +96,7 @@ public abstract class VRPlayerActivity extends Activity {
                         .init(R.id.spinner_interactive);
 
         SpinnerBuildUtil.with(this)
-                        .setData(sProjectionMode)
+                        .setData(projectionMode)
                         .setDefault(mVRLibrary.getProjectionMode())
                         .setClickHandler(new SpinnerBuildUtil.ClickHandler() {
                             @Override
@@ -113,18 +105,6 @@ public abstract class VRPlayerActivity extends Activity {
                             }
                         })
                         .init(R.id.spinner_projection);
-
-        SpinnerBuildUtil.with(this)
-                        .setData(sAntiDistortion)
-                        .setDefault(mVRLibrary.isAntiDistortionEnabled() ? 1 : 0)
-                        .setClickHandler(new SpinnerBuildUtil.ClickHandler() {
-                            @Override
-                            public void onSpinnerClicked(int index, int key, String value) {
-                                mVRLibrary.setAntiDistortionEnabled(key != 0);
-                            }
-                        })
-                        .init(R.id.spinner_distortion);
-
     }
 
     protected Uri getUri() {

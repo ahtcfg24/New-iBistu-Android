@@ -14,30 +14,6 @@
             android:id="@+id/gl_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-        <!--屏幕中间的+准星-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/hotspot_point1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="+"
-                android:textColor="@android:color/white"/>
-
-            <TextView
-                android:id="@+id/hotspot_point2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="+"
-                android:textColor="@android:color/white"/>
-        </LinearLayout>
         <!--底部进度控制模块-->
         <LinearLayout
             android:id="@+id/playControlBar"
