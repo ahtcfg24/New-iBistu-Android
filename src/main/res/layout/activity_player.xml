@@ -1,40 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/colorPureWhite"
               android:orientation="vertical">
 
-    <org.iflab.ibistubydreamfactory.customviews.EditSpinner
-        android:id="@+id/edit_spinner"
+
+    <com.lhh.ptrrv.library.PullToRefreshRecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:dropDownDrawable="@drawable/ic_arrow_down"
-        app:dropDownDrawableHeight="25dp"
-        app:dropDownDrawableSpacing="15dp"
-        app:dropDownDrawableWidth="25dp"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <Button
-            android:id="@+id/video_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="VR视频"/>
-
-        <Button
-            android:id="@+id/bitmap_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="全景图片"/>
-
-    </LinearLayout>
-
+        android:layout_height="match_parent"/>
 </LinearLayout>

@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/button_normal"
+            android:background="@color/colorTransparentBlack"
             android:orientation="horizontal"
             android:padding="5dp"
             android:visibility="gone"

@@ -3,78 +3,98 @@ package org.iflab.ibistubydreamfactory.activities;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Toast;
 
-import org.iflab.ibistubydreamfactory.R;
-import org.iflab.ibistubydreamfactory.customviews.EditSpinner;
+import com.lhh.ptrrv.library.PullToRefreshRecyclerView;
 
-import java.util.ArrayList;
+import org.iflab.ibistubydreamfactory.R;
+import org.iflab.ibistubydreamfactory.adapters.VRMediaAdapter;
+import org.iflab.ibistubydreamfactory.apis.APISource;
+import org.iflab.ibistubydreamfactory.apis.VRMediaAPI;
+import org.iflab.ibistubydreamfactory.models.ErrorMessage;
+import org.iflab.ibistubydreamfactory.models.Resource;
+import org.iflab.ibistubydreamfactory.models.VRMedia;
+
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 主界面.
  */
-public class PlayerActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditSpinner mEditSpinner;
-    private List<String> list;
-    private Button mVRVideoButton, imageButton;
+public class PlayerActivity extends AppCompatActivity {
+    @BindView(R.id.recyclerView)
+    PullToRefreshRecyclerView recyclerView;
+    private List<VRMedia> vrMediaList;
+    private Resource<VRMedia> vrMediaResource;
+    private VRMediaAdapter vrMediaAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-        initView();
-
-        mEditSpinner = (EditSpinner) findViewById(R.id.edit_spinner);
-        list = new ArrayList<>();
-        list.add("全景视频示例：http://7xlbe9.com1.z0.glb.clouddn.com/Kodak%20PixPro%20SP360%20.mp4");
-        list.add("全景图片示例：http://7xp4hv.com1.z0.glb.clouddn.com/image/vr/20098c.jpg");
-        list.add("STEREO镜头示例：http://7xp4hv.com1.z0.glb.clouddn.com/image/vr/stereo.jpg");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
-        mEditSpinner.setAdapter(adapter);
-        mEditSpinner.setDropDownDrawableSpacing(50);
-
-        mEditSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ButterKnife.bind(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        vrMediaAdapter = new VRMediaAdapter(this);
+        vrMediaAdapter.setMyOnItemClickListener(new VRMediaAdapter.MyOnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mEditSpinner.setText(list.get(position).split("：")[1]);
+            public void onItemClick(View view, int position, String type, String url) {
+                switch (type) {
+                    case "VIDEO":
+                        VRVideoPlayerActivity.startVideo(PlayerActivity.this, Uri.parse(url));
+                        break;
+                    case "IMAGE":
+                        VRVideoPlayerActivity.startBitmap(PlayerActivity.this, Uri.parse(url));
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 
+        getVRMediaResource();
 
     }
 
-    /**
-     * 初始化控件
-     */
-    private void initView() {
-        mVRVideoButton = (Button) findViewById(R.id.video_button);
-        imageButton = (Button) findViewById(R.id.bitmap_button);
-        mVRVideoButton.setOnClickListener(this);
-        imageButton.setOnClickListener(this);
-    }
 
-    /**
-     * 监听点击事件
-     */
-    @Override
-    public void onClick(View v) {
-        String url = mEditSpinner.getText().toString();
-        if (!TextUtils.isEmpty(url)) {
-            if (v.equals(mVRVideoButton)) {
-                VRPlayerActivity.startVideo(PlayerActivity.this, Uri.parse(url));
-            } else if (v.equals(imageButton)) {
-                VRPlayerActivity.startBitmap(PlayerActivity.this, Uri.parse(url));
+    private void getVRMediaResource() {
+        VRMediaAPI vrMediaAPI = APISource.getInstance().getAPIObject(VRMediaAPI.class);
+        Call<Resource<VRMedia>> call = vrMediaAPI.getVRMedia();
+        call.enqueue(new Callback<Resource<VRMedia>>() {
+            @Override
+            public void onResponse(Call<Resource<VRMedia>> call, Response<Resource<VRMedia>> response) {
+                if (response.isSuccessful()) {
+                    vrMediaResource = response.body();
+                    loadData();
+                } else {
+                    ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
+                    onFailure(call, e.toException());
+                }
             }
-        } else {
-            Toast.makeText(PlayerActivity.this, "URL不能为空！", Toast.LENGTH_SHORT).show();
-        }
 
+            @Override
+            public void onFailure(Call<Resource<VRMedia>> call, Throwable t) {
+                System.out.println("error：" + t.toString());
+                Toast.makeText(PlayerActivity.this, "错误：" + t.getMessage(), Toast.LENGTH_LONG)
+                     .show();
+            }
+        });
     }
+
+    /**
+     * 填充数据
+     */
+    private void loadData() {
+        vrMediaList = vrMediaResource.getResource();
+        vrMediaAdapter.addItem(vrMediaList);
+        recyclerView.setAdapter(vrMediaAdapter);
+    }
+
 }

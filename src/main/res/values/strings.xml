@@ -13,7 +13,7 @@
     <string name="label_activity_about_details">关于详情</string>
     <string name="label_activity_news_detail">新闻详情</string>
     <string name="label_activity_map">地图</string>
-    <string name="label_activity_vr_player">VR播放器</string>
+    <string name="label_activity_vr_player">校园全景</string>
     <string name="label_activity_register">注册</string>
     <string name="label_activity_lost_found">失物招领</string>
 

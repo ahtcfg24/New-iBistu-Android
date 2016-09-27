@@ -116,9 +116,9 @@ public class LostFoundListAdapter extends BaseAdapter {
     }
 
     /**
-     * 把更新后的新闻列表同步到listView里
+     * 把更新后的列表同步到listView里
      *
-     * @param list 更新后的新闻列表
+     * @param list 更新后的列表
      */
     public void addItem(List<LostFound> list) {
         lostFoundList = list;
