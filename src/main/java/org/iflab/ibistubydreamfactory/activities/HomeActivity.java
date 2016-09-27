@@ -1,10 +1,16 @@
 package org.iflab.ibistubydreamfactory.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -33,6 +39,7 @@ import java.util.List;
  */
 public class HomeActivity extends AppCompatActivity implements OnMenuItemClickListener, OnMenuItemLongClickListener {
 
+    private static final int PERMISSION_CODE_STORAGE = 2;
     private FragmentManager fragmentManager;
     private ContextMenuDialogFragment menuDialogFragment;
     private long exitTime = 0;//记录按返回键的时间点
@@ -175,12 +182,38 @@ public class HomeActivity extends AppCompatActivity implements OnMenuItemClickLi
                 startActivity(intent);
                 break;
             case 3://检查更新
-                CheckUpdateUtil.checkUpdate(parentView, HomeActivity.this);
+                if (Build.VERSION.SDK_INT < 23 || ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    CheckUpdateUtil.checkUpdate(parentView, HomeActivity.this);
+                } else {
+                    ActivityCompat.requestPermissions(HomeActivity.this, new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, PERMISSION_CODE_STORAGE);
+                }
                 break;
         }
 
     }
 
+    /**
+     * 授权回调
+     *
+     * @param grantResults grantResults[i] 对应的权限用户是否授权
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_CODE_STORAGE://同类权限只要有一个被允许，其他都算允许
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {//用户授权了
+                    CheckUpdateUtil.checkUpdate(parentView, HomeActivity.this);
+                } else {
+                    Toast.makeText(HomeActivity.this, "没有访问存储权限，将无法下载软件更新包！", Toast.LENGTH_SHORT)
+                         .show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 
     /**
      * 当在主页按返回键时，双击退出，并确保fragment被dismiss

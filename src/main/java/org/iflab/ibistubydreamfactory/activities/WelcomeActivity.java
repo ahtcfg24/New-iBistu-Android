@@ -1,10 +1,16 @@
 package org.iflab.ibistubydreamfactory.activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +45,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  * 程序第一个Activity
  */
 public class WelcomeActivity extends Activity {
+    private static final int PERMISSION_CODE_STORAGE = 2;
+    private UpdateInfo updateInfo;
     private static String TAG = "WelcomeActivity";
     private View parentView;
     private Handler handler = new Handler();
@@ -97,9 +105,36 @@ public class WelcomeActivity extends Activity {
         parentView = LayoutInflater.from(this).inflate(R.layout.activity_welcome, null);
         setContentView(parentView);
         if (AndroidUtils.isWifi(MyApplication.getAppContext())) {
-            checkUpdateOnStart();
+            if (Build.VERSION.SDK_INT < 23 || ContextCompat.checkSelfPermission(WelcomeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                checkUpdateOnStart();
+            } else {
+                ActivityCompat.requestPermissions(WelcomeActivity.this, new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }, PERMISSION_CODE_STORAGE);
+            }
         } else {
             handler.postDelayed(runnable, 1000);
+        }
+    }
+
+    /**
+     * 授权回调
+     *
+     * @param grantResults grantResults[i] 对应的权限用户是否授权
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_CODE_STORAGE://同类权限只要有一个被允许，其他都算允许
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {//用户授权了
+                    checkUpdateOnStart();
+                } else {
+                    Toast.makeText(WelcomeActivity.this, "没有访问存储权限，将无法下载软件更新包！", Toast.LENGTH_SHORT)
+                         .show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -113,7 +148,7 @@ public class WelcomeActivity extends Activity {
             @Override
             public void onResponse(Call<UpdateInfo> call, Response<UpdateInfo> response) {
                 if (response.isSuccessful()) {
-                    UpdateInfo updateInfo = response.body();
+                    updateInfo = response.body();
                     if (updateInfo.getVersionCode() > AndroidUtils.getVersionCode(MyApplication.getAppContext())) {
                         showUpdateDialog(updateInfo);
                     } else {
