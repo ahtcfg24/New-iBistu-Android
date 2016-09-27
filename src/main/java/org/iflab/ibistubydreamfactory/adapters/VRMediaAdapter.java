@@ -51,7 +51,7 @@ public class VRMediaAdapter extends RecyclerView.Adapter {
              .load(vrMedia.getPreview())
              .fitCenter()
              .placeholder(R.drawable.ic_image_loading_picture)
-             .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
+             .error(R.drawable.ic_image_error_picture)
              .into(vrMediaViewHolder.imageViewPreview);
         //设置监听回调,当子类传入了监听器类的对象时，就会调用子类中实现的onItemClick方法，
         // 并传入holder.itemView和itemPosition这两个参数

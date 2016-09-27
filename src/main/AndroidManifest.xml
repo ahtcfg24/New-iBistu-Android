@@ -126,7 +126,7 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged">
         </activity>
         <activity
-            android:name=".activities.PlayerActivity"
+            android:name=".activities.VRActivity"
             android:label="@string/label_activity_vr_player"
             android:parentActivityName=".activities.HomeActivity">
         </activity>

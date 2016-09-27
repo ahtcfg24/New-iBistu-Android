@@ -51,7 +51,7 @@ public class MyApplication extends Application {
                      .fitCenter()//photoView的预览效果
                      .diskCacheStrategy(DiskCacheStrategy.ALL)//同一图片源有不同的显示大小时使用该策略
                      .placeholder(R.drawable.ic_image_loading_picture)
-                     .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
+                     .error(R.drawable.ic_image_error_picture)
                      .into(imageView);
             }
 

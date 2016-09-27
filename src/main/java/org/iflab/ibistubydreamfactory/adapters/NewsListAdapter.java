@@ -67,15 +67,12 @@ public class NewsListAdapter extends BaseAdapter {
         viewHolder.newsListTitle.setText(newsList.get(position).getNewsTitle());
         viewHolder.newsListIntro.setText(newsList.get(position).getNewsIntro());
         viewHolder.newsListTime.setText(newsList.get(position).getNewsTime());
-        String newImageUrl = newsList.get(position).getNewsImage();
-        if (!newImageUrl.equals("")) {
-            Glide.with(context)
-                 .load(newImageUrl)
-                 .centerCrop()
-                 .placeholder(R.drawable.ic_image_loading_picture)
-                 .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
-                 .into(viewHolder.newsListImage);
-        }
+        Glide.with(context)
+             .load(newsList.get(position).getNewsImage())
+             .centerCrop()
+             .placeholder(R.drawable.ic_image_loading_picture)
+             .error(R.drawable.ic_image_no_picture)
+             .into(viewHolder.newsListImage);
         return convertView;
     }
 

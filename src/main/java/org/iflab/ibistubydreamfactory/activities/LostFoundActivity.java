@@ -124,7 +124,7 @@ public class LostFoundActivity extends AppCompatActivity {
                         getLostFoundResource(currentPage, onlyShowFound);
                         Snackbar.make(rootView, "刷新完成", Snackbar.LENGTH_SHORT).show();
                     }
-                }, 1000);
+                }, 500);
             }
 
 

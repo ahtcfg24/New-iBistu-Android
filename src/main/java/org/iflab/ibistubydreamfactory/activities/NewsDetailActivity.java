@@ -178,9 +178,9 @@ public class NewsDetailActivity extends AppCompatActivity {
         public void UpdateUI(Context context, final int position, String data) {
             Glide.with(context)
                  .load(data)
-                 .centerCrop()
+                 .fitCenter()
                  .placeholder(R.drawable.ic_image_loading_picture)
-                 .error(me.iwf.photopicker.R.drawable.__picker_ic_broken_image_black_48dp)
+                 .error(R.drawable.ic_image_error_picture)
                  .into(imageView);
         }
     }

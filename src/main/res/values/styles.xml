@@ -10,6 +10,12 @@
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
 
+    <!--自定义无ActionBar主题-->
+    <style name="MyAppTheme.NoActionBar" parent="@style/MyAppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <!-- 自定义ActionBar样式 -->
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/colorPrimary</item>
@@ -30,11 +36,7 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <!--自定义无ActionBar主题-->
-    <style name="MyAppTheme.NoActionBar" parent="@style/MyAppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
+
 
     <!-- 自定义EditText theme -->
     <style name="edit_text_style" parent="@android:style/Widget.DeviceDefault.EditText">

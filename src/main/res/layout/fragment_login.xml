@@ -33,7 +33,7 @@
                 android:layout_gravity="center_vertical"
                 android:text="登录"
                 android:textColor="@color/colorPureWhite"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 />
 
         </android.support.v7.widget.Toolbar>

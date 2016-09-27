@@ -1,13 +1,16 @@
 package org.iflab.ibistubydreamfactory.activities;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
-
-import com.lhh.ptrrv.library.PullToRefreshRecyclerView;
 
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.adapters.VRMediaAdapter;
@@ -28,19 +31,29 @@ import retrofit2.Response;
 /**
  * 主界面.
  */
-public class PlayerActivity extends AppCompatActivity {
+public class VRActivity extends AppCompatActivity {
     @BindView(R.id.recyclerView)
-    PullToRefreshRecyclerView recyclerView;
+    RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout)
+    SwipeRefreshLayout refreshLayout;
     private List<VRMedia> vrMediaList;
     private Resource<VRMedia> vrMediaResource;
     private VRMediaAdapter vrMediaAdapter;
-
+    private boolean isFirstGetData = true;//是否第一次获取数据
+    private View rootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player);
+        rootView = getLayoutInflater().inflate(R.layout.activity_player, null);
+        setContentView(rootView);
         ButterKnife.bind(this);
+        initView();
+        initRefresh();
+        getVRMediaResource();
+    }
+
+    private void initView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         vrMediaAdapter = new VRMediaAdapter(this);
         vrMediaAdapter.setMyOnItemClickListener(new VRMediaAdapter.MyOnItemClickListener() {
@@ -48,19 +61,38 @@ public class PlayerActivity extends AppCompatActivity {
             public void onItemClick(View view, int position, String type, String url) {
                 switch (type) {
                     case "VIDEO":
-                        VRVideoPlayerActivity.startVideo(PlayerActivity.this, Uri.parse(url));
+                        VRPlayerActivity.startVideo(VRActivity.this, Uri.parse(url));
                         break;
                     case "IMAGE":
-                        VRVideoPlayerActivity.startBitmap(PlayerActivity.this, Uri.parse(url));
+                        VRPlayerActivity.startBitmap(VRActivity.this, Uri.parse(url));
                         break;
                     default:
                         break;
                 }
             }
         });
+    }
 
-        getVRMediaResource();
+    /**
+     * 初始化下拉刷新功能
+     */
+    private void initRefresh() {
+        refreshLayout.setColorSchemeColors(Color.RED, Color.BLUE);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        vrMediaList.clear();
+                        getVRMediaResource();
+                        Snackbar.make(rootView, "刷新完成", Snackbar.LENGTH_SHORT).show();
+                    }
+                }, 500);
+            }
 
+
+        });
     }
 
 
@@ -81,9 +113,9 @@ public class PlayerActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Resource<VRMedia>> call, Throwable t) {
+                refreshLayout.setRefreshing(false);
                 System.out.println("error：" + t.toString());
-                Toast.makeText(PlayerActivity.this, "错误：" + t.getMessage(), Toast.LENGTH_LONG)
-                     .show();
+                Toast.makeText(VRActivity.this, "错误：" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -92,9 +124,15 @@ public class PlayerActivity extends AppCompatActivity {
      * 填充数据
      */
     private void loadData() {
+        refreshLayout.setRefreshing(false);
         vrMediaList = vrMediaResource.getResource();
         vrMediaAdapter.addItem(vrMediaList);
-        recyclerView.setAdapter(vrMediaAdapter);
+        if (isFirstGetData) {
+            recyclerView.setAdapter(vrMediaAdapter);
+            isFirstGetData = false;
+        } else {
+            vrMediaAdapter.notifyDataSetChanged();
+        }
     }
 
 }
