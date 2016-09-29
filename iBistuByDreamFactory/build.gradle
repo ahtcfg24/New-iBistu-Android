@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        applicationId "org.iflab.ibistubydreamfactory"
+        minSdkVersion 19
+        targetSdkVersion 24
+        versionCode 7
+        versionName "1.07"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+
+    compile 'com.yalantis:contextmenu:1.0.6'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'me.drakeet.materialdialog:library:1.3.1'
+    compile 'com.github.ashqal:MD360Player4Android:2.0.4.beta'
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.4.5'
+    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.4.5'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.shizhefei:ViewPagerIndicator:1.1.2'
+    compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.bigkoo:convenientbanner:2.0.5'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+//选择多张图片
+    compile 'me.iwf.photopicker:PhotoPicker:0.8.10@aar'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:support-v4:24.2.1'
+//九宫格图片预览
+    compile 'com.lzy.widget:ninegridview:0.2.0'
+//CardView
+    compile 'com.android.support:cardview-v7:24.2.1'
+
+}
