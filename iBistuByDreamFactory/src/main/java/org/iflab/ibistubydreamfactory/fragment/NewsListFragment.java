@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,24 +16,25 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.loopj.android.http.JsonHttpResponseHandler;
+import android.widget.Toast;
 
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.activities.NewsDetailActivity;
 import org.iflab.ibistubydreamfactory.adapters.NewsListAdapter;
+import org.iflab.ibistubydreamfactory.apis.APISource;
+import org.iflab.ibistubydreamfactory.apis.NewsAPI;
+import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.News;
 import org.iflab.ibistubydreamfactory.utils.ACache;
-import org.iflab.ibistubydreamfactory.utils.HttpUtil;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 新闻列表
@@ -54,6 +54,7 @@ public class NewsListFragment extends Fragment {
     private ProgressBar progressBar;
     private TextView loadToLastTextView;
     private Intent intent;
+    private String category;
 
 
     @Override
@@ -62,6 +63,7 @@ public class NewsListFragment extends Fragment {
         init();
         initView();
         initRefresh();
+//        getNews();
         loadData();
         return rootView;
     }
@@ -72,8 +74,9 @@ public class NewsListFragment extends Fragment {
     private void init() {
         Bundle bundle = getArguments();
         fragmentName = bundle.getString("fragmentName");
+        category = bundle.getString("newsCategoryPath");
         newsListURL = MyApplication.newsListBaseURL + "?category=" + bundle.getString("newsCategoryPath") + "&page=";
-        currentPage = 1;
+        currentPage = 0;
         newsList = new ArrayList<>();
         newsListAdapter = new NewsListAdapter(NewsListFragment.this.getActivity());
     }
@@ -116,8 +119,8 @@ public class NewsListFragment extends Fragment {
                     @Override
                     public void run() {
                         newsList.clear();
-                        currentPage = 1;
-                        requestByURL(newsListURL + currentPage);
+                        currentPage = 0;
+                        getNews();
                         Snackbar.make(rootView, "刷新完成", Snackbar.LENGTH_SHORT).show();
                     }
                 }, 1000);
@@ -127,85 +130,62 @@ public class NewsListFragment extends Fragment {
         });
     }
 
-    /**
-     * 从网络或者缓存载入数据
-     */
     private void loadData() {
-        JSONArray newsListJsonArray = null;
-        if (currentPage == 1) {
-            newsListJsonArray = aCache.getAsJSONArray(newsListURL + currentPage);
-        }
-        if (newsListJsonArray == null) {
-            requestByURL(newsListURL + currentPage);
+        List<News> tempList = (List<News>) aCache.getAsObject(newsListURL);
+        if (tempList == null) {//如果缓存没有
+            getNews();
         } else {
-            handleNewsListData(newsListJsonArray);
+            newsList.addAll(tempList);
+            progressBar.setVisibility(View.GONE);
+            newsListAdapter.addItem(newsList);
+            if (currentPage == 0) {
+                newsListView.setAdapter(newsListAdapter);
+            } else {
+                newsListAdapter.notifyDataSetChanged();//更新列表视图
+            }
+            currentPage++;
         }
     }
 
-    /**
-     * 通过URL从网络获取数据
-     *
-     * @param URL 按页分的数据URL
-     */
-    private void requestByURL(final String URL) {
-        HttpUtil.get(URL, new JsonHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e(URL, throwable.getMessage());
-                footerProgressLayout.setVisibility(View.INVISIBLE);
-                loadToLastTextView.setVisibility(View.VISIBLE);
-            }
 
+    /**
+     * 获得新闻列表信息
+     */
+    private void getNews() {
+        NewsAPI newsAPI = APISource.getInstance().getAPIObject(NewsAPI.class);
+        Call<List<News>> call = newsAPI.getNewsList(category, currentPage + "");
+        call.enqueue(new Callback<List<News>>() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.i(URL, response.toString());
-                if (response.toString().equals("[]")) {
-                    footerProgressLayout.setVisibility(View.INVISIBLE);
-                    loadToLastTextView.setVisibility(View.VISIBLE);
-                } else {
-                    if (currentPage == 1) {
-                        aCache.put(URL, response);//缓存第一页数据
+            public void onResponse(Call<List<News>> call, Response<List<News>> response) {
+                pullToRefreshView.setRefreshing(false);//加载完成收起下拉刷新的进度圈
+                if (response.isSuccessful()) {
+                    List<News> tempList = response.body();
+                    if (tempList.size() == 0) {
+                        footerProgressLayout.setVisibility(View.INVISIBLE);
+                        loadToLastTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        if (currentPage == 0) {
+                            aCache.put(newsListURL, (Serializable) tempList);//缓存第一页的数据
+                        }
+                        loadData();
                     }
-                    handleNewsListData(response);
+                } else {
+                    ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
+                    onFailure(call, e.toException());
                 }
             }
 
             @Override
-            public void onFinish() {
+            public void onFailure(Call<List<News>> call, Throwable t) {
                 pullToRefreshView.setRefreshing(false);//加载完成收起下拉刷新的进度圈
-
+                System.out.println("error：" + t.toString());
+                footerProgressLayout.setVisibility(View.INVISIBLE);
+                loadToLastTextView.setVisibility(View.VISIBLE);
+                Toast.makeText(NewsListFragment.this.getActivity(), "错误：" + t.getMessage(), Toast.LENGTH_LONG)
+                     .show();
             }
         });
-    }
 
-    /**
-     * 处理分页后的新闻列表数据
-     *
-     * @param jsonArray 分页存放的数据
-     */
-    private void handleNewsListData(JSONArray jsonArray) {
-        try {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                News news = new News();
-                JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                news.setNewsTitle(jsonObject2.getString("newsTitle"));
-                news.setNewsIntro(jsonObject2.getString("newsIntro"));
-                news.setNewsTime(jsonObject2.getString("newsTime"));
-                news.setNewsImage(jsonObject2.getString("newsImage"));
-                news.setNewsLink(jsonObject2.getString("newsLink"));
-                newsList.add(news);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        progressBar.setVisibility(View.GONE);
-        newsListAdapter.addItem(newsList);
-        if (currentPage == 1) {
-            newsListView.setAdapter(newsListAdapter);
-        } else {
-            newsListAdapter.notifyDataSetChanged();//更新列表视图
-        }
-        currentPage++;
     }
 
 
@@ -247,7 +227,7 @@ public class NewsListFragment extends Fragment {
             if (isLastRow && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 loadToLastTextView.setVisibility(View.INVISIBLE);
                 footerProgressLayout.setVisibility(View.VISIBLE);
-                loadData();
+                getNews();
                 isLastRow = false;
             }
         }
