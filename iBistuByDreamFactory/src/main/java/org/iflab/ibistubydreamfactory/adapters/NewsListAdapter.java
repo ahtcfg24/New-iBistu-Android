@@ -19,6 +19,8 @@ import java.util.List;
  *
  */
 public class NewsListAdapter extends BaseAdapter {
+    private static int TYPE_FIRST_NEWS = 0;
+    private static int TYPE_NORMAL_NEWS = 1;
     private List<News> newsList;
     private Context context;
 
@@ -42,6 +44,20 @@ public class NewsListAdapter extends BaseAdapter {
         return 0;
     }
 
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return TYPE_FIRST_NEWS;
+        } else {
+            return TYPE_NORMAL_NEWS;
+        }
+    }
+
     /**
      * 绘制每个item
      *
@@ -52,27 +68,42 @@ public class NewsListAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_news, null);
-            viewHolder = new ViewHolder();
-            viewHolder.newsListTitle = (TextView) convertView.findViewById(R.id.newsList_title);
-            viewHolder.newsListIntro = (TextView) convertView.findViewById(R.id.newsList_content);
-            viewHolder.newsListTime = (TextView) convertView.findViewById(R.id.newsList_time);
-            viewHolder.newsListImage = (ImageView) convertView.findViewById(R.id.newsList_icon);
-            convertView.setTag(viewHolder);
+        if (getItemViewType(position) == TYPE_FIRST_NEWS) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_first_news, null);
+            TextView textViewTitle = (TextView) convertView.findViewById(R.id.title);
+            TextView textViewContent = (TextView) convertView.findViewById(R.id.content);
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.image);
+            textViewTitle.setText(newsList.get(position).getNewsTitle());
+            textViewContent.setText(newsList.get(position).getNewsIntro());
+            Glide.with(context)
+                 .load(newsList.get(position).getNewsImage())
+                 .fitCenter()
+                 .placeholder(R.drawable.ic_image_loading_picture)
+                 .error(R.drawable.ic_image_no_picture)
+                 .into(imageView);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.item_news, null);
+                viewHolder = new ViewHolder();
+                viewHolder.newsListTitle = (TextView) convertView.findViewById(R.id.newsList_title);
+                viewHolder.newsListIntro = (TextView) convertView.findViewById(R.id.newsList_content);
+                viewHolder.newsListTime = (TextView) convertView.findViewById(R.id.newsList_time);
+                viewHolder.newsListImage = (ImageView) convertView.findViewById(R.id.newsList_icon);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            viewHolder.newsListTitle.setText(newsList.get(position).getNewsTitle());
+            viewHolder.newsListIntro.setText(newsList.get(position).getNewsIntro());
+            viewHolder.newsListTime.setText(newsList.get(position).getNewsTime());
+            Glide.with(context)
+                 .load(newsList.get(position).getNewsImage())
+                 .centerCrop()
+                 .placeholder(R.drawable.ic_image_loading_picture)
+                 .error(R.drawable.ic_image_no_picture)
+                 .into(viewHolder.newsListImage);
         }
-        viewHolder.newsListTitle.setText(newsList.get(position).getNewsTitle());
-        viewHolder.newsListIntro.setText(newsList.get(position).getNewsIntro());
-        viewHolder.newsListTime.setText(newsList.get(position).getNewsTime());
-        Glide.with(context)
-             .load(newsList.get(position).getNewsImage())
-             .centerCrop()
-             .placeholder(R.drawable.ic_image_loading_picture)
-             .error(R.drawable.ic_image_no_picture)
-             .into(viewHolder.newsListImage);
         return convertView;
     }
 

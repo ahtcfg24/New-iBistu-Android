@@ -17,5 +17,6 @@
         android:id="@+id/listView_scheduledBus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scrollbarStyle="outsideOverlay"
         />
 </LinearLayout>

@@ -39,6 +39,7 @@
             android:id="@+id/registerScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scrollbarStyle="outsideOverlay"
             >
 
 
@@ -47,10 +48,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:paddingBottom="16dp"
                 android:paddingLeft="44dp"
                 android:paddingRight="44dp"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"
                 >
 
 
