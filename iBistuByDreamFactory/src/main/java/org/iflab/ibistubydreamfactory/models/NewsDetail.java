@@ -67,6 +67,13 @@ public class NewsDetail extends BaseRecord {
     public static class ImgBean {
         private String url;
 
+        public ImgBean() {
+        }
+
+        public ImgBean(String url) {
+            this.url = url;
+        }
+
         public String getUrl() {
             return url;
         }
@@ -74,5 +81,6 @@ public class NewsDetail extends BaseRecord {
         public void setUrl(String url) {
             this.url = url;
         }
+
     }
 }

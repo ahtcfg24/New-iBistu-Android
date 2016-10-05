@@ -9,33 +9,31 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bumptech.glide.Glide;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
+import org.iflab.ibistubydreamfactory.apis.APISource;
+import org.iflab.ibistubydreamfactory.apis.NewsAPI;
+import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.NewsDetail;
-import org.iflab.ibistubydreamfactory.utils.HttpUtil;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewsDetailActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView newsDetailTitle, newsDetailArticle, newsDetailTime;
-    private String newsDetailURL;
-    private List<NewsDetail.ImgBean> imgList;
-    private List<String> imageUrlList;
     private ConvenientBanner<String> newsBannerView;//新闻图片Banner
+    private String newsLink;
 
     @Override
 
@@ -44,7 +42,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_detail);
         init();
         initView();
-        getNewsDataByURL(newsDetailURL);
+        getNewsDetail();
 
     }
 
@@ -54,10 +52,7 @@ public class NewsDetailActivity extends AppCompatActivity {
     private void init() {
         Intent intent = getIntent();
         setTitle(intent.getStringExtra("fragmentName"));
-        String newsLink = intent.getStringExtra("newsLink");
-        newsDetailURL = MyApplication.newsDetailBaseURL + "?link=" + newsLink;
-        imgList = new ArrayList<>();
-        imageUrlList = new ArrayList<>();
+        newsLink = intent.getStringExtra("newsLink");
     }
 
     private void initView() {
@@ -71,43 +66,32 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * 从网络获取新闻数据
-     */
-    private void getNewsDataByURL(final String url) {
-        HttpUtil.get(url, new JsonHttpResponseHandler() {
+    public void getNewsDetail() {
+        NewsAPI newsAPI = APISource.getInstance().getAPIObject(NewsAPI.class);
+        Call<NewsDetail> call = newsAPI.getNewsDetail(newsLink);
+        call.enqueue(new Callback<NewsDetail>() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                NewsDetail newsDetail = new NewsDetail();
-                try {
-                    newsDetail.setTitle(response.getString("title"));
-                    newsDetail.setArticle(response.getString("article"));
-                    newsDetail.setTime(response.getString("time"));
-                    JSONArray imgArray = (response.getJSONArray("imgList"));
-                    if (imgArray.toString().equals("[]")) {
-                        newsBannerView.setVisibility(View.GONE);
-                    } else {
-                        for (int i = 0; i < imgArray.length(); i++) {
-                            NewsDetail.ImgBean image = new NewsDetail.ImgBean();
-                            JSONObject imageObject = imgArray.getJSONObject(i);
-                            image.setUrl(imageObject.getString("url"));
-                            imgList.add(image);
-                        }
-                    }
-                    newsDetail.setImgList(imgList);
+            public void onResponse(Call<NewsDetail> call, Response<NewsDetail> response) {
+                if (response.isSuccessful()) {
+                    NewsDetail newsDetail = response.body();
+                    System.out.println(newsDetail.toString());
                     loadData(newsDetail);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } else {
+                    ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
+                    onFailure(call, e.toException());
                 }
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e(url, throwable.getMessage());
+            public void onFailure(Call<NewsDetail> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                System.out.println("error：" + t.toString());
+                Toast.makeText(NewsDetailActivity.this, "错误：" + t.getMessage(), Toast.LENGTH_LONG)
+                     .show();
             }
         });
     }
+
 
     /**
      * 填充新闻数据到控件里
@@ -122,6 +106,7 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         int imageCount = newsDetail.getImgList().size();
         if (imageCount > 0) {//如果资源线性表不为空就执行
+            List<String> imageUrlList = new ArrayList<>();
             for (NewsDetail.ImgBean imgBean : newsDetail.getImgList()) {
                 imageUrlList.add(imgBean.getUrl());
             }
@@ -141,6 +126,8 @@ public class NewsDetailActivity extends AppCompatActivity {
                 newsBannerView.startTurning(3000);
             }
 
+        } else {
+            newsBannerView.setVisibility(View.GONE);
         }
     }
 
@@ -165,7 +152,6 @@ public class NewsDetailActivity extends AppCompatActivity {
         @Override
         public View createView(Context context) {
             imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             return imageView;
         }
 

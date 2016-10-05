@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
@@ -178,11 +178,10 @@ public class NewsListFragment extends Fragment {
             @Override
             public void onFailure(Call<List<News>> call, Throwable t) {
                 pullToRefreshView.setRefreshing(false);//加载完成收起下拉刷新的进度圈
-                System.out.println("error：" + t.toString());
+                Log.e("error：", t.toString());
                 footerProgressLayout.setVisibility(View.INVISIBLE);
                 loadToLastTextView.setVisibility(View.VISIBLE);
-                Toast.makeText(NewsListFragment.this.getActivity(), "错误：" + t.getMessage(), Toast.LENGTH_LONG)
-                     .show();
+                Snackbar.make(rootView, "错误：" + t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
 
