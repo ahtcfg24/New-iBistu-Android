@@ -23,7 +23,6 @@ public abstract class VRPlayerActivity extends Activity {
     private static final SparseArray<String> displayMode = new SparseArray<>();
     private static final SparseArray<String> interactiveMode = new SparseArray<>();
     private static final SparseArray<String> projectionMode = new SparseArray<>();
-    private static final SparseArray<String> showBoderMode = new SparseArray<>();
 
     static {
         displayMode.put(MDVRLibrary.DISPLAY_MODE_NORMAL, "普通模式");
@@ -74,9 +73,9 @@ public abstract class VRPlayerActivity extends Activity {
                             @Override
                             public void onSpinnerClicked(int index, int key, String value) {
                                 mVRLibrary.switchDisplayMode(VRPlayerActivity.this, key);
-                                if (key==MDVRLibrary.DISPLAY_MODE_GLASS){
+                                if (key == MDVRLibrary.DISPLAY_MODE_GLASS) {
                                     mVRLibrary.setAntiDistortionEnabled(true);
-                                }else {
+                                } else {
                                     mVRLibrary.setAntiDistortionEnabled(false);
                                 }
 

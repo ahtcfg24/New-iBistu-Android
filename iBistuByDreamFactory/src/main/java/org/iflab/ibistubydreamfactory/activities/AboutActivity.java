@@ -20,22 +20,27 @@ import org.iflab.ibistubydreamfactory.utils.ACache;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AboutActivity extends AppCompatActivity {
+    @BindView(R.id.progressBar_about)
+    ProgressBar progressBar;
+    @BindView(R.id.about_listView)
+    ListView aboutListView;
     private Resource<About> introductionResource;
-    private ProgressBar progressBar;
     private List<About> aboutItemList;//存储关于列表各选项的名字
-    private ListView aboutListView;
     private Intent intent;
-    private ACache aCache;
+    private ACache aCache = ACache.get(MyApplication.getAppContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        ButterKnife.bind(this);
         init();
         if (introductionResource == null) {
             /*如果缓存没有就从网络获取*/
@@ -46,7 +51,8 @@ public class AboutActivity extends AppCompatActivity {
         aboutListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intent.putExtra("aboutContent", aboutItemList.get(position).getAboutDetails());//把模块的内容传过去
+                intent.putExtra("aboutContent", aboutItemList.get(position)
+                                                             .getAboutDetails());//把模块的内容传过去
                 intent.putExtra("aboutName", aboutItemList.get(position)
                                                           .getAboutName());//把所点击的模块的名字传过去
                 intent.setClass(AboutActivity.this, AboutDetailsActivity.class);
@@ -61,9 +67,6 @@ public class AboutActivity extends AppCompatActivity {
      */
     private void init() {
         intent = new Intent();
-        progressBar = (ProgressBar) findViewById(R.id.progressBar_about);
-        aboutListView = (ListView) findViewById(R.id.about_listView);
-        aCache = ACache.get(MyApplication.getAppContext());
         introductionResource = (Resource<About>) aCache.getAsObject("introductionResource");
     }
 
@@ -89,6 +92,7 @@ public class AboutActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Resource<About>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 System.out.println("error：" + t.toString());
 
             }
@@ -104,8 +108,5 @@ public class AboutActivity extends AppCompatActivity {
         aboutListView.setAdapter(new AboutListViewAdapter(aboutItemList, this));
 
     }
-
-
-
 
 }

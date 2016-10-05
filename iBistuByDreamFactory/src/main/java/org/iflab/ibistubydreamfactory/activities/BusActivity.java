@@ -24,25 +24,29 @@ import org.iflab.ibistubydreamfactory.utils.ACache;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BusActivity extends AppCompatActivity {
 
-    private ListView listViewBus;
-    private ProgressBar progressBar;
+    @BindView(R.id.progressBar_scheduledbus)
+    ProgressBar progressBar;
+    @BindView(R.id.listView_scheduledBus)
+    ListView listViewBus;
     private List<Bus> busSourceList;
     private BusType scheduledBus;
     private Resource<Bus> busResource;
-    private ACache aCache;
+    private ACache aCache = ACache.get(MyApplication.getAppContext());
     private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus);
-
+        ButterKnife.bind(this);
         init();//初始化
         if (busResource == null) {
           /*如果缓存没有就从网络获取*/
@@ -68,12 +72,11 @@ public class BusActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 初始化
+     */
     private void init() {
-        progressBar = (ProgressBar) findViewById(R.id.progressBar_scheduledbus);
-        listViewBus = (ListView) findViewById(R.id.listView_scheduledBus);
-        aCache = ACache.get(MyApplication.getAppContext());
         busResource = (Resource<Bus>) aCache.getAsObject("busResource");
-
     }
 
     /**

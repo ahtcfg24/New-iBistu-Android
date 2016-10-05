@@ -34,6 +34,8 @@ import org.iflab.ibistubydreamfactory.utils.StringUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,10 +46,21 @@ import retrofit2.Response;
  */
 public class RegisterActivity extends AppCompatActivity {
 
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.phone_input)
+    EditText phoneInput;
+    @BindView(R.id.confirmCode_input)
+    EditText confirmCodeInput;
+    @BindView(R.id.sendCodeButton)
+    Button sendCodeButton;
+    @BindView(R.id.email_input)
+    EditText emailInput;
+    @BindView(R.id.password_input)
+    EditText passwordInput;
+    @BindView(R.id.confirmPassword_input)
+    EditText confirmPasswordInput;
     private FragmentManager fragmentManager;
-    private EditText phoneInput, confirmCodeInput, emailInput, passwordInput, confirmPasswordInput;
-    private Button sendCodeButton;
-    private ProgressBar progressBar;
     private View parentView;
     private AuthAPI authAPI;
     private Bundle bundle;
@@ -63,8 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         parentView = LayoutInflater.from(this).inflate(R.layout.activity_register, null);
         setContentView(parentView);
+        ButterKnife.bind(this);
         initToolbar();
-        initView();
         authAPI = APISource.getInstance().getAPIObject(AuthAPI.class);
         bundle = new Bundle();
         fragmentManager = getFragmentManager();
@@ -96,15 +109,6 @@ public class RegisterActivity extends AppCompatActivity {
         client.addHeader("CheckSum", StringUtil.getCheckSum(MyApplication.APPSECRET, nonce, curTime));
     }
 
-    private void initView() {
-        sendCodeButton = (Button) findViewById(R.id.sendCodeButton);
-        phoneInput = (EditText) findViewById(R.id.phone_input);
-        confirmCodeInput = (EditText) findViewById(R.id.confirmCode_input);
-        emailInput = (EditText) findViewById(R.id.email_input);
-        passwordInput = (EditText) findViewById(R.id.password_input);
-        confirmPasswordInput = (EditText) findViewById(R.id.confirmPassword_input);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-    }
 
 
     public void onButtonRegisterClick(View view) {

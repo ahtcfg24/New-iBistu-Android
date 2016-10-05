@@ -23,16 +23,25 @@ import org.iflab.ibistubydreamfactory.utils.ACache;
 import org.iflab.ibistubydreamfactory.utils.ClearLocalDataUtils;
 import org.iflab.ibistubydreamfactory.utils.RegexConfirmUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserCenterActivity extends AppCompatActivity {
-    private EditText oldPasswordInput, newPasswordInput, repeatNewPasswordInput;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.textView_email)
+    TextView textViewEmail;
+    @BindView(R.id.editText_oldPassword)
+    EditText editTextOldPassword;
+    @BindView(R.id.editText_newPassword)
+    EditText editTextNewPassword;
+    @BindView(R.id.editText_repeatNewPassword)
+    EditText editTextRepeatNewPassword;
     private AuthAPI authAPI;
     private View parentView;
-    private TextView emailTextView;
-    private ProgressBar progressBar;
     private ACache aCache = ACache.get(MyApplication.getAppContext());
     private User user;
 
@@ -41,20 +50,13 @@ public class UserCenterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         parentView = LayoutInflater.from(this).inflate(R.layout.activity_user_center, null);
         setContentView(parentView);
-        initView();
+        ButterKnife.bind(this);
         authAPI = APISource.getInstance().getAPIObject(AuthAPI.class);
         user = (User) aCache.getAsObject("user");
-        emailTextView.setText(user.getEmail());
+        textViewEmail.setText(user.getEmail());
 
     }
 
-    private void initView() {
-        oldPasswordInput = (EditText) findViewById(R.id.editText_oldPassword);
-        newPasswordInput = (EditText) findViewById(R.id.editText_newPassword);
-        repeatNewPasswordInput = (EditText) findViewById(R.id.editText_repeatNewPassword);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        emailTextView = (TextView) findViewById(R.id.textView_email);
-    }
 
     /**
      * 点击退出登录
@@ -66,7 +68,7 @@ public class UserCenterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
                 progressBar.setVisibility(View.GONE);
-                if(response.isSuccessful()) {//如果成功
+                if (response.isSuccessful()) {//如果成功
                     logout();
                 } else {//失败
                     ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
@@ -117,9 +119,9 @@ public class UserCenterActivity extends AppCompatActivity {
      * 点击修改密码
      */
     public void onButtonChangePasswordClick(View view) {
-        String oldPassword = oldPasswordInput.getText().toString();
-        String newPassword = newPasswordInput.getText().toString();
-        String repeatNewPassword = repeatNewPasswordInput.getText().toString();
+        String oldPassword = editTextOldPassword.getText().toString();
+        String newPassword = editTextNewPassword.getText().toString();
+        String repeatNewPassword = editTextRepeatNewPassword.getText().toString();
         if (!RegexConfirmUtils.isNotContainsSpecial(oldPassword)) {
             Snackbar.make(parentView, "密码不能包含特殊字符！", Snackbar.LENGTH_SHORT).show();
         } else if (!RegexConfirmUtils.isNotContainsSpecial(newPassword)) {

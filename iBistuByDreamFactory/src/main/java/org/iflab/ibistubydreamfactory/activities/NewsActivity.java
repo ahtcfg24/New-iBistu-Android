@@ -15,15 +15,24 @@ import org.iflab.ibistubydreamfactory.adapters.NewsListFragmentAdapter;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static org.iflab.ibistubydreamfactory.MyApplication.newsCategory;
 
 
 public class NewsActivity extends AppCompatActivity {
 
+    @BindView(R.id.category_news)
+    ScrollIndicatorView categoryNews;
+    @BindView(R.id.viewPager_newsList)
+    ViewPager viewPagerNewsList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+        ButterKnife.bind(this);
 
         initView();
     }
@@ -40,15 +49,14 @@ public class NewsActivity extends AppCompatActivity {
         newsPathMap.put(newsCategory[7], "shfw");
         newsPathMap.put(newsCategory[8], "mtgz");
 
-        ScrollIndicatorView categoryIndicatorView = (ScrollIndicatorView) findViewById(R.id.category_news);
 
         /**
          * 设置tab下面的滑动条
          */
-        categoryIndicatorView.setScrollBar(new DrawableBar(this,R.drawable.bg_news_tab, ScrollBar.Gravity.BOTTOM) {
+        categoryNews.setScrollBar(new DrawableBar(this, R.drawable.bg_news_tab, ScrollBar.Gravity.BOTTOM) {
             @Override
             public int getHeight(int tabHeight) {
-                return tabHeight/12;
+                return tabHeight / 12;
             }
 
             @Override
@@ -57,8 +65,7 @@ public class NewsActivity extends AppCompatActivity {
             }
         });
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager_newsList);
-        IndicatorViewPager indicatorViewPager = new IndicatorViewPager(categoryIndicatorView, viewPager);
+        IndicatorViewPager indicatorViewPager = new IndicatorViewPager(categoryNews, viewPagerNewsList);
         indicatorViewPager.setAdapter(new NewsListFragmentAdapter(getSupportFragmentManager(), NewsActivity.this, newsPathMap));
     }
 

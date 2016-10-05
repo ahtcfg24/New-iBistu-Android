@@ -33,6 +33,8 @@ import org.iflab.ibistubydreamfactory.utils.ACache;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.drakeet.materialdialog.MaterialDialog;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -40,12 +42,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LostFoundActivity extends AppCompatActivity {
-    private ListView lostFoundListView;
-    private FloatingActionButton floatingActionButton;
+    @BindView(R.id.listView_lostFound)
+    ListView listViewLostFound;
+    @BindView(R.id.pullToRefreshView)
+    SwipeRefreshLayout pullToRefreshView;
+    @BindView(R.id.floatingButton)
+    FloatingActionButton floatingButton;
     private List<LostFound> lostFoundList;
     private Resource<LostFound> lostFoundResource;
     private int currentPage;//分页加载的当前页编号
-    private SwipeRefreshLayout pullToRefreshView;//下拉刷新控件
     private View rootView;
     private View loadMoreView;//上拉加载更多控件
     private LinearLayout footerProgressLayout;
@@ -60,6 +65,7 @@ public class LostFoundActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         rootView = getLayoutInflater().inflate(R.layout.activity_lost_found, null);
         setContentView(rootView);
+        ButterKnife.bind(this);
 
         initView();
 
@@ -68,7 +74,7 @@ public class LostFoundActivity extends AppCompatActivity {
             setTitle("我发布的");
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             onlyShowFound = intentExtra;
-            floatingActionButton.setVisibility(View.INVISIBLE);
+            floatingButton.setVisibility(View.INVISIBLE);
         }
 
         initRefresh();
@@ -84,11 +90,9 @@ public class LostFoundActivity extends AppCompatActivity {
         loadMoreView = getLayoutInflater().inflate(R.layout.item_load_more, null);
         loadToLastTextView = (TextView) loadMoreView.findViewById(R.id.load_to_last_textView);
         footerProgressLayout = (LinearLayout) loadMoreView.findViewById(R.id.footer_progress_layout);
-        pullToRefreshView = (SwipeRefreshLayout) findViewById(R.id.pullToRefreshView);
-        lostFoundListView = (ListView) findViewById(R.id.listView_lostFound);
-        lostFoundListView.addFooterView(loadMoreView);
-        lostFoundListView.setOnScrollListener(new ScrollListener());
-        lostFoundListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listViewLostFound.addFooterView(loadMoreView);
+        listViewLostFound.setOnScrollListener(new ScrollListener());
+        listViewLostFound.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (onlyShowFound.equals("isFound=false")) {
@@ -99,8 +103,7 @@ public class LostFoundActivity extends AppCompatActivity {
                 return true;
             }
         });
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        floatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LostFoundActivity.this, PostLostFoundActivity.class));
@@ -131,6 +134,13 @@ public class LostFoundActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * 获取招领信息
+     *
+     * @param currentPage 当前页
+     * @param isFound 是否结束
+     */
     private void getLostFoundResource(final int currentPage, String isFound) {
         lostFoundAPI = APISource.getInstance().getAPIObject(LostFoundAPI.class);
         Call<Resource<LostFound>> call = lostFoundAPI.getLostFound((currentPage - 1) * 10 + "", isFound);
@@ -166,7 +176,7 @@ public class LostFoundActivity extends AppCompatActivity {
         if (currentPage == 1) {
             lostFoundList = lostFoundResource.getResource();
             lostFoundListAdapter.addItem(lostFoundList);
-            lostFoundListView.setAdapter(lostFoundListAdapter);
+            listViewLostFound.setAdapter(lostFoundListAdapter);
         } else {
             List<LostFound> tempList = lostFoundResource.getResource();
             if (tempList.size() != 0) {

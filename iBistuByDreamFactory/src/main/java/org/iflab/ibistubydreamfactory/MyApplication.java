@@ -24,8 +24,6 @@ public class MyApplication extends Application {
     public static String SMSCONFIRMURL;//云信短信验证URL
     public static String UPDATE_DOWNLOAD_URL = "";//软件更新下载URL
     public static String CAS_URL = "https://cas.bistu.edu.cn/ibistu/login.php";//CAS认证URL
-    public static String newsListBaseURL = "http://iamding.cn:8080/newsapi/newslist";
-    public static String newsDetailBaseURL = "http://iamding.cn:8080/newsapi/newsDetail";
     public static String[] newsCategory = {
             "综合新闻", "图片新闻", "人才培养", "教学科研", "文化活动", "校园人物", "交流合作", "社会服务", "媒体关注"
     };

@@ -25,14 +25,23 @@ import org.iflab.ibistubydreamfactory.models.NewsDetail;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NewsDetailActivity extends AppCompatActivity {
-    private ProgressBar progressBar;
-    private TextView newsDetailTitle, newsDetailArticle, newsDetailTime;
-    private ConvenientBanner<String> newsBannerView;//新闻图片Banner
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.newsDetailTitle_textView)
+    TextView newsDetailTitleTextView;
+    @BindView(R.id.newsDetailTime_textView)
+    TextView newsDetailTimeTextView;
+    @BindView(R.id.newsDetail_bannerView)
+    ConvenientBanner newsDetailBannerView;
+    @BindView(R.id.newsContent_textView)
+    TextView newsContentTextView;
     private String newsLink;
 
     @Override
@@ -40,8 +49,8 @@ public class NewsDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
+        ButterKnife.bind(this);
         init();
-        initView();
         getNewsDetail();
 
     }
@@ -53,17 +62,6 @@ public class NewsDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         setTitle(intent.getStringExtra("fragmentName"));
         newsLink = intent.getStringExtra("newsLink");
-    }
-
-    private void initView() {
-
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        newsDetailTitle = (TextView) findViewById(R.id.newsDetailTitle_textView);
-        newsDetailTime = (TextView) findViewById(R.id.newsDetailTime_textView);
-        newsDetailArticle = (TextView) findViewById(R.id.newsContent_textView);
-        newsBannerView = (ConvenientBanner<String>) findViewById(R.id.newsDetail_bannerView);
-
-
     }
 
     public void getNewsDetail() {
@@ -100,9 +98,9 @@ public class NewsDetailActivity extends AppCompatActivity {
      */
     private void loadData(NewsDetail newsDetail) {
         progressBar.setVisibility(View.GONE);
-        newsDetailTitle.setText(newsDetail.getTitle());
-        newsDetailTime.setText(newsDetail.getTime());
-        newsDetailArticle.setText(newsDetail.getArticle());
+        newsDetailTitleTextView.setText(newsDetail.getTitle());
+        newsDetailTimeTextView.setText(newsDetail.getTime());
+        newsContentTextView.setText(newsDetail.getArticle());
 
         int imageCount = newsDetail.getImgList().size();
         if (imageCount > 0) {//如果资源线性表不为空就执行
@@ -112,22 +110,22 @@ public class NewsDetailActivity extends AppCompatActivity {
             }
             Log.i("imageUrlList", imageUrlList.toString());
             //使用Android-ConvenientBanner库设置banner
-            newsBannerView.setPages(new CBViewHolderCreator<ImageHolderView>() {
+            newsDetailBannerView.setPages(new CBViewHolderCreator<ImageHolderView>() {
                 @Override
                 public ImageHolderView createHolder() {
                     return new ImageHolderView();
                 }
             }, imageUrlList)
-                          //设置两个点图片作为翻页指示器，不设置则没有指示器
-                          .setPageIndicator(new int[]{
+                                //设置两个点图片作为翻页指示器，不设置则没有指示器
+                                .setPageIndicator(new int[]{
                                   R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused
                           });
             if (imageCount > 1) {//如果图片数量超过一张就执行
-                newsBannerView.startTurning(3000);
+                newsDetailBannerView.startTurning(3000);
             }
 
         } else {
-            newsBannerView.setVisibility(View.GONE);
+            newsDetailBannerView.setVisibility(View.GONE);
         }
     }
 
@@ -137,8 +135,8 @@ public class NewsDetailActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (newsBannerView.isTurning()) {
-            newsBannerView.stopTurning();
+        if (newsDetailBannerView.isTurning()) {
+            newsDetailBannerView.stopTurning();
         }
     }
 

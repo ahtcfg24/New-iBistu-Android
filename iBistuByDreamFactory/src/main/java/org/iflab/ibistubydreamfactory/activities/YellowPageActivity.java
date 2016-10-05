@@ -22,16 +22,20 @@ import org.iflab.ibistubydreamfactory.utils.ACache;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class YellowPageActivity extends AppCompatActivity {
-    private ListView listViewYellowPageDepart;
-    private ProgressBar progressBar;
+    @BindView(R.id.progressBar_yellowPageDepart)
+    ProgressBar progressBar;
+    @BindView(R.id.listView_yellowPage)
+    ListView listViewYellowPage;
     private List<YellowPageDepartment> yellowPageDepartmentList;
     private Resource<YellowPageDepartment> yellowPageDepartResource;
-    private ACache aCache;
+    private ACache aCache = ACache.get(MyApplication.getAppContext());
     private Intent intent;
 
 
@@ -39,6 +43,7 @@ public class YellowPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yellow_page_depart);
+        ButterKnife.bind(this);
         init();//初始化
         if (yellowPageDepartResource == null) {
             /*如果缓存没有就从网络获取*/
@@ -46,7 +51,7 @@ public class YellowPageActivity extends AppCompatActivity {
         } else {
             loadData();
         }
-        listViewYellowPageDepart.setOnItemClickListener(new OnItemClickListener() {
+        listViewYellowPage.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent();
@@ -59,12 +64,11 @@ public class YellowPageActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 初始化
+     */
     private void init() {
-        progressBar = (ProgressBar) findViewById(R.id.progressBar_yellowPageDepart);
-        listViewYellowPageDepart = (ListView) findViewById(R.id.listView_yellowPage);
-        aCache = ACache.get(MyApplication.getAppContext());
         yellowPageDepartResource = (Resource<YellowPageDepartment>) aCache.getAsObject("yellowPageDepartResource");
-
     }
 
 
@@ -74,7 +78,7 @@ public class YellowPageActivity extends AppCompatActivity {
     private void loadData() {
         yellowPageDepartmentList = yellowPageDepartResource.getResource();
         progressBar.setVisibility(View.GONE);
-        listViewYellowPageDepart.setAdapter(new YellowPageAdapter(yellowPageDepartmentList, YellowPageActivity.this));
+        listViewYellowPage.setAdapter(new YellowPageAdapter(yellowPageDepartmentList, YellowPageActivity.this));
     }
 
 

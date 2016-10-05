@@ -28,12 +28,6 @@ public class AndroidUtils {
 
     }
 
-    /**
-     * 获得版本名
-     */
-    public static String getVersionName(Context context) {
-        return getPackageInfo(context).versionName;
-    }
 
     /**
      * 获得版本号
@@ -46,18 +40,16 @@ public class AndroidUtils {
      * 包信息
      */
     private static PackageInfo getPackageInfo(Context context) {
-        PackageInfo pi = null;
+        PackageInfo packageInfo = null;
 
         try {
-            PackageManager pm = context.getPackageManager();
-            pi = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_CONFIGURATIONS);
-
-            return pi;
+            PackageManager packageManager = context.getPackageManager();
+            packageInfo = packageManager.getPackageInfo(context.getPackageName(), PackageManager.GET_CONFIGURATIONS);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return pi;
+        return packageInfo;
     }
 
     /**

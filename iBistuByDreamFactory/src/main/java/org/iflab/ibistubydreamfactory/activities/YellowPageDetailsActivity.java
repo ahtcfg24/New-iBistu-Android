@@ -22,13 +22,17 @@ import org.iflab.ibistubydreamfactory.utils.ACache;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class YellowPageDetailsActivity extends AppCompatActivity {
-    private ListView listViewYellowPageDepartDetails;
-    private ProgressBar progressBar;
+    @BindView(R.id.progressBar_yellowPageDepartDetails)
+    ProgressBar progressBar;
+    @BindView(R.id.listView_yellowPageDepartDetails)
+    ListView listViewYellowPageDepartDetails;
     private List<YellowPageDepartment> yellowPageDepartmentDetailsList;
     private Resource<YellowPageDepartment> yellowPageDepartDetailsResource;
     private ACache aCache;
@@ -41,6 +45,7 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yellow_page_depart_details);
+        ButterKnife.bind(this);
         init();//初始化
         if (yellowPageDepartDetailsResource == null) {
             /*如果缓存没有就从网络获取*/
@@ -54,18 +59,18 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
                 branchName = yellowPageDepartmentDetailsList.get(position).getName();
                 telephoneNumber = yellowPageDepartmentDetailsList.get(position).getTelephone();
                 new YellowPageDialog(YellowPageDetailsActivity.this, branchName, telephoneNumber, yellowPageDepartmentDetailsList, position);
-
             }
         });
 
     }
 
+    /**
+     * 初始化
+     */
     private void init() {
-        progressBar = (ProgressBar) findViewById(R.id.progressBar_yellowPageDepartDetails);
         Intent intent = getIntent();
         department = intent.getStringExtra("department");
-        getSupportActionBar().setTitle(intent.getStringExtra("name"));
-        listViewYellowPageDepartDetails = (ListView) findViewById(R.id.listView_yellowPageDepartDetails);
+        setTitle(intent.getStringExtra("name"));
         aCache = ACache.get(MyApplication.getAppContext());
         yellowPageDepartDetailsResource = (Resource<YellowPageDepartment>) aCache.getAsObject(department);
 
@@ -76,8 +81,7 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
      * 获得学校部门信息
      */
     private void getYellowPageDepartResource() {
-        YellowPageAPI departmentService = APISource.getInstance()
-                                                   .getAPIObject(YellowPageAPI.class);
+        YellowPageAPI departmentService = APISource.getInstance().getAPIObject(YellowPageAPI.class);
         String filter = "department=";
         Call<Resource<YellowPageDepartment>> call = departmentService.getYellowPageDetails(filter + department);
         call.enqueue(new Callback<Resource<YellowPageDepartment>>() {
@@ -113,7 +117,6 @@ public class YellowPageDetailsActivity extends AppCompatActivity {
         listViewYellowPageDepartDetails.setAdapter(new yellowPageDetailsAdapter(YellowPageDetailsActivity.this, yellowPageDepartmentDetailsList));
 
     }
-
 
 
 }

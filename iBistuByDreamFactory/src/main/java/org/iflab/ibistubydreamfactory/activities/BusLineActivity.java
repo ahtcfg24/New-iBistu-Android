@@ -16,10 +16,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class BusLineActivity extends AppCompatActivity {
 
-    private ListView listViewBusLine;
-    private TextView textViewBusName;
+    @BindView(R.id.textView_busName)
+    TextView textViewBusName;
+    @BindView(R.id.listView_busLine)
+    ListView listViewBusLine;
     private List<BusStation> busStationList;
     private String busLine;//班车路线json数据
 
@@ -27,14 +32,16 @@ public class BusLineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_line);
+        ButterKnife.bind(this);
         init();
         loadData();
         listViewBusLine.setAdapter(new BusLineAdapter(busStationList, BusLineActivity.this));
     }
 
+    /**
+     * 初始化
+     */
     private void init() {
-        listViewBusLine = (ListView) findViewById(R.id.listView_busLine);
-        textViewBusName = (TextView) findViewById(R.id.textView_busName);
         Intent intent = getIntent();
         busLine = intent.getStringExtra("line");
         setTitle(intent.getStringExtra("type"));//获取传过来的类型并设为activity的标题
@@ -42,6 +49,9 @@ public class BusLineActivity extends AppCompatActivity {
         busStationList = new ArrayList<>();
     }
 
+    /**
+     * 填充数据
+     */
     private void loadData() {
         try {
             JSONArray jsonArray = new JSONArray(busLine);
@@ -57,9 +67,6 @@ public class BusLineActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
 

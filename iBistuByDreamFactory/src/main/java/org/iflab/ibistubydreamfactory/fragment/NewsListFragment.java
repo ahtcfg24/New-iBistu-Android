@@ -32,6 +32,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,18 +42,20 @@ import retrofit2.Response;
  * 新闻列表
  */
 public class NewsListFragment extends Fragment {
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.newsListView)
+    ListView newsListView;
+    @BindView(R.id.pullToRefreshView)
+    SwipeRefreshLayout pullToRefreshView;
     private ACache aCache = ACache.get(MyApplication.getAppContext());
-    private ListView newsListView;
-    private SwipeRefreshLayout pullToRefreshView;//下拉刷新控件
     private View loadMoreView;//上拉加载更多控件
     private LinearLayout footerProgressLayout;
     private View rootView;//Fragment的界面
     private String fragmentName;//每个fragmentTab的名字
-    private String newsListURL;//缺少当前页编号参数的新闻列表URL
     private int currentPage;//分页加载的当前页编号
     private NewsListAdapter newsListAdapter;
     private List<News> newsList;//
-    private ProgressBar progressBar;
     private TextView loadToLastTextView;
     private Intent intent;
     private String category;
@@ -60,22 +64,26 @@ public class NewsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_news_list, container, false);
+        ButterKnife.bind(this, rootView);
         init();
         initView();
         initRefresh();
-//        getNews();
-        loadData();
+        List<News> tempList = (List<News>) aCache.getAsObject(fragmentName + currentPage);
+        if (tempList == null) {
+            getNews();
+        } else {
+            loadData(tempList);
+        }
         return rootView;
     }
 
     /**
-     * 初始化新闻列表
+     * 初始化
      */
     private void init() {
         Bundle bundle = getArguments();
         fragmentName = bundle.getString("fragmentName");
         category = bundle.getString("newsCategoryPath");
-        newsListURL = MyApplication.newsListBaseURL + "?category=" + bundle.getString("newsCategoryPath") + "&page=";
         currentPage = 0;
         newsList = new ArrayList<>();
         newsListAdapter = new NewsListAdapter(NewsListFragment.this.getActivity());
@@ -85,13 +93,10 @@ public class NewsListFragment extends Fragment {
      * 初始化布局控件
      */
     private void initView() {
-        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
-        newsListView = (ListView) rootView.findViewById(R.id.newsListView);
         loadMoreView = getActivity().getLayoutInflater().inflate(R.layout.item_load_more, null);
         loadToLastTextView = (TextView) loadMoreView.findViewById(R.id.load_to_last_textView);
         footerProgressLayout = (LinearLayout) loadMoreView.findViewById(R.id.footer_progress_layout);
         newsListView.addFooterView(loadMoreView);
-        pullToRefreshView = (SwipeRefreshLayout) rootView.findViewById(R.id.pullToRefreshView);
         newsListView.setOnScrollListener(new ScrollListener());//上拉加载
         /*监听listView*/
         newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -130,23 +135,6 @@ public class NewsListFragment extends Fragment {
         });
     }
 
-    private void loadData() {
-        List<News> tempList = (List<News>) aCache.getAsObject(newsListURL);
-        if (tempList == null) {//如果缓存没有
-            getNews();
-        } else {
-            newsList.addAll(tempList);
-            progressBar.setVisibility(View.GONE);
-            newsListAdapter.addItem(newsList);
-            if (currentPage == 0) {
-                newsListView.setAdapter(newsListAdapter);
-            } else {
-                newsListAdapter.notifyDataSetChanged();//更新列表视图
-            }
-            currentPage++;
-        }
-    }
-
 
     /**
      * 获得新闻列表信息
@@ -165,9 +153,9 @@ public class NewsListFragment extends Fragment {
                         loadToLastTextView.setVisibility(View.VISIBLE);
                     } else {
                         if (currentPage == 0) {
-                            aCache.put(newsListURL, (Serializable) tempList);//缓存第一页的数据
+                            aCache.put(fragmentName + currentPage, (Serializable) tempList);//缓存第一页的数据
                         }
-                        loadData();
+                        loadData(tempList);
                     }
                 } else {
                     ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
@@ -187,6 +175,20 @@ public class NewsListFragment extends Fragment {
 
     }
 
+    /**
+     * 填充数据
+     */
+    private void loadData(List<News> tempList) {
+        newsList.addAll(tempList);
+        progressBar.setVisibility(View.GONE);
+        newsListAdapter.addItem(newsList);
+        if (currentPage == 0) {
+            newsListView.setAdapter(newsListAdapter);
+        } else {
+            newsListAdapter.notifyDataSetChanged();
+        }
+        currentPage++;
+    }
 
     /**
      * listView的滑动监听器

@@ -50,6 +50,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
     compile 'com.android.support:design:24.2.1'
+    //小型异步请求库，用于发送短信验证码
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'me.drakeet.materialdialog:library:1.3.1'
     compile 'com.github.ashqal:MD360Player4Android:2.0.4.beta'

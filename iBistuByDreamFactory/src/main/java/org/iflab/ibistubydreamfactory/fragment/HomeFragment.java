@@ -22,24 +22,28 @@ import org.iflab.ibistubydreamfactory.models.HomeItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * 绘制GridView
  */
 public class HomeFragment extends Fragment {
-    private GridView gridView;//主界面宫格
+    @BindView(R.id.gridView_home)
+    GridView gridViewHome;
     private List<HomeItem> modules;//存放所有模块的列表
     private View rootView;//fragment的主界面
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, rootView);
         initGridView();
         return rootView;
 
     }
 
     public void initGridView() {
-        gridView = (GridView) rootView.findViewById(R.id.gridView_home);
         modules = new ArrayList<>();
         modules.add(new HomeItem(R.drawable.ic_module_news, "新闻", NewsActivity.class));
         modules.add(new HomeItem(R.drawable.ic_module_yellowpage, "黄页", YellowPageActivity.class));
@@ -54,9 +58,9 @@ public class HomeFragment extends Fragment {
         //        modules.add(new HomeItem(R.drawable.classroom, "教室", ClassRoomActivity.class));
         //        modules.add(new HomeItem(R.drawable.grade, "成绩", GradeActivity.class));
 
-        gridView.setAdapter(new HomeAdapter(modules, HomeFragment.this.getActivity()));
+        gridViewHome.setAdapter(new HomeAdapter(modules, HomeFragment.this.getActivity()));
 
-        gridView.setOnItemClickListener(new MyItemListener());
+        gridViewHome.setOnItemClickListener(new MyItemListener());
 
 
     }
