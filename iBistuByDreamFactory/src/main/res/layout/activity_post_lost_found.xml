@@ -37,7 +37,7 @@
                 android:gravity="start|top"
                 android:hint="描述："
                 android:inputType="textMultiLine"
-                android:maxLines="20"
+                android:maxLines="10"
                 android:textSize="18sp"
                 />
 

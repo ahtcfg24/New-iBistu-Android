@@ -10,8 +10,8 @@ android {
         applicationId "org.iflab.ibistubydreamfactory"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 7
-        versionName "1.07"
+        versionCode 8
+        versionName "1.08"
     }
     buildTypes {
         release {
@@ -41,17 +41,22 @@ android {
 
 }
 
+repositories {
+    flatDir {
+        dirs 'libs' //就是你放aar的目录地址
+    }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-
     compile 'com.yalantis:contextmenu:1.0.6'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
     compile 'com.android.support:design:24.2.1'
     //小型异步请求库，用于发送短信验证码
-    compile 'com.loopj.android:android-async-http:1.4.9'
+//    compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'me.drakeet.materialdialog:library:1.3.1'
     compile 'com.github.ashqal:MD360Player4Android:2.0.4.beta'
     compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.4.5'
@@ -72,5 +77,6 @@ dependencies {
     compile 'com.lzy.widget:ninegridview:0.2.0'
 //CardView
     compile 'com.android.support:cardview-v7:24.2.1'
-
+    //mob短信验证
+    compile name: 'SMSSDK-2.1.2', ext: 'aar'
 }

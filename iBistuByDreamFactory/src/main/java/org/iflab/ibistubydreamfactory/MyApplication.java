@@ -17,6 +17,8 @@ import com.lzy.ninegrid.NineGridView;
  * 代表整个APP的Application类，程序中首先加载，需要在AndroidManifest中注册
  */
 public class MyApplication extends Application {
+    public static final String SMS_APP_KEY = "17dca343d1024";//mob短信验证必须的KEY
+    public static final String SMS_APP_SECRET = "48ee667c95945354c19337dc8a8608d6";//mob短信验证必须的密钥
     public static String INSTANCE_URL;//DreamFactory的提供的接口地址
     public static String API_KEY;//DreamFactory接口的key，可在DreamFactory控制台的apps标签下找到
     public static String APPSECRET;//云信短信要求的AppSecret

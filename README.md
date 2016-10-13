@@ -2,12 +2,11 @@
 
 
 # 前言
----
 
- * 本文档提供的接口使用DreamFactory生成，默认返回json数据。
+#### 本文档提供的接口（以以下简称接口）使用DreamFactory生成，默认返回json数据。如果想得到xml格式的数据，也可以通过在接口后面添加可选参数`accept=application/xml`转变成xml结构的数据
 
-  - 返回的json结构：
- ```
+- 返回的json结构：
+```
  {
       "resource" :  [
                     { 对象1 } ,  
@@ -16,22 +15,17 @@
                     { 对象n }
               ]
  }
- ```
- * 本文档提供的接口除特非特别注明不需添加header，否则其它接口均需要添加`X-DreamFactory-Api-Key`和`X-DreamFactory-Session-Token`。以上不需token的接口即使添加了token也会自动忽略`X-DreamFactory-Session-Token`。
+```
+#### 接口除特别注明不需添加header，否则默认添加两个header参数：`X-DreamFactory-Api-Key`和`X-DreamFactory-Session-Token`。部分不需token的接口即使添加了token也会自动忽略`X-DreamFactory-Session-Token`。这两个header参数分别等价于URL参数`api_key`和`session_token`。
 
-  - 请求头及其格式为：
- > "X-DreamFactory-Api-Key", "dreamfactory提供的apikey"
+- 请求头及其格式为：`"X-DreamFactory-Api-Key", "dreamfactory提供的apikey"`，
+`"X-DreamFactory-Session-Token","当前用户登录后获取到的token"`
 
-    > "X-DreamFactory-Session-Token","当前登录获取到的token"
+- 或者以URL参数的形式添加api_key和session_token代替请求头进行接口访问。例如：`http://api.iflab.org/api/v2/ibistu/_table/module_map?api_key=dreamfactory提供的apikey&session_token=当前用户登录后获取到的token`
+#### 接口均可以通过添加可选参数`include_count=true`以获得包含数据对象总数的json数据。例如：
 
-  - 也可以不使用请求头，直接以URL参数的形式添加api_key和session_token代替请求头进行接口访问。例如：
- > http://api.iflab.org/api/v2/ibistu/_table/module_map?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M
-
- * 本文档提供的接口均可以通过添加可选参数`include_count=true`以获得包含数据对象总数的json数据。例如：
- > http://api.iflab.org/api/v2/ibistu/_table/module_map?include_count=true&api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M
-
-  - 返回值结构：
- ```
+- 返回值结构：
+```
  {
       "resource" :  [
                     { 对象1 } ,  
@@ -41,22 +35,20 @@
               ] ,
        "meta" :  { "count" : 对象数量n }
  }
- ```
- * 本文档提供的接口也可以通过添加可选参数`accept=application/xml`转变成xml结构的数据
- * 本文档提供的接口的返回值均为示例数据，数据数量有删减，仅用于说明结构，具体数据请自行获取测试
+```
+#### 接口的返回值均为示例数据，数据数量有删减，仅用于说明结构，具体数据请自行获取测试
 
 ---
 # 正文
----
 ## 升级更新(安卓)
 
- * 检查更新（只需添加header:`X-DreamFactory-Api-Key`）
+#### 检查更新（只需添加header:`X-DreamFactory-Api-Key`）
 
-    - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_update/1`
-    - 请求方法：get
-    - 参数：无
-    - 示例返回值
-    ```
+- 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_update/1`
+- 请求方法：get
+- 参数：无
+- 示例返回值
+   ```
     {
         "id": 1,
         "name": "iBistu.apk",
@@ -67,27 +59,27 @@
         "updateTime": "2016-08-21 15:06:11",
         "updateSize": 6.38
     }
-    ```
+   ```
 
- * 下载更新（只需添加header:`X-DreamFactory-Api-Key`）
+#### 下载更新（只需添加header:`X-DreamFactory-Api-Key`）
 
-    - 接口：`http://api.iflab.org/api/v2/{检查更新返回值中的path字段}{name字段}`
-    - 请求方法：get
-    - 参数：无
-    - 示例URL：`http://api.iflab.org/api/v2/files/ibistu/update/Android/iBistu.apk`
-    - 示例返回值：iBistu.apk
+- 接口：`http://api.iflab.org/api/v2/{检查更新返回值中的path字段}{name字段}`
+- 请求方法：get
+- 参数：无
+- 示例URL：`http://api.iflab.org/api/v2/files/ibistu/update/Android/iBistu.apk`
+- 示例返回值：iBistu.apk
 
 
 ## 用户模块
 
- * 注册（只需添加header:`X-DreamFactory-Api-Key`）
+#### 注册（只需添加header:`X-DreamFactory-Api-Key`）
 
-    - 接口：`http://api.iflab.org/api/v2/user/register`
-    - 请求方法：post
-    - 请求体：
-      + name、first_name、last_name是可选参数
-      + email字段必须符合邮箱格式
-    ```
+- 接口：`http://api.iflab.org/api/v2/user/register`
+- 请求方法：post
+- 请求体：
+ + name、first_name、last_name是可选参数
+ + email字段必须符合邮箱格式
+   ```
     {
       "email": "testuser@test.com",
       "password":"testuser",
@@ -96,30 +88,30 @@
       "first_name": "test",
       "last_name": "user"
     }
-    ```
-    - 示例返回值：
-    ```
+   ```
+- 示例返回值：
+   ```
     {
     "success":true
     }
-    ```
- * 注册验证（无需添加本文档的header）
+   ```
+#### 注册验证（无需添加本文档的header）
 
-    - 注册验证使用网易云信对手机进行短信验证，详见[官方文档](http://dev.netease.im/docs?doc=server_sms)
- * 登录（只需添加header:`X-DreamFactory-Api-Key`）
+- 注册验证使用网易云信对手机进行短信验证，详见[官方文档](http://dev.netease.im/docs?doc=server_sms)
+#### 登录（只需添加header:`X-DreamFactory-Api-Key`）
 
-    - 接口：`http://api.iflab.org/api/v2/user/session?remember_m=true`
-    - 请求方法：post
-    - 请求体：
-    ```
+- 接口：`http://api.iflab.org/api/v2/user/session?remember_m=true`
+- 请求方法：post
+- 请求体：
+   ```
     {
     "email": "testuser@test.com",
     "password":"testuser"
     }
-    ```
-    - 示例返回值：
-      + 此处返回的session_token默认有效期为24小时，过期后必须刷新token，否则无法使用。
-    ```
+   ```
+- 示例返回值：
+ + 此处返回的session_token默认有效期为24小时，过期后必须刷新token，否则无法使用。
+   ```
     {
         "session_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M",
         "session_id": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5LCJ1c2VyX2lkIjoyOSwiZW1haWwiOiJ0ZXN0dXNlckB0ZXN0LmNvbSIsImZvcmV2ZXIiOnRydWUsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTU0MDI4MCwiZXhwIjoxNDcxNTQzODgwLCJuYmYiOjE0NzE1NDAyODAsImp0aSI6IjFlOWI3ZTBlMDZjYzcwMDg0OGRhM2NkNDA1OTBjOGYzIn0.4I_BVND1GGp4v8aSO2_liMBCwDpBSSTgbO1oD_zbl8M",
@@ -134,63 +126,63 @@
         "role": "RegisterRole",
         "role_id": 5
     }
-    ```
- * 退出登录：
+   ```
+#### 退出登录：
 
-    - 接口：`http://api.iflab.org/api/v2/user/session`
-    - 请求方法：delete
-    - 参数：无
-    - 示例返回值：
-    ```
+- 接口：`http://api.iflab.org/api/v2/user/session`
+- 请求方法：delete
+- 参数：无
+- 示例返回值：
+   ```
     {
         "success": true
     }
-    ```
- * 修改密码：
+   ```
+#### 修改密码：
 
-    - 接口：`http://api.iflab.org/api/v2/user/password`
-    - 请求方法：post
-    - 请求体：
-    ```
+- 接口：`http://api.iflab.org/api/v2/user/password`
+- 请求方法：post
+- 请求体：
+   ```
     {
       "old_password": "testuser",
       "new_password": "newtestuser",
       "email": "testuser@test.com"
     }
-    ```
-    - 示例返回值：
-    ```
+   ```
+- 示例返回值：
+   ```
     {
       "success": true
     }
-    ```
- * 请求重置密码：（只需添加header:`X-DreamFactory-Api-Key`）
+   ```
+#### 请求重置密码：（只需添加header:`X-DreamFactory-Api-Key`）
 
-    - 接口：`http://api.iflab.org/api/v2/user/password?reset=true`
-    - 请求方法：post
-    - 请求体：
-      + 此处email值必须是当前登录用户的email
+- 接口：`http://api.iflab.org/api/v2/user/password?reset=true`
+- 请求方法：post
+- 请求体：
+ + 此处email值必须是当前登录用户的email
 
-    ```
+   ```
     {
       "email": "testuser@test.com"
     }
-    ```
-    - 示例返回值：
-      + 该请求成功发出后就会往该用户的邮箱里发送重置密码邮件
-    ```
+   ```
+- 示例返回值：
+ + 该请求成功发出后就会往该用户的邮箱里发送重置密码邮件
+   ```
     {
       "success": true
     }
-    ```
- * 刷新token：
+   ```
+#### 刷新token：
 
-    - 接口：`http://api.iflab.org/api/v2/user/session`
-    - 请求方法：put
-    - 参数：无
-    - 示例：刷新当前token（此处参数值为登录后获取到的token）：`http://104.155.211.143/api/v2/user/session`
-    - 示例返回值：
-    ```
+- 接口：`http://api.iflab.org/api/v2/user/session`
+- 请求方法：put
+- 参数：无
+- 示例：刷新当前token（此处参数值为登录后获取到的token）：`http://104.155.211.143/api/v2/user/session`
+- 示例返回值：
+   ```
     {
     "session_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQzNzg0NSwiZXhwIjoxNDcxNDQxNjcyLCJuYmYiOjE0NzE0MzgwNzIsImp0aSI6ImJkZTQ3NzA0NmQ2M2FmMWYzZDJiOTVkMjJjZjEzZWZhIn0.AnqB40vdntLkxyD6WHtes7DZEQ8wsrCtpWq9aXC8MzE",
     "session_id": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExLCJ1c2VyX2lkIjoxMSwiZW1haWwiOiJqZG9lQGV4YW1wbGUuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cLzEwNC4xNTUuMjExLjE0M1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTQ3MTQzNzg0NSwiZXhwIjoxNDcxNDQxNjcyLCJuYmYiOjE0NzE0MzgwNzIsImp0aSI6ImJkZTQ3NzA0NmQ2M2FmMWYzZDJiOTVkMjJjZjEzZWZhIn0.AnqB40vdntLkxyD6WHtes7DZEQ8wsrCtpWq9aXC8MzE",
@@ -206,20 +198,20 @@
     "role_id": 5
     }
 
-    ```
+   ```
 
 
 
 
 ## 关于模块
 
- * 获取iBistu相关的介绍数据
+#### 获取iBistu相关的介绍数据
 
-   - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_about`
-   - 请求方法：get
-   - 参数：无
-   - 示例返回值：
-  ```
+ - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_about`
+ - 请求方法：get
+ - 参数：无
+ - 示例返回值：
+ ```
     {
   "resource": [
     {
@@ -239,19 +231,19 @@
     }
   ]
 }
-  ```
+ ```
 
 
 
 ## 班车模块
 
- * 获取班车数据
+#### 获取班车数据
 
-   - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_bus`
-   - 请求方法：get
-   - 参数：无
-   - 示例返回值：
- ```
+ - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_bus`
+ - 请求方法：get
+ - 参数：无
+ - 示例返回值：
+```
  {
   "resource": [
     {
@@ -292,18 +284,18 @@
     }
   ]
 }
- ```
+```
 
 
 ## 黄页模块
 
- * 获取黄页部门列表数据
+#### 获取黄页部门列表数据
 
-   - 接口：`ibistu/_table/module_yellowpage?filter=isDisplay%3D1&offset=1&group=department`
-   - 请求方法：get
-   - 参数：无
-   - 示例返回值：
- ```
+ - 接口：`ibistu/_table/module_yellowpage?filter=isDisplay%3D1&offset=1&group=department`
+ - 请求方法：get
+ - 参数：无
+ - 示例返回值：
+```
   {
   "resource": [
     {
@@ -336,18 +328,18 @@
     }
   ]
 }
- ```
- * 获取黄页某一部门下的电话号码数据
+```
+#### 获取黄页某一部门下的电话号码数据
 
-   - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_yellowpage`
-   - 请求方法：get
-   - 参数：
+ - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_yellowpage`
+ - 请求方法：get
+ - 参数：
 
-      * `offset`：固定参数，值为`1`
-      * `filter`：固定前缀`department=`，值为黄页接口1返回的数据中的`department`字段值
-   - 示例：获取研究生工作办公室的电话号码：（此处参数值为：`department=10`）：`http://api.iflab.org/api/v2/ibistu/_table/module_yellowpage?offset=1&filter=department=10`
-   - 示例返回值：
- ```
+     #### `offset`：固定参数，值为`1`
+     #### `filter`：固定前缀`department=`，值为黄页接口1返回的数据中的`department`字段值
+ - 示例：获取研究生工作办公室的电话号码：（此处参数值为：`department=10`）：`http://api.iflab.org/api/v2/ibistu/_table/module_yellowpage?offset=1&filter=department=10`
+ - 示例返回值：
+```
 {
   "resource": [
     {
@@ -373,18 +365,18 @@
     }
   ]
 }
- ```
+```
 
 
 ## 地图模块
 
- * 获取校区位置数据
+#### 获取校区位置数据
 
-   - 接口: `http://api.iflab.org/api/v2/ibistu/_table/module_map`
-   - 请求方法：get
-   - 参数：无
-   - 示例返回值：
-  ```
+ - 接口: `http://api.iflab.org/api/v2/ibistu/_table/module_map`
+ - 请求方法：get
+ - 参数：无
+ - 示例返回值：
+ ```
   {
   "resource": [
     {
@@ -416,7 +408,7 @@
     }
   ]
 }
-  ```
+ ```
 
 
 ## 模块列表
@@ -426,10 +418,10 @@
 
 ## 错误接口
 
- * 错误接口指接口访问失败时返回的json数据
+#### 错误接口指接口访问失败时返回的json数据
 
-   - 返回值结构：
-  ```
+ - 返回值结构：
+ ```
   {
     "error": {
       "context": 产生异常的上下文环境,
@@ -437,9 +429,9 @@
       "code": 异常状态码
     }
   }
-  ```
-   - 关于json的处理可参考DreamFacotory官方Demo中的处理流程：
-      + [iOS-Objective-C](https://github.com/dreamfactorysoftware/ios-sdk)
-      + [iOS-Swift](https://github.com/dreamfactorysoftware/ios-swift-sdk)
-      + [ReactJS](https://github.com/dreamfactorysoftware/reactjs-sdk)
-      + [Android](https://github.com/dreamfactorysoftware/android-sdk)
+ ```
+ - 关于json的处理可参考DreamFacotory官方Demo中的处理流程：
+ + [iOS-Objective-C](https://github.com/dreamfactorysoftware/ios-sdk)
+ + [iOS-Swift](https://github.com/dreamfactorysoftware/ios-swift-sdk)
+ + [ReactJS](https://github.com/dreamfactorysoftware/reactjs-sdk)
+ + [Android](https://github.com/dreamfactorysoftware/android-sdk)

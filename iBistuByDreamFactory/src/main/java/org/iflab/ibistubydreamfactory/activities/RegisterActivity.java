@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,11 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
@@ -30,22 +27,25 @@ import org.iflab.ibistubydreamfactory.models.SuccessModel;
 import org.iflab.ibistubydreamfactory.utils.AndroidUtils;
 import org.iflab.ibistubydreamfactory.utils.MyCountTimer;
 import org.iflab.ibistubydreamfactory.utils.RegexConfirmUtils;
-import org.iflab.ibistubydreamfactory.utils.StringUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cz.msebera.android.httpclient.Header;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- *
+ * 注册Activity
  */
 public class RegisterActivity extends AppCompatActivity {
 
+    //    private AsyncHttpClient client;
+    private static final int CONFIRM_SUCCESS = 1;//代表验证码验证成功的消息，用于在验证短信的线程中传递消息给主线程
+    private static final int CONFIRM_FAIL = 0;//代表验证码验证失败
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.phone_input)
@@ -65,11 +65,70 @@ public class RegisterActivity extends AppCompatActivity {
     private AuthAPI authAPI;
     private Bundle bundle;
     private String phone;
-    private String password;
     private String email;
-    private String confirmPhone;//进行短信验证的手机号
-    private AsyncHttpClient client;
-
+    private String password;
+    private String confirmPhone;
+    /**
+     * 用来处理验证码校验成功后的事情的线程
+     */
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            register(email, password, phone);
+        }
+    };
+    /**
+     * 用来操作主线程（UI线程）中的控件的handler，它属于本线程
+     */
+    private Handler handlerOfUI = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.arg1) {
+                case CONFIRM_SUCCESS:
+                    System.out.println("msg.arg1" + msg.arg1);
+                    handlerOfUI.post(runnable);//验证码是对的
+                    break;
+                case CONFIRM_FAIL:
+                    progressBar.setVisibility(View.GONE);//让进度加载框隐藏
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    /**
+     * mob短信校验sdk提供的事件回调
+     */
+    private EventHandler eventHandler = new EventHandler() {
+        @Override
+        public void afterEvent(int event, int result, Object data) {
+            Message msg = new Message();//创建一个消息对象，用于放置消息
+            if (result == SMSSDK.RESULT_COMPLETE) {//回调完成
+                if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {//提交的验证码是正确的
+                    msg.arg1 = CONFIRM_SUCCESS;//校验成功
+                    Log.i("验证码正确：", data + "");
+                } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {//成功发送验证码
+                    Snackbar.make(parentView, "验证码发送成功，请在十分钟内验证，60秒后可重新发送！", Snackbar.LENGTH_LONG)
+                            .show();
+                    Log.i("验证码已经发送到手机", data + "");
+                } else {
+                    ((Throwable) data).printStackTrace();
+                    Log.i("其他事件：", data + "");
+                }
+            } else {//回调失败
+                msg.arg1 = CONFIRM_FAIL;//校验失败
+                try {
+                    JSONObject jsonObject = new JSONObject(((Throwable) data).getMessage());
+                    Snackbar.make(parentView, jsonObject.getString("detail"), Snackbar.LENGTH_LONG)
+                            .show();//输出失败原因
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.e("回调失败", ((Throwable) data).getMessage());
+            }
+            handlerOfUI.sendMessage(msg);//把短信验证的结果传递给主线程
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
         authAPI = APISource.getInstance().getAPIObject(AuthAPI.class);
         bundle = new Bundle();
         fragmentManager = getFragmentManager();
-        initSMSConfirmClient();
+        initSMSConfirm();
 
 
     }
@@ -97,20 +156,29 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * 初始化短信校验联网的Client
+     * 初始化网易云信短信校验联网的Client
      */
-    private void initSMSConfirmClient() {
-        client = new AsyncHttpClient();
-        client.addHeader("AppKey", MyApplication.APPKEY);
-        String nonce = StringUtil.getRandomString(20);
-        String curTime = StringUtil.getUTCSecond();
-        client.addHeader("Nonce", nonce);
-        client.addHeader("CurTime", curTime);
-        client.addHeader("CheckSum", StringUtil.getCheckSum(MyApplication.APPSECRET, nonce, curTime));
+//    private void initSMSConfirm() {
+//        client = new AsyncHttpClient();
+//        client.addHeader("AppKey", MyApplication.APPKEY);
+//        String nonce = StringUtil.getRandomString(20);
+//        String curTime = StringUtil.getUTCSecond();
+//        client.addHeader("Nonce", nonce);
+//        client.addHeader("CurTime", curTime);
+//        client.addHeader("CheckSum", StringUtil.getCheckSum(MyApplication.APPSECRET, nonce, curTime));
+//    }
+
+    /**
+     * 初始化mob短信验证
+     */
+    private void initSMSConfirm() {
+        SMSSDK.initSDK(this, MyApplication.SMS_APP_KEY, MyApplication.SMS_APP_SECRET);
+        SMSSDK.registerEventHandler(eventHandler); //注册短信回调
     }
 
-
-
+    /**
+     * 注册按钮点击事件
+     */
     public void onButtonRegisterClick(View view) {
         AndroidUtils.hideSoftInput(RegisterActivity.this);
         phone = phoneInput.getText().toString();
@@ -135,43 +203,50 @@ public class RegisterActivity extends AppCompatActivity {
             Snackbar.make(parentView, "该手机号还没有验证！", Snackbar.LENGTH_SHORT).show();
         } else {
             progressBar.setVisibility(View.VISIBLE);
-            RequestParams params = new RequestParams();
-            params.add("mobile", phone);
-            params.add("code", confirmCode);
-            client.post(MyApplication.SMSCONFIRMURL + "verifycode.action", params, new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(new String(responseBody));
-                        if (jsonObject.getString("code").equals("200")) {
-                            Toast.makeText(RegisterActivity.this, "验证成功!", Toast.LENGTH_SHORT)
-                                 .show();
-                            register(email, password, phone);
-                        } else if (jsonObject.getString("code").equals("413")) {//验证码错误
-                            progressBar.setVisibility(View.GONE);
-                            Snackbar.make(parentView, "验证码错误，请重新获取！", Snackbar.LENGTH_SHORT).show();
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Snackbar.make(parentView, "校验失败，错误码：" + jsonObject.getString("code"), Snackbar.LENGTH_SHORT)
-                                    .show();
-                            Log.i("短信错误码", jsonObject.getString("code"));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                    Snackbar.make(parentView, "发送验证码失败：" + error.getMessage(), Snackbar.LENGTH_LONG)
-                            .show();
-
-                }
-            });
+            SMSSDK.submitVerificationCode("86", phone, confirmCode);//向mob短信后台提交输入的验证码，验证是否正确
+//            sendConfirmCode(confirmCode);
         }
     }
+
+    /**
+     * 向服务器提交短信验证码
+     */
+//    private void sendConfirmCode(String confirmCode) {
+//        RequestParams params = new RequestParams();
+//        params.add("mobile", phone);
+//        params.add("code", confirmCode);
+//        client.post(MyApplication.SMSCONFIRMURL + "verifycode.action", params, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                try {
+//                    JSONObject jsonObject = new JSONObject(new String(responseBody));
+//                    if (jsonObject.getString("code").equals("200")) {
+//                        Toast.makeText(RegisterActivity.this, "验证成功!", Toast.LENGTH_SHORT).show();
+//                        register(email, password, phone);
+//                    } else if (jsonObject.getString("code").equals("413")) {//验证码错误
+//                        progressBar.setVisibility(View.GONE);
+//                        Snackbar.make(parentView, "验证码错误，请重新获取！", Snackbar.LENGTH_SHORT).show();
+//                    } else {
+//                        progressBar.setVisibility(View.GONE);
+//                        Snackbar.make(parentView, "校验失败，错误码：" + jsonObject.getString("code"), Snackbar.LENGTH_SHORT)
+//                                .show();
+//                        Log.i("短信错误码", jsonObject.getString("code"));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//                Snackbar.make(parentView, "发送验证码失败：" + error.getMessage(), Snackbar.LENGTH_LONG)
+//                        .show();
+//
+//            }
+//        });
+//    }
 
     /**
      * 发起注册请求
@@ -184,7 +259,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         Call<SuccessModel> call = authAPI.register(request);
         call.enqueue(new Callback<SuccessModel>() {
-
             @Override
             public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
                 progressBar.setVisibility(View.GONE);
@@ -205,7 +279,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SuccessModel> call, Throwable t) {
-
+                progressBar.setVisibility(View.GONE);
+                Snackbar.make(parentView, "注册失败：" + t.getMessage(), Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -225,36 +300,41 @@ public class RegisterActivity extends AppCompatActivity {
             Snackbar.make(parentView, "请填写正确的手机号！", Snackbar.LENGTH_SHORT).show();
         } else {
             new MyCountTimer(60000, 1000, sendCodeButton, RegisterActivity.this).start();//发送后即显示重新获取验证码倒计时
-            client.post(MyApplication.SMSCONFIRMURL + "sendcode.action", new RequestParams("mobile", confirmPhone), new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(new String(responseBody));
-                        if (jsonObject.getString("code").equals("200")) {
-                            Snackbar.make(parentView, "验证码发送成功，请在十分钟内验证，60秒后可重新发送！", Snackbar.LENGTH_LONG)
-                                    .show();
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Snackbar.make(parentView, "未知错误，错误码：" + jsonObject.getString("code"), Snackbar.LENGTH_SHORT)
-                                    .show();
-                            Log.i("短信错误码", jsonObject.getString("code"));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                    System.out.println(new String(responseBody));
-                    Snackbar.make(parentView, "发送验证码失败：" + error.getMessage(), Snackbar.LENGTH_LONG)
-                            .show();
-
-                }
-            });
+            SMSSDK.getVerificationCode("86", confirmPhone);//向填入的手机号发送验证码
+//            getSMSConfirmCode();
         }
     }
+
+//    private void getSMSConfirmCode(){
+//        client.post(MyApplication.SMSCONFIRMURL + "sendcode.action", new RequestParams("mobile", confirmPhone), new AsyncHttpResponseHandler() {
+//                @Override
+//                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(new String(responseBody));
+//                        if (jsonObject.getString("code").equals("200")) {
+//                            Snackbar.make(parentView, "验证码发送成功，请在十分钟内验证，60秒后可重新发送！", Snackbar.LENGTH_LONG)
+//                                    .show();
+//                        } else {
+//                            progressBar.setVisibility(View.GONE);
+//                            Snackbar.make(parentView, "未知错误，错误码：" + jsonObject.getString("code"), Snackbar.LENGTH_SHORT)
+//                                    .show();
+//                            Log.i("短信错误码", jsonObject.getString("code"));
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//                    System.out.println(new String(responseBody));
+//                    Snackbar.make(parentView, "发送验证码失败：" + error.getMessage(), Snackbar.LENGTH_LONG)
+//                            .show();
+//
+//                }
+//            });
+//    }
 
     /**
      * 跳转到登录页面
