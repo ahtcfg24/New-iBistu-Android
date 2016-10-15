@@ -17,7 +17,6 @@ import org.iflab.ibistubydreamfactory.apis.APISource;
 import org.iflab.ibistubydreamfactory.apis.AuthAPI;
 import org.iflab.ibistubydreamfactory.models.ChangePasswordRequestBody;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
-import org.iflab.ibistubydreamfactory.models.SuccessModel;
 import org.iflab.ibistubydreamfactory.models.User;
 import org.iflab.ibistubydreamfactory.utils.ACache;
 import org.iflab.ibistubydreamfactory.utils.ClearLocalDataUtils;
@@ -25,6 +24,7 @@ import org.iflab.ibistubydreamfactory.utils.RegexConfirmUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,10 +63,10 @@ public class UserCenterActivity extends AppCompatActivity {
      */
     public void onButtonLogoutClick(View view) {
         progressBar.setVisibility(View.VISIBLE);
-        Call<SuccessModel> call = authAPI.logout();
-        call.enqueue(new Callback<SuccessModel>() {
+        Call<ResponseBody> call = authAPI.logout();
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {//如果成功
                     logout();
@@ -77,7 +77,7 @@ public class UserCenterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SuccessModel> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Snackbar.make(parentView, "退出失败：" + t.getMessage(), Snackbar.LENGTH_LONG).show();
 
@@ -136,11 +136,11 @@ public class UserCenterActivity extends AppCompatActivity {
             request.setEmail(user.getEmail());
             request.setOld_password(oldPassword);
             request.setNew_password(newPassword);
-            Call<SuccessModel> call = authAPI.changePassword(request);
-            call.enqueue(new Callback<SuccessModel>() {
+            Call<ResponseBody> call = authAPI.changePassword(request);
+            call.enqueue(new Callback<ResponseBody>() {
 
                 @Override
-                public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     progressBar.setVisibility(View.GONE);
                     if (response.isSuccessful()) {//如果成功
                         Toast.makeText(UserCenterActivity.this, "密码修改成功,请重新登录", Toast.LENGTH_SHORT)
@@ -153,7 +153,7 @@ public class UserCenterActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<SuccessModel> call, Throwable t) {
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
                     Snackbar.make(parentView, "密码修改失败：" + t.getMessage(), Snackbar.LENGTH_LONG)
                             .show();

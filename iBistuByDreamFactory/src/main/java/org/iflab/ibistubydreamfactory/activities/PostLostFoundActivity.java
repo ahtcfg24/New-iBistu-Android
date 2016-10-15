@@ -31,7 +31,7 @@ import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.LostFound;
 import org.iflab.ibistubydreamfactory.models.LostFoundImageURL;
 import org.iflab.ibistubydreamfactory.models.UploadFileRequestBody;
-import org.iflab.ibistubydreamfactory.models.UploadSuccessModel;
+import org.iflab.ibistubydreamfactory.models.UploadResult;
 import org.iflab.ibistubydreamfactory.models.User;
 import org.iflab.ibistubydreamfactory.utils.ACache;
 import org.iflab.ibistubydreamfactory.utils.AndroidUtils;
@@ -54,6 +54,7 @@ import retrofit2.Response;
 
 public class PostLostFoundActivity extends AppCompatActivity {
 
+    private static final int PERMISSION_CODE_STORAGE = 002;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.edit_content)
@@ -63,14 +64,13 @@ public class PostLostFoundActivity extends AppCompatActivity {
     ArrayList<String> selectedPhotos = new ArrayList<>();
     @BindView(R.id.edit_contact)
     EditText editPhone;
-    private static final int PERMISSION_CODE_STORAGE = 002;
     private View parentView;
     private String details, phone;
     private LostFoundAPI lostFoundAPI;
     private PhotoSelectorAdapter photoSelectorAdapter;
     private ACache aCache = ACache.get(MyApplication.getAppContext());
     private User user;
-    private UploadSuccessModel uploadSuccessModel;
+    private UploadResult uploadResult;
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         @Override
@@ -80,7 +80,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
             lostFound.setPhone(phone);
             lostFound.setAuthor(user.getName());
             List<LostFoundImageURL> imgUrlList = new ArrayList<>();
-            for (UploadSuccessModel.UploadedResource resource : uploadSuccessModel.getResource()) {
+            for (UploadResult.UploadedResource resource : uploadResult.getResource()) {
                 imgUrlList.add(new LostFoundImageURL("files/" + resource
                         .getPath()));
             }
@@ -210,12 +210,12 @@ public class PostLostFoundActivity extends AppCompatActivity {
                     }
                     UploadFileRequestBody uploadFileRequestBody = new UploadFileRequestBody();
                     uploadFileRequestBody.setResource(uploadResourceList);
-                    Call<UploadSuccessModel> call = lostFoundAPI.uploadFile(uploadFileRequestBody);
-                    call.enqueue(new Callback<UploadSuccessModel>() {
+                    Call<UploadResult> call = lostFoundAPI.uploadFile(uploadFileRequestBody);
+                    call.enqueue(new Callback<UploadResult>() {
                         @Override
-                        public void onResponse(Call<UploadSuccessModel> call, Response<UploadSuccessModel> response) {
+                        public void onResponse(Call<UploadResult> call, Response<UploadResult> response) {
                             if (response.isSuccessful()) {//如果成功
-                                uploadSuccessModel = response.body();
+                                uploadResult = response.body();
                                 handler.post(runnable);
                             } else {//失败
                                 ErrorMessage e = APISource.getErrorMessage(response);//解析错误信息
@@ -224,7 +224,7 @@ public class PostLostFoundActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<UploadSuccessModel> call, Throwable t) {
+                        public void onFailure(Call<UploadResult> call, Throwable t) {
                             progressBar.setVisibility(View.GONE);
                             Snackbar.make(parentView, "上传失败：" + t.getMessage(), Snackbar.LENGTH_LONG)
                                     .show();

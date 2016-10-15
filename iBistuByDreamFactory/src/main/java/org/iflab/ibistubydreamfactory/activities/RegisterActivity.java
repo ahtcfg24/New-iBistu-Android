@@ -23,7 +23,6 @@ import org.iflab.ibistubydreamfactory.apis.AuthAPI;
 import org.iflab.ibistubydreamfactory.fragment.LoginFragment;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.RegisterRequestBody;
-import org.iflab.ibistubydreamfactory.models.SuccessModel;
 import org.iflab.ibistubydreamfactory.utils.AndroidUtils;
 import org.iflab.ibistubydreamfactory.utils.MyCountTimer;
 import org.iflab.ibistubydreamfactory.utils.RegexConfirmUtils;
@@ -34,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -257,10 +257,10 @@ public class RegisterActivity extends AppCompatActivity {
         request.setPassword(password);
         request.setPhone(phone);
 
-        Call<SuccessModel> call = authAPI.register(request);
-        call.enqueue(new Callback<SuccessModel>() {
+        Call<ResponseBody> call = authAPI.register(request);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {//如果成功
                     Snackbar.make(parentView, "注册成功", Snackbar.LENGTH_LONG).show();
@@ -278,7 +278,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SuccessModel> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Snackbar.make(parentView, "注册失败：" + t.getMessage(), Snackbar.LENGTH_SHORT).show();
             }

@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.iflab.ibistubydreamfactory.R;
@@ -21,7 +21,7 @@ import java.util.List;
  * @time 23:41
  */
 public class YellowPageDialog extends Dialog {
-    private Button dialButton, insertButton, cancelButton;
+    private ImageButton dialButton, insertButton, cancelButton;
     private TextView titleTextView, numTextView;
     private int position;
     private Context context;
@@ -42,9 +42,9 @@ public class YellowPageDialog extends Dialog {
 
     private void init(String title, String num) {
         setContentView(R.layout.dialog_dial);
-        dialButton = (Button) findViewById(R.id.dial_button);
-        insertButton = (Button) findViewById(R.id.insert_button);
-        cancelButton = (Button) findViewById(R.id.cancel_button);
+        dialButton = (ImageButton) findViewById(R.id.dial_button);
+        insertButton = (ImageButton) findViewById(R.id.insert_button);
+        cancelButton = (ImageButton) findViewById(R.id.cancel_button);
         titleTextView = (TextView) findViewById(R.id.dialog_title_textView);
         numTextView = (TextView) findViewById(R.id.dialog_num_textView);
         titleTextView.setText(title);

@@ -4,7 +4,7 @@ import org.iflab.ibistubydreamfactory.models.LostFound;
 import org.iflab.ibistubydreamfactory.models.Resource;
 import org.iflab.ibistubydreamfactory.models.SetIsFoundRequestBody;
 import org.iflab.ibistubydreamfactory.models.UploadFileRequestBody;
-import org.iflab.ibistubydreamfactory.models.UploadSuccessModel;
+import org.iflab.ibistubydreamfactory.models.UploadResult;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -32,7 +32,7 @@ public interface LostFoundAPI {
      * @param uploadFileRequestBody 要上传的文件请求体，可以多文件上传
      */
     @POST("files/ibistu/lost_found/image/")
-    Call<UploadSuccessModel> uploadFile(@Body UploadFileRequestBody uploadFileRequestBody);
+    Call<UploadResult> uploadFile(@Body UploadFileRequestBody uploadFileRequestBody);
 
     /**
      * 发布新的lostfound

@@ -9,11 +9,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="5"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="20dp"
         >
 
         <TextView
@@ -21,7 +20,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-
             android:text="测试"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
@@ -48,56 +46,36 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
         >
 
-        <Button
-
+        <ImageButton
             android:id="@+id/dial_button"
             android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="3"
-            android:background="#fff"
-            android:text="拨号"
-            android:textColor="#8b8b8b"
-            android:textSize="17sp"/>
-
-        <TextView
-
-            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#8b8b8b"/>
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_call"
+            />
 
-        <Button
 
+        <ImageButton
             android:id="@+id/insert_button"
             android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="4"
-            android:background="#fff"
-            android:text="加入通讯录"
-            android:textColor="#8b8b8b"
-
-            android:textSize="17sp"/>
-
-        <TextView
-
-            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#8b8b8b"/>
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_save"
+            />
 
-        <Button
 
+        <ImageButton
             android:id="@+id/cancel_button"
             android:layout_width="0dp"
-            android:layout_height="100dp"
-
-            android:layout_weight="3"
-            android:background="#fff"
-            android:text="取消"
-            android:textColor="#8b8b8b"
-            android:textSize="17sp"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            />
     </LinearLayout>
 </LinearLayout>

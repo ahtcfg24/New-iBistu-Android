@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
-    android:paddingBottom="4dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:paddingBottom="4dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+    >
 
     <ImageView
         android:id="@+id/imageView_bus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:paddingBottom="4dp"
         android:paddingTop="5dp"
         android:src="@drawable/ic_bus_icon"/>
@@ -18,35 +21,35 @@
         android:id="@+id/textView_busName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imageView_bus"
+        android:layout_toEndOf="@+id/imageView_bus"
         android:paddingTop="5dp"
         android:text="TextView"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/textView_busIntro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView_bus"
-        android:layout_alignLeft="@+id/textView_busName"
+        android:layout_alignStart="@+id/textView_busName"
         android:paddingBottom="4dp"
         android:text="TextView"
-        android:textColor="#CCCCCC" />
+        android:textColor="#CCCCCC"/>
 
     <TextView
         android:id="@+id/textView_goTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:paddingTop="7dp"
         android:text="TextView"
-        android:textColor="#FF0033" />
+        android:textColor="#FF0033"/>
 
     <ImageView
         android:id="@+id/imageView_goTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/textView_goTime"
+        android:layout_toStartOf="@+id/textView_goTime"
         android:paddingTop="9dp"
         android:src="@drawable/ic_bus_departure"/>
 
@@ -55,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView_busIntro"
-        android:layout_toLeftOf="@+id/textView_backTime"
+        android:layout_toStartOf="@+id/textView_backTime"
         android:paddingBottom="6dp"
         android:src="@drawable/ic_bus_return"/>
 
@@ -64,9 +67,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView_returnTime"
-        android:layout_toRightOf="@+id/imageView_goTime"
+        android:layout_toEndOf="@+id/imageView_goTime"
         android:paddingBottom="4dp"
         android:text="TextView"
-        android:textColor="#FF6600" />
+        android:textColor="#FF6600"/>
 
 </RelativeLayout>

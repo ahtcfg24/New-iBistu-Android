@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="80dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="80dp"
+              android:orientation="vertical"
+    >
 
     <ImageView
         android:id="@+id/imageView_busType_top_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
         android:background="@drawable/bg_bus_top_line"/>
 
     <TextView
         android:id="@+id/textView_busType"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_below="@+id/imageView_busType_top_line"
         android:gravity="center"
         android:text="通勤班车/教学班车"
         android:textSize="20sp"/>
-</RelativeLayout>
+</LinearLayout>

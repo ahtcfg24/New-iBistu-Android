@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 上传成功后返回的资源详情
  */
-public class UploadSuccessModel extends BaseRecord {
+public class UploadResult extends BaseRecord {
     private List<UploadedResource> resource;
 
     public List<UploadedResource> getResource() {
@@ -18,7 +18,7 @@ public class UploadSuccessModel extends BaseRecord {
 
     @Override
     public String toString() {
-        return "UploadSuccessModel{" +
+        return "UploadResult{" +
                 "resource=" + resource +
                 '}';
     }

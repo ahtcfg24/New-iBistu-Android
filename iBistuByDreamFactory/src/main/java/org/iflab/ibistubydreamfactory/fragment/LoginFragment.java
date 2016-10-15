@@ -22,7 +22,6 @@ import org.iflab.ibistubydreamfactory.apis.AuthAPI;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.LoginRequestBody;
 import org.iflab.ibistubydreamfactory.models.ResetPasswordRequestBody;
-import org.iflab.ibistubydreamfactory.models.SuccessModel;
 import org.iflab.ibistubydreamfactory.models.User;
 import org.iflab.ibistubydreamfactory.utils.ACache;
 import org.iflab.ibistubydreamfactory.utils.AndroidUtils;
@@ -32,6 +31,7 @@ import org.iflab.ibistubydreamfactory.utils.SharedPreferenceUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -141,11 +141,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     final ResetPasswordRequestBody request = new ResetPasswordRequestBody();
                     request.setEmail(email);
 
-                    Call<SuccessModel> call = authAPI.resetPassword(request);
-                    call.enqueue(new Callback<SuccessModel>() {
+                    Call<ResponseBody> call = authAPI.resetPassword(request);
+                    call.enqueue(new Callback<ResponseBody>() {
 
                         @Override
-                        public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             progressBar.setVisibility(View.GONE);
                             if (response.isSuccessful()) {//如果成功
                                 Snackbar.make(parentView, "我们已经向您的邮箱发送了密码重置邮件，请登录邮箱查看", Snackbar.LENGTH_LONG)
@@ -157,7 +157,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         }
 
                         @Override
-                        public void onFailure(Call<SuccessModel> call, Throwable t) {
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
                             progressBar.setVisibility(View.GONE);
                             Snackbar.make(parentView, "重置密码失败：" + t.getMessage(), Snackbar.LENGTH_LONG)
                                     .show();
