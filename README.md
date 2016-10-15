@@ -3,61 +3,22 @@
 
 # 前言
 
-#### 本文档提供的接口（以以下简称接口）使用DreamFactory生成，默认返回json数据。如果想得到xml格式的数据，也可以通过在接口后面添加可选参数`accept=application/xml`转变成xml结构的数据
+#### 本文档提供的接口（以以下简称接口）使用DreamFactory生成，返回json数据。
 
-- 返回的json结构：
-```
-{
-    "resource": [
-        {
-            对象1
-        },
-        {
-            对象2
-        },
-        ...,
-        {
-            对象n
-        }
-    ]
-}
-```
+#### 接口大部分默认需要添加两个header参数：`X-DreamFactory-Api-Key`和`X-DreamFactory-Session-Token`（以下简称apikey和token），apikey的值固定为`3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2`,token的值需要登录后获取。部分不需要这两个header参数的接口添加了会自动忽略。这两个header参数完全等价于URL参数`api_key`和`session_token`，因此可以不添加header，而直接在每个接口后面以URL参数的形式追加。
 
-#### 接口除特别注明不需添加header，否则默认添加两个header参数：`X-DreamFactory-Api-Key`和`X-DreamFactory-Session-Token`。部分不需token的接口即使添加了token也会自动忽略`X-DreamFactory-Session-Token`。这两个header参数分别等价于URL参数`api_key`和`session_token`。
-
-- 请求头及其格式为：`"X-DreamFactory-Api-Key", "dreamfactory提供的apikey"`，
+- header参数格式：`"X-DreamFactory-Api-Key", "3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2"`，
 `"X-DreamFactory-Session-Token","当前用户登录后获取到的token"`
-- 或者以URL参数的形式添加api_key和session_token代替请求头进行接口访问。例如：`http://api.iflab.org/api/v2/ibistu/_table/module_map?api_key=dreamfactory提供的apikey&session_token=当前用户登录后获取到的token`
+- 或者以URL参数的形式添加api_key和session_token代替请求头进行接口访问。例如：`http://api.iflab.org/api/v2/ibistu/_table/module_map?api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=当前用户登录后获取到的token`
 
-#### 接口均可以通过添加可选参数`include_count=true`以获得包含数据对象总数的json数据。此时的返回值结构如下：
-```
-{
-    "resource": [
-        {
-            对象1
-        },
-        {
-            对象2
-        },
-        ...,
-        {
-            对象n
-        }
-    ],
-    "meta": {
-        "count": 对象数量n
-    }
-}
-```
-
-#### 接口的返回值均为示例数据，数据数量有删减，仅用于说明结构，具体数据请自行获取测试
+#### 接口的返回值均为示例数据，数据数量和数据内容与实际有出入，仅用于说明结构，具体数据请自行获取测试
 
 ---
 # 正文
 
-## 升级更新(安卓)
+## 安卓升级更新（本模块的接口只需要添加apikey，不需要token）
 
-#### 检查更新（只需添加header:`X-DreamFactory-Api-Key`）
+#### 检查更新
 
 - 接口：`http://api.iflab.org/api/v2/ibistu/_table/module_update/1`
 - 请求方法：get
@@ -76,7 +37,7 @@
 }
 ```
 
-#### 下载更新（只需添加header:`X-DreamFactory-Api-Key`）
+#### 下载更新
 
 - 接口：`http://api.iflab.org/api/v2/{检查更新返回值中的path字段}{name字段}`
 - 请求方法：get
@@ -87,7 +48,7 @@
 
 ## 用户模块
 
-#### 注册（只需添加header:`X-DreamFactory-Api-Key`）
+#### 注册（只需添加apikey）
 
 - 接口：`http://api.iflab.org/api/v2/user/register`
 - 请求方法：post
@@ -109,11 +70,12 @@
  }
  ```
 
-#### 注册验证（无需添加本文档的header）
+#### 注册验证（无需添加apikey和token）
 
-- 注册验证使用网易云信对手机进行短信验证，详见[官方文档](http://dev.netease.im/docs?doc=server_sms)
+- 使用网易云信平台进行短信验证，详见[官方文档](http://dev.netease.im/docs?doc=server_sms)
+- 或者使用mob平台进行短信验证，详见[官方文档](http://www.mob.com/#/download#sms)
 
-#### 登录（只需添加header:`X-DreamFactory-Api-Key`）
+#### 登录（只需添加apikey）
 
 - 接口：`http://api.iflab.org/api/v2/user/session?remember_m=true`
 - 请求方法：post
@@ -147,7 +109,7 @@
 - 接口：`http://api.iflab.org/api/v2/user/session`
 - 请求方法：delete
 - 参数：无
-- 示例请求成功返回值：
+- 示例请求成功返回值：（可忽略）
 ```
 {
     "success": true
@@ -173,7 +135,7 @@
 }
 ```
 
-#### 请求重置密码：（只需添加header:`X-DreamFactory-Api-Key`）
+#### 请求重置密码：（只需添加apikey）
 
 - 接口：`http://api.iflab.org/api/v2/user/password?reset=true`
 - 请求方法：post
@@ -663,8 +625,10 @@
     }
 }
 ```
- - 关于json的处理可参考DreamFacotory官方Demo中的处理流程：
- + [iOS-Objective-C](https://github.com/dreamfactorysoftware/ios-sdk)
- + [iOS-Swift](https://github.com/dreamfactorysoftware/ios-swift-sdk)
- + [ReactJS](https://github.com/dreamfactorysoftware/reactjs-sdk)
- + [Android](https://github.com/dreamfactorysoftware/android-sdk)
+
+
+# DreamFacotory官方Demo：
+  + [iOS-Objective-C](https://github.com/dreamfactorysoftware/ios-sdk)
+  + [iOS-Swift](https://github.com/dreamfactorysoftware/ios-swift-sdk)
+  + [ReactJS](https://github.com/dreamfactorysoftware/reactjs-sdk)
+  + [Android](https://github.com/dreamfactorysoftware/android-sdk)
