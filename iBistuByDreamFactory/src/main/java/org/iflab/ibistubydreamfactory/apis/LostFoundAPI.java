@@ -40,6 +40,12 @@ public interface LostFoundAPI {
     @POST("ibistu/_table/module_lost_found")
     Call<ResponseBody> postNewLostFound(@Body LostFound[] postLostFoundRequestBody);
 
+    /**
+     * 将某条招领信息设为完结
+     * @param id
+     * @param setIsFoundRequestBody
+     * @return
+     */
     @PATCH("ibistu/_table/module_lost_found/{id}")
     Call<ResponseBody> setIsFound(@Path("id") int id, @Body SetIsFoundRequestBody setIsFoundRequestBody);
 }

@@ -7,7 +7,6 @@ public class LostFound extends BaseRecord {
 
 
     private int id;
-    private String title;
     private String details;
     private String createTime;
     private String author;
@@ -38,14 +37,6 @@ public class LostFound extends BaseRecord {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDetails() {
@@ -88,4 +79,16 @@ public class LostFound extends BaseRecord {
         this.isFound = isFound;
     }
 
+    @Override
+    public String toString() {
+        return "LostFound{" +
+                "id=" + id +
+                ", details='" + details + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", author='" + author + '\'' +
+                ", phone='" + phone + '\'' +
+                ", isFound=" + isFound +
+                ", imgUrlList='" + imgUrlList + '\'' +
+                '}';
+    }
 }
