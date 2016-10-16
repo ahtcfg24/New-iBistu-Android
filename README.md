@@ -21,5 +21,17 @@
 
 ## [接口文档](https://github.com/ifLab/iBistu-API)
 
-## 产品文档
-敬请期待
+## 系统架构
+![系统架构](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/iBistu系统架构设计图.png)
+
+## 软件架构
+![软件架构](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/APP功能流程图.png)
+
+## 开源许可License
+Copyright 2016 Amon Tin(徐鼎)
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.

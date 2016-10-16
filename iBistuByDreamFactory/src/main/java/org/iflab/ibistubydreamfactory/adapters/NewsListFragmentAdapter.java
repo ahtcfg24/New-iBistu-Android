@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 
 import org.iflab.ibistubydreamfactory.R;
-import org.iflab.ibistubydreamfactory.fragment.NewsListFragment;
+import org.iflab.ibistubydreamfactory.fragments.NewsListFragment;
 
 import java.util.Map;
 

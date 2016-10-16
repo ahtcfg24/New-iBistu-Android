@@ -20,7 +20,7 @@ import org.iflab.ibistubydreamfactory.MyApplication;
 import org.iflab.ibistubydreamfactory.R;
 import org.iflab.ibistubydreamfactory.apis.APISource;
 import org.iflab.ibistubydreamfactory.apis.AuthAPI;
-import org.iflab.ibistubydreamfactory.fragment.LoginFragment;
+import org.iflab.ibistubydreamfactory.fragments.LoginFragment;
 import org.iflab.ibistubydreamfactory.models.ErrorMessage;
 import org.iflab.ibistubydreamfactory.models.RegisterRequestBody;
 import org.iflab.ibistubydreamfactory.utils.AndroidUtils;

@@ -28,7 +28,7 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 
 import org.iflab.ibistubydreamfactory.R;
-import org.iflab.ibistubydreamfactory.fragment.HomeFragment;
+import org.iflab.ibistubydreamfactory.fragments.HomeFragment;
 import org.iflab.ibistubydreamfactory.utils.CheckUpdateUtil;
 
 import java.util.ArrayList;

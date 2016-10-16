@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPureWhite"
     android:orientation="vertical"
-    tools:context="org.iflab.ibistubydreamfactory.fragment.LoginFragment">
+    tools:context="org.iflab.ibistubydreamfactory.fragments.LoginFragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

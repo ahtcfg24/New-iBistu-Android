@@ -1,4 +1,4 @@
-package org.iflab.ibistubydreamfactory.fragment;
+package org.iflab.ibistubydreamfactory.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
