@@ -30,40 +30,53 @@
 
 ## 使用到的第三方库
 * [mob短信验证](http://www.mob.com/)
-注册短信验证
+  注册短信验证
+
 * [高德地图SDK](http://lbs.amap.com/)
-地图模块
+  地图模块
+
 * [butterknife](https://github.com/JakeWharton/butterknife)
-代码中控件、监听器快速绑定
+  代码中控件、监听器快速绑定
+
 * [retrofit2](http://square.github.io/retrofit/)
-网络请求
+  网络请求
+
 * [glide](https://github.com/bumptech/glide)
-图片加载
+  图片加载
+
 * [Context-Menu.Android](https://github.com/Yalantis/Context-Menu.Android)
-动态menu
-![动态menu](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/主页菜单.jpg)
+  动态menu
+  ![动态menu](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/主页菜单.jpg)
+
 * [MaterialDialog](https://github.com/drakeet/MaterialDialog)
-Material Design风格的对话框
-![Material Design风格的对话框](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/检查更新.jpg)
+  Material Design风格的对话框
+  ![Material Design风格的对话框](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/检查更新.jpg)
+
 * [MD360Player4Android](https://github.com/ashqal/MD360Player4Android)
-全景播放器
-![全景播放器](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/全景示例.jpg)
+  全景播放器
+  ![全景播放器](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/全景示例.jpg)
+
 * [ijkplayer](https://github.com/Bilibili/ijkplayer)
-全景播放器底层视频播放
+  全景播放器底层视频播放
+
 * [picasso](https://github.com/square/picasso)
-全景图片加载
+  全景图片加载
+
 * [ViewPagerIndicator](https://github.com/LuckyJayce/ViewPagerIndicator)
-新闻列表滑动tab切换分类
-![新闻列表滑动tab切换分类](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/新闻列表.jpg)
+  新闻列表滑动tab切换分类
+  ![新闻列表滑动tab切换分类](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/新闻列表.jpg)
+
 * [Android-ConvenientBanner](https://github.com/saiwu-bigkoo/Android-ConvenientBanner)
-新闻详情图片轮播
-![新闻详情图片轮播](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/新闻详情.jpg)
+  新闻详情图片轮播
+  ![新闻详情图片轮播](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/新闻详情.jpg)
+
 * [PhotoPicker](https://github.com/donglua/PhotoPicker)
-从本地选择要上传的图片
-![从本地选择要上传的图片](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/选择图片.jpg)
+  从本地选择要上传的图片
+  ![从本地选择要上传的图片](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/选择图片.jpg)
+
 * [NineGridView](https://github.com/jeasonlzy/NineGridView)
-失物招领模块九宫格图片显示
-![失物招领模块九宫格图片显示](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/失物招领2.jpg)
+  失物招领模块九宫格图片显示
+  ![失物招领模块九宫格图片显示](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/失物招领2.jpg)
 
 ## 开源许可License
 Copyright 2016 Amon Tin(徐鼎)
