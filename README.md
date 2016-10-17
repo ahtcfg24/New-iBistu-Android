@@ -13,11 +13,13 @@
 5. 校内全景图；
 6. 校园班车查询；
 
+产品本身没什么亮点，重在开源、完整，适合安卓新手学习。
 ## 应用商店下载链接：
 
-[百度手机助手](http://shouji.baidu.com/software/10108684.html)
-[安卓市场](http://apk.hiapk.com/appinfo/org.iflab.ibistubydreamfactory)
-[豌豆荚](http://www.wandoujia.com/apps/org.iflab.ibistubydreamfactory)
+* [百度手机助手](http://shouji.baidu.com/software/10108684.html)
+* [安卓市场](http://apk.hiapk.com/appinfo/org.iflab.ibistubydreamfactory)
+* [豌豆荚](http://www.wandoujia.com/apps/org.iflab.ibistubydreamfactory)
+* [小米应用商店](http://app.mi.com/details?id=org.iflab.ibistubydreamfactory)
 
 ## 后端接口
 [接口文档](https://github.com/ifLab/iBistu-API)
