@@ -10,7 +10,7 @@
 2. 随时查阅校内黄页；
 3. 校区地图；
 4. 校内二手交易；
-5. 校内全景图；
+5. 校内VR全景；
 6. 校园班车查询；
 
 产品本身没什么亮点，重在开源、完整，适合安卓新手学习。
@@ -48,18 +48,15 @@
 
 * [Context-Menu.Android](https://github.com/Yalantis/Context-Menu.Android)
   动态menu
-  <br> ![动态menu](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/主页菜单.jpg) <br>
+  <br><br> ![动态menu](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/主页菜单.jpg) <br>
 
 * [MaterialDialog](https://github.com/drakeet/MaterialDialog)
   Material Design风格的对话框
-  <br> ![Material Design风格的对话框](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/检查更新.jpg) <br>
+  <br><br> ![Material Design风格的对话框](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/检查更新.jpg) <br>
 
 * [MD360Player4Android](https://github.com/ashqal/MD360Player4Android)
   全景播放器
-  <br> ![全景播放器](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/全景示例.jpg) <br>
-
-* [ijkplayer](https://github.com/Bilibili/ijkplayer)
-  全景播放器底层视频播放
+  <br><br> ![全景播放器](https://github.com/ahtcfg24/New-iBistu-Android/blob/master/image/全景示例.jpg) <br>
 
 * [picasso](https://github.com/square/picasso)
   全景图片加载
