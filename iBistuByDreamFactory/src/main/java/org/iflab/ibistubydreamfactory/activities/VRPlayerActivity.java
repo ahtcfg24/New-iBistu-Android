@@ -22,7 +22,6 @@ public abstract class VRPlayerActivity extends Activity {
 
     private static final SparseArray<String> displayMode = new SparseArray<>();
     private static final SparseArray<String> interactiveMode = new SparseArray<>();
-    private static final SparseArray<String> projectionMode = new SparseArray<>();
 
     static {
         displayMode.put(MDVRLibrary.DISPLAY_MODE_NORMAL, "普通模式");
@@ -32,8 +31,6 @@ public abstract class VRPlayerActivity extends Activity {
         interactiveMode.put(MDVRLibrary.INTERACTIVE_MODE_TOUCH, "滑屏控制");
         interactiveMode.put(MDVRLibrary.INTERACTIVE_MODE_MOTION_WITH_TOUCH, "感应+滑屏");
 
-        projectionMode.put(MDVRLibrary.PROJECTION_MODE_SPHERE, "SPHERE视角");
-        projectionMode.put(MDVRLibrary.PROJECTION_MODE_STEREO_SPHERE, "STEREO视角");
 
     }
 
@@ -94,16 +91,6 @@ public abstract class VRPlayerActivity extends Activity {
                         })
                         .init(R.id.spinner_interactive);
 
-        SpinnerBuildUtil.with(this)
-                        .setData(projectionMode)
-                        .setDefault(mVRLibrary.getProjectionMode())
-                        .setClickHandler(new SpinnerBuildUtil.ClickHandler() {
-                            @Override
-                            public void onSpinnerClicked(int index, int key, String value) {
-                                mVRLibrary.switchProjectionMode(VRPlayerActivity.this, key);
-                            }
-                        })
-                        .init(R.id.spinner_projection);
     }
 
     protected Uri getUri() {

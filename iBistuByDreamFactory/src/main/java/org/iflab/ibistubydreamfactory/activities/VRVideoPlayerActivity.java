@@ -1,5 +1,6 @@
 package org.iflab.ibistubydreamfactory.activities;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,13 +15,12 @@ import com.asha.vrlib.MDVRLibrary;
 import com.asha.vrlib.model.BarrelDistortionConfig;
 
 import org.iflab.ibistubydreamfactory.R;
-import org.iflab.ibistubydreamfactory.adapters.MediaPlayerWrapper;
+import org.iflab.ibistubydreamfactory.utils.MediaPlayerWrapper;
 import org.iflab.ibistubydreamfactory.utils.StringUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 /**
  * VR视频播放器
@@ -45,20 +45,19 @@ public class VRVideoPlayerActivity extends VRPlayerActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMediaPlayerWrapper.init();
-        mMediaPlayerWrapper.setPreparedListener(new IMediaPlayer.OnPreparedListener() {
+        mMediaPlayerWrapper.setPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
-            public void onPrepared(IMediaPlayer mp) {
+            public void onPrepared(MediaPlayer mp) {
                 cancelBusy();//隐藏progressBar
                 playOrPauseButton.setImageResource(R.drawable.ic_pause_button);
-                durationTime = (int) (mMediaPlayerWrapper.getPlayer().getDuration() / 1000);
+                durationTime = (mMediaPlayerWrapper.getPlayer().getDuration() / 1000);
                 videoProgressSeekBar.setMax(durationTime);
                 durationTimeTextView.setText(StringUtil.transToTime(durationTime));
 
                 timeTask = new TimerTask() {//更新进度条
                     @Override
                     public void run() {
-                        currentTime = (int) mMediaPlayerWrapper.getPlayer()
-                                                               .getCurrentPosition() / 1000;
+                        currentTime = mMediaPlayerWrapper.getPlayer().getCurrentPosition() / 1000;
                         videoProgressSeekBar.setProgress(currentTime);
                         handler.post(updateThread);
 
@@ -68,9 +67,9 @@ public class VRVideoPlayerActivity extends VRPlayerActivity {
             }
         });
 
-        mMediaPlayerWrapper.getPlayer().setOnErrorListener(new IMediaPlayer.OnErrorListener() {
+        mMediaPlayerWrapper.getPlayer().setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
-            public boolean onError(IMediaPlayer mp, int what, int extra) {
+            public boolean onError(MediaPlayer mp, int what, int extra) {
                 Toast.makeText(VRVideoPlayerActivity.this, "播放失败：" + what + "，extra=" + extra, Toast.LENGTH_SHORT)
                      .show();
                 return true;
@@ -78,17 +77,17 @@ public class VRVideoPlayerActivity extends VRPlayerActivity {
         });
 
         mMediaPlayerWrapper.getPlayer()
-                           .setOnVideoSizeChangedListener(new IMediaPlayer.OnVideoSizeChangedListener() {
+                           .setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
                                @Override
-                               public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sar_num, int sar_den) {
+                               public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
                                    getVRLibrary().onTextureResize(width, height);
                                }
                            });
 
         mMediaPlayerWrapper.getPlayer()
-                           .setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
+                           .setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                                @Override
-                               public void onCompletion(IMediaPlayer mp) {
+                               public void onCompletion(MediaPlayer mp) {
                                    mMediaPlayerWrapper.getPlayer().seekTo(0);
                                    playOrPauseButton.setImageResource(R.drawable.ic_play_button);
                                }

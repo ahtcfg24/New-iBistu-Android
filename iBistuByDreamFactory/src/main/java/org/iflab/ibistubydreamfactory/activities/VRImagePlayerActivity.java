@@ -27,7 +27,7 @@ public class VRImagePlayerActivity extends VRPlayerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        cancelBusy();
+//        cancelBusy();
     }
 
     private void loadImage(Uri uri, final MD360BitmapTexture.Callback callback) {
