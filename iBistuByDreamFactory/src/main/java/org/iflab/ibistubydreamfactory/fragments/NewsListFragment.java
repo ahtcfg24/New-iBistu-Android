@@ -120,15 +120,15 @@ public class NewsListFragment extends Fragment {
         pullToRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
+                new Handler().post(new Runnable() {
                     @Override
                     public void run() {
                         newsList.clear();
                         currentPage = 0;
                         getNews();
-                        Snackbar.make(rootView, "刷新完成", Snackbar.LENGTH_SHORT).show();
+//                        Snackbar.make(rootView, "刷新完成", Snackbar.LENGTH_SHORT).show();
                     }
-                }, 1000);
+                });
             }
 
 
@@ -170,6 +170,7 @@ public class NewsListFragment extends Fragment {
                 footerProgressLayout.setVisibility(View.INVISIBLE);
                 loadToLastTextView.setVisibility(View.VISIBLE);
                 Snackbar.make(rootView, "错误：" + t.getMessage(), Snackbar.LENGTH_LONG).show();
+
             }
         });
 
@@ -224,7 +225,7 @@ public class NewsListFragment extends Fragment {
          */
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
-            //当滚到最后一行且停止滚动时，执行加载
+            //当滚到最后一行且停止滚动,当前没有下拉刷新时，执行加载
             if (isLastRow && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 loadToLastTextView.setVisibility(View.INVISIBLE);
                 footerProgressLayout.setVisibility(View.VISIBLE);

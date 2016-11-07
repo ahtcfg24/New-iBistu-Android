@@ -71,7 +71,7 @@
                     style="@style/edit_text_style"
                     android:layout_width="match_parent"
                     android:hint="手机号:"
-                    android:inputType="phone"
+                    android:inputType="number"
                     android:maxLines="1"
                     />
 
